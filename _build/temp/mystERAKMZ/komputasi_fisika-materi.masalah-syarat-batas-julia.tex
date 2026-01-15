@@ -1,0 +1,1023 @@
+\section{Penyelesaian Persamaan Poisson}
+
+\subsection{Masalah Syarat Batas}
+
+Beberapa masalah fisika dapat disajikan oleh model yang diwakili oleh persamaan \textit{Poisson} dalam bentuk berikut.
+
+\begin{equation}
+\nabla^2\phi(\vec{r})=f(\vec{r})
+\end{equation}
+
+Dalam ungkapan di atas, $\nabla^2$ merupakan operator Laplasan sedang $\phi(\vec{r})$ dan $f(\vec{r})$ merupakan fungsi bernilai komplek atau real. Penyelesaian persamaan \textit{Poisson} merupakan upaya untuk memperoleh fungsi $\phi(\vec{r})$ ketika $f(\vec{r})$ diketahui atau diberikan.
+
+Sebagai gambaran, dalam ruang 3 dimensi pada koordinat Kartesan maka persamaan \textit{Poisson} akan memiliki bentuk berikut.
+
+\begin{equation}
+\left(\frac{\partial ^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}+\frac{\partial^2}{\partial x^2}\right)\phi(x,y,x)=f(x,y,z)
+\end{equation}
+
+Salah satu contoh sistem fisis yang memenuhi persamaan \textit{Poisson} adalah masalah untuk menemukan distribusi potensial gravitasi pada seluruh ruang $\phi(r)$ oleh adanya tarikan medan gravitasi akibat rapat massa $\rho$. Ungkapan persamaan \textit{Poisson} untuk potensial gravitasi mengambil bentuk berikut.
+
+\begin{equation}
+\nabla^2\phi=4\pi G\rho
+\end{equation}
+dengan $G$ adalah tetapan gravitasi umum.
+
+Penyelesaian bagi pers (2) untuk benda berbentuk titik dengan massa $m$ akan memberikan potensial gravitasi $\phi(r)$ pada suatu jarak radial $r$ seperti berikut.
+
+\begin{equation}
+\phi(r)=-\frac{Gm}{r}
+\end{equation}
+Bentuk di atas tidak lain merupakan ungkapan Hukum Newton tentang gravitasi umum.
+
+Contoh lain sistem fisis yang memenuhi persamaan \textit{Poisson} adalah masalah untuk menemukan distribusi potensial listrik pada seluruh ruang $V(r)$ oleh adanya distribusi rapat muatan $\rho$. Ungkapan persamaan \textit{Poisson} untuk potensial listrik mengambil bentuk berikut.
+
+\begin{equation}
+\nabla^2 V=-\frac{\rho}{\epsilon}
+\end{equation}
+dengan $\epsilon$ adalah permitivitas medium.
+
+Penyelesaian bagi pers (3) untuk muatan berbentuk titik dengan besar $q$ akan memberikan potensial listrik $V(r)$ pada suatu jarak radial $r$ seperti berikut.
+
+\begin{equation}
+V(r)=\frac{q}{4\pi\epsilon r}
+\end{equation}
+
+Bentuk di atas tidak lain merupakan ungkapan Hukum Coulomb tentang listrik statis.
+
+Secara umum, saat distribusi rapat massa atau rapat muatan berbentuk sebarang maka penyelesaian persamaan \textit{Poisson} menjadi tidak mudah dan diperlukan prosedur komputasi untuk menyelesaikan masalah tersebut.
+
+\subsection{Penyelesaian dalam Ruang Satu Dimensi (1-D)}
+
+Sebagai gambaran, diberikan bentuk rapat muatan yang tergantung pada jarak radial saja yaitu
+
+\begin{equation}
+\rho(r)=\epsilon e^{-r}
+\end{equation}
+
+Mengingat terjadinya simetri bola, maka persamaan \textit{Poisson} dalam ruang tiga dimensi dapat dibawa ke masalah pada ruang satu dimensi menjadi
+
+\begin{equation}
+\frac{1}{r^{2}}\frac{d}{dr}\left(r^{2}\frac{dV(r)}{dr}\right)=\frac{d^2V(r)}{dr^2}+\frac{2}{r}\frac{dV(r)}{dr}=-e^{-r}
+\end{equation}
+
+Ungkapan tersebut dapat dinyatakan dalam bentuk berikut.
+
+\begin{equation}
+r\frac{d^2V(r)}{dr^2}+2\frac{dV(r)}{dr}=-re^{-r}
+\end{equation}
+
+Penyelesaian pers (5) dapat dilakukan secara analitik dengan bentuk potensial berikut:
+
+\begin{equation}
+V(r)=\frac{2}{r}-\left(\frac{2}{r}+1\right)e^{-r}
+\end{equation}
+
+Karena $\rho(r)$ tidak singular di $r = 0$ maka $V(0)$ bernilai berhingga dan memiliki perilaku seperti potensial Coulomb di $r\rightarrow\infty$ yaitu $V(r\rightarrow\infty) = 1/r$. Berdasar penyelesaian analitik tersebut maka syarat batas pada $r=0$ dan $r\rightarrow\infty$ dapat diambil dalam nilai berikut.
+
+\begin{equation}
+V(0)=1;\qquad V(r\rightarrow \infty)=\frac{2}{r}
+\end{equation}
+
+\subsection{Metode Beda Hingga (\textit{Finite Difference})}
+
+Masalah syarat batas merupakan suatu bentuk permasalahan ketika informasi terkait sistem fisis pada keadaan tertentu yaitu pada bagian batas dari ruang yang ditinjau telah diketahui dan kemudian diinginkan informasi terkait sistem fisis tersebut pada daerah yang dilingkupi oleh batas tersebut.
+
+\begin{enumerate}
+\item Untuk ruang 1 dimensi, yang dimaksud bagian batas adalah 2 titik pada bagian ujung sumbu.
+\item Untuk ruang 2 dimensi, yang dimaksud bagian batas adalah titik-titik yang mengelilingi bagian tepi bidang.
+\item Sedangkan untuk ruang 3 dimensi, yang dimaksud bagian batas adalah titik-titik yang melingkupi bagian permukaan ruang.
+\end{enumerate}
+
+Pendekatan beda hingga (\textit{finite difference}) menggunakan skema beda terpusat (\textit{central difference}) bagi bentuk turunan satu kali dan dua kali sebarang fungsi $f(x)$ adalah sebagai berikut.
+
+\begin{align}
+\left.\frac{df(x)}{dx}\right]_{x=x_i}&\approx\frac{f_{i+1}-f_{i-1}}{2h}\\
+\left.\frac{d^2 f(x)}{dx^2}\right]_{x=x_i}&\approx \frac{f_{i+1}-2f_i+f_{i-1}}{h^2}
+\end{align}
+
+Dalam ungkapan di atas, $h=x_i -x_{i -1}, x_i=x_0+ih$ dan $f_i\equiv f(x_i)$.
+
+Dengan pendekatan tersebut maka persamaan diferensial dalam pers (5b) akan dapat dinyatakan dalam bentuk persamaan beda hingga yaitu
+
+\begin{equation}
+r_i\left(\frac{V_{i+1}-2V_i+V_{i-1}}{h^2}\right)+2\left(\frac{V_{i+1}-V_{i-1}}{2h}\right)=-r_i e^{-r_i}
+\end{equation}
+
+Ungkapan tersebut dapat dinyatakan dalam bentuk lain sebagai berikut.
+
+\begin{equation}
+\left(r_i-h\right)V_{i-1}-2r_iV_i+\left(r_i+h\right)V_{i+1}=r_{i-1}V_{i-1}-2r_iV_i+r_{i+1}V_{i+1}=-h^2 r_i e^{-r_i}
+\end{equation}
+
+Ungkapan bagi syarat batas dapat dinyatakan sebagai $V_0=1$ dan $V_{N+1}=\tfrac{2}{r_{N+1}}$ dimana $r_0=0$ dan $N$ adalah bilangan bulat positip yang diambil bernilai cukup besar sedemikian hingga $r_{N+1}\rightarrow\infty$.
+
+Dengan memperhitungkan nilai pada kedua batas yaitu $V_0=1$ dan $V_{N+1}=\tfrac{2}{r_{N+1}}$ maka pers (7) akan berujud menjadi sejumlah $N$ persamaan simultan yang mengandung $N$ variabel yang perlu dicari yaitu $\left\{V_1, V_2,\dots,V_N\right\}$. Apabila sejumlah besaran yang akan dicari tersebut, yaitu $\left\{V_i; i=1.2,3,\dots,N\right\}$ dinyatakan dalam bentuk matrik kolom $V$, maka sejumlah $N$ persamaan simultan tersebut dapat ditulis dalam bentuk perkalian matrik sebagai
+
+\begin{equation}
+AV=b
+\end{equation}
+
+Dalam bentuk eksplisit akan berbentuk berikut
+
+\begin{equation}
+\left(
+\begin{array}{cccccc} 
+-2r_1&r_2&0&\ldots&\ldots&0\\
+r_1&-2r_2&r_3&0&\ldots&0\\
+\vdots&\vdots&\ddots&\vdots&\vdots&\vdots\\
+\vdots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+\vdots&\ldots&0&r_{N-2}&-2r_{N-1}&r_N\\
+0&\ldots&\ldots&0&r_{N-1}&-2r_N
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+V_1\\
+V_2\\
+\vdots\\
+\vdots\\
+V_{N-1}\\
+V_N
+\end{array}
+\right)=
+\left(
+\begin{array}{c}
+-h^2\,r_1\,e^{-r_1}-r_0V_0\\
+-h^2\,r_2\,e^{-r_2}\\
+\vdots\\
+\vdots\\
+-h^2\,r_{N-1}\,e^{-r_{N-1}}\\
+-h^2\,r_N\,e^{-r_N}-r_{N+1}V_{N+1}
+\end{array}
+\right)
+\end{equation}
+
+Berikut adalah \textit{source-code} bagi uraian prosedur komputasi tersebut.
+
+\begin{verbatim}
+using LinearAlgebra
+
+rmax = 10.0
+N = 1000
+h = rmax / (N - 1)
+r = collect(range(h, rmax; length=N))
+r0 = 0.0
+rN1 = rmax + h
+V0 = 1.0
+VN1 = 2.0 / rN1
+V_ref = 2.0 ./ r . - (2.0 ./ r .+ 1.0) .* exp.( -r);
+\end{verbatim}
+
+\begin{verbatim}
+function gen_A(N, r)
+    b1 = r[2:end]
+    b2 = -2.0 .* r
+    b3 = r[1:end -1]
+    A = diagm(1 => b1) + diagm(0 => b2) + diagm( -1 => b3)
+    return A
+end
+\end{verbatim}
+
+\begin{verbatim}
+gen_A (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function gen_b(N, h, r, V0, VN1, r0, rN1)
+    b = -h^2 .* r .* exp.( -r)
+    b[1] -= r0 * V0
+    b[N] -= rN1 * VN1
+    return b
+end
+\end{verbatim}
+
+\begin{verbatim}
+gen_b (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+A=gen_A(N,r)
+b=gen_b(N,h,r,V0,VN1,r0,rN1);
+\end{verbatim}
+
+\begin{verbatim}
+V = A \ b;
+\end{verbatim}
+
+\begin{verbatim}
+using Plots
+using LaTeXStrings
+
+plot(r,[V,V_ref],label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"V(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/fb0124a2062ec149ab396d57cbeae650.png}
+
+\begin{verbatim}
+phi = V .* r
+plot(r,phi,xlabel="r", ylabel=L"$\phi(r)$", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/ad466764342e46490cf9fd8e074aa01e.png}
+
+\subsection{Dekomposisi LU}
+
+Dalam kebanyakan permasalahan, rapat muatan dalam peubah radial dapat diambil pada bentuk beragam dan kemudian ditentukan konfigurasi potensial listrik untuk berbagai bentuk tersebut. Untuk permasalahan semacam ini, maka prosedur komputasi dekomposisi LU akan lebih tepat untuk dipilih karena operasi yang melibatkan matrik $A$, yaitu operasi eleminasi atau invers matrik, cukup dilakukan satu kali dan untuk seterusnya cukup menggunakan operasi substitusi maju dan substitusi mundur.
+
+Seperti yang telah diuraikan pada materi penyelesaian persamaan simultas, prinsip dasar metode dekomposisi LU adalah mengubah matrik persegi $A$ menjadi perkalian dua matrik persegi yaitu matrik segitiga bawah $L$ dengan matrik segitiga atas $U$ dalam bentuk berikut.
+
+\begin{equation}
+PA=LU
+\end{equation}
+
+Matrik persegi $P$ disebut matrik permutasi yang berperan untuk mempertukarkan baris atau kolom agar tidak terjadi singularitas. Sifat matrik permutasi adalah $P^TP=I$ atau $P^{ -1}=P^T$. Dengan demikian penyelesaian persamaan simultan akan berubah menjadi
+
+\begin{align}
+AV&=P^{-1}LUV=P^{-1}LW=P^{-1}Z=b; \qquad\mathrm{dengan}\\
+P^{-1}Z&=b\quad\mathrm{atau}\quad Z=Pb\quad\mathrm{dilanjutkan}\\
+LW&=Z\quad\mathrm{kemudian}\\  
+UV&=W
+\end{align}
+
+Dalam ungkapan matrik segitiga atas $U$ dan matrik segitiga bawah $L$ diberikan oleh bentuk
+
+\begin{equation}
+U=\begin{pmatrix}
+u_{11}&u_{12}&u_{13}&\cdots&u_{1N}\\
+0&u_{22}&\cdots&\cdots&u_{2N}\\
+\vdots&\vdots&\vdots&\vdots&\vdots\\
+0&0&0&\cdots&u_{NN}
+\end{pmatrix};\qquad
+L=\begin{pmatrix}
+1&0&0&\cdots&0\\
+0&1\cdots&\cdots&0\\
+\vdots&\vdots&\vdots&\vdots&\vdots\\
+l_{N1}&l_{N2}&l_{N3}&\cdots&1
+\end{pmatrix}
+\end{equation}
+
+Dengan ungkapan tersebut maka matrik kolom $W$ dapat diperoleh melalui proses substitusi maju, yaitu diperoleh nilai $W_1, W_2$ dan seterusnya hingga $W_N$. Setelah matrik kolom $W$ diperoleh, selanjutnya matrik kolom $V$ dihitung melalui proses substitusi balik, yaitu diperoleh nilai $V_N, V_{N -1}$ dan seterusnya hingga $V_1$.
+
+\begin{verbatim}
+function forw_subs(A, b)
+    n = size(A, 1)
+    x = zeros(eltype(b), n)
+    x[1] = b[1] / A[1, 1]
+    for i in 2:n
+        x[i] = (b[i] - dot(A[i, 1:i -1], x[1:i -1])) / A[i, i]
+    end
+    return x
+end
+\end{verbatim}
+
+\begin{verbatim}
+forw_subs (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function back_subs(A, b)
+    n = size(A, 1)
+    x = zeros(eltype(b), n)
+    x[end] = b[end] / A[end, end]
+    for i in n -1: -1:1
+        x[i] = (b[i] - dot(A[i, i+1:end], x[i+1:end])) / A[i, i]
+    end
+    return x
+end
+\end{verbatim}
+
+\begin{verbatim}
+back_subs (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+F = lu(A);
+L = F.L;
+U = F.U;
+P = F.P;
+\end{verbatim}
+
+\begin{verbatim}
+Z = P * b
+W = forw_subs(L,Z)
+V = back_subs(U,W);
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,[V,V_ref],label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"V(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/fb0124a2062ec149ab396d57cbeae650.png}
+
+Cara lain yang biasa dilakukan ketika berhadapan dengan penyelesaian bagian radial dari bentuk simetri bola adalah dengan memperkenalkan fungsi $\phi(r)$ yang didefinisikan seperti berikut.
+
+\begin{equation}
+\phi(r)=\frac{V(r)}{r};\quad\text{atau}\quad V(r)=r\phi(r)
+\end{equation}
+
+Dengan bentuk fungsi tersebut maka persamaan \textit{Poisson} akan berbentuk berikut.
+
+\begin{equation}
+\frac{1}{r^{2}}\frac{d}{dr}\left(r^{2}\frac{dV(r)}{dr}\right)=\frac{1}{r}\frac{d^2\phi(r)}{dr^2}=-e^{-r}
+\end{equation}
+
+Ungkapan tersebut dapat dinyatakan dalam bentuk berikut.
+
+\begin{equation}
+\frac{d^2\phi(r)}{dr^2}=-re^{-r}
+\end{equation}
+
+Persamaan diferensial di atas akan dapat dinyatakan dalam bentuk persamaan beda hingga yaitu
+
+\begin{equation}
+\left(\frac{\phi_{i+1}-2\phi_i+\phi_{i-1}}{h^2}\right)=-r_i e^{-r_i}
+\end{equation}
+
+Ungkapan bagi syarat batas dapat dinyatakan sebagai $\phi_0=0$ dan $\phi_{N+1}=2$ dimana $r_0=0$ dan $N$ adalah bilangan bulat positip yang diambil bernilai cukup besar sedemikian hingga $r_{N+1}\rightarrow\infty$.
+
+Dengan memperhitungkan nilai pada kedua batas yaitu $\phi_0=0$ dan $\phi_{N+1}=2$ maka tersebut akan berujud menjadi sejumlah $N$ persamaan simultan yang mengandung $N$ variabel yang perlu dicari yaitu $\left\{\phi_1, \phi_2,\dots,\phi_N\right\}$. Sejumlah $N$ persamaan simultan tersebut dapat ditulis dalam bentuk perkalian matrik sebagai
+
+\begin{equation}
+A\,\phi=b
+\end{equation}
+
+Dalam bentuk eksplisit, ungkapan tersebut mengambil bentuk
+
+\begin{equation}
+\left(
+\begin{array}{cccccc} 
+-2&1&0&\ldots&\ldots&0\\
+1&-2&1&0&\ldots&0\\
+\vdots&\vdots&\ddots&\vdots&\vdots&\vdots\\
+\vdots&\vdots&\vdots&\ddots&\vdots&\vdots\\
+\vdots&\ldots&0&1&-2&1\\
+0&\ldots&\ldots&0&1&-2
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+\phi_1\\
+\phi_2\\
+\vdots\\
+\vdots\\
+\phi_{N-1}\\
+\phi_N
+\end{array}
+\right)=
+\left(
+\begin{array}{c}
+-h^2\,r_1\,e^{-r_1}-\phi_0\\
+-h^2\,r_2\,e^{-r_2}\\
+\vdots\\
+\vdots\\
+-h^2\,r_{N-1}\,e^{-r_{N-1}}\\
+-h^2\,r_N\,e^{-r_N}-\phi_{N+1}
+\end{array}
+\right)
+\end{equation}
+
+Berikut adalah \textit{source-code} bagi uraian prosedur komputasi tersebut.
+
+\begin{verbatim}
+rmax = 10.0
+N = 1000
+h = rmax / (N - 1)
+r = collect(range(h, rmax; length=N))
+Phi0 = 0.0
+PhiN1 = 2.0
+Phi_ref = 2.0 . - (2.0 .+ r) .* exp.( -r);
+\end{verbatim}
+
+\begin{verbatim}
+function gen_APhi(N)
+    b1 = ones(N -1)
+    b2 = -2.0 .* ones(N)
+    b3 = ones(N -1)
+    APhi = diagm(1 => b1) + diagm(0 => b2) + diagm( -1 => b3)
+    return APhi
+end
+\end{verbatim}
+
+\begin{verbatim}
+gen_APhi (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function gen_bPhi(N, h, r, Phi0, PhiN1)
+    bPhi = -h^2 .* r .* exp.( -r)
+    bPhi[1] -= Phi0
+    bPhi[N] -= PhiN1
+    return bPhi
+end
+\end{verbatim}
+
+\begin{verbatim}
+gen_bPhi (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+APhi=gen_APhi(N)
+bPhi=gen_bPhi(N,h,r,Phi0,PhiN1);
+\end{verbatim}
+
+\begin{verbatim}
+Phi = APhi \ bPhi;
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,[Phi,Phi_ref],label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"\phi(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/f3597a498d751b05068d52efcd24d223.png}
+
+\begin{verbatim}
+V = Phi ./ r;
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,V,label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"V(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/2bd9c309f8b89d60e4455e9c19a004ba.png}
+
+\subsection{Metode Iterasi Gauss-Seidel}
+
+Sebarang matrik persegi $A$ dapat diungkapkan dalam bentuk berikut.
+
+\begin{equation}
+A=U+L_D
+\end{equation}
+
+dengan
+
+\begin{equation}
+U=\begin{pmatrix}
+0&a_{12}&u_{13}&\cdots&a_{1N}\\
+0&0&\cdots&\cdots&a_{2N}\\
+\vdots&\vdots&\vdots&\vdots&\vdots\\
+0&0&0&\cdots&0
+\end{pmatrix};\quad
+L_D=\begin{pmatrix}
+a_{11}&0&0&\cdots&0\\
+a_{21}&a_{22}\cdots&\cdots&0\\
+\vdots&\vdots&\vdots&\vdots&\vdots\\
+a_{N1}&a_{N2}&a_{N3}&\cdots&a_{NN}
+\end{pmatrix}
+\end{equation}
+
+Dengan demikian penyelesaian persamaan simultan akan berubah menjadi
+
+\begin{equation}
+Av=(U+L_D)v=b; \qquad \mathrm{menjadi}\quad v=L_D^{-1}(b-Uv)
+\end{equation}
+
+\subsubsection{Penyelesaian berdasar bentuk eksplisit persamaan simultan untuk penentuan $V(r)$}
+
+Bentuk persamaan diferensial yang mewakili masalah tersebut dalam koordinat bola pada bagian radial adalah
+
+\begin{equation}
+r\frac{d^2V(r)}{dr^2}+2\frac{dV(r)}{dr}=-re^{-r}
+\end{equation}
+
+Ungkapan $\textit{source -code}$ untuk penyelesaian berdasar metode iterasi Gauss-Seidel adalah seperti berikut.
+
+\begin{verbatim}
+function gauss_seidel(A, b, Iter, V_trial)
+    n = length(b)
+    for _ in 1:Iter
+        for i in 1:n
+            s1 = dot(A[i,1:i -1], V_trial[1:i -1])
+            s2 = dot(A[i,i+1:end], V_trial[i+1:end])
+            V_trial[i] = (b[i] - s1 - s2) / A[i,i]
+        end
+    end
+    return V_trial
+end
+\end{verbatim}
+
+\begin{verbatim}
+gauss_seidel (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+rmax = 10.0
+N = 50
+h = rmax / (N - 1)
+r = range(h, stop=rmax, length=N)
+r0 = 0.0
+rN1 = rmax + h
+V0 = 1.0
+VN1 = 2.0 / rN1
+V_ref = 2.0 ./ r . - (2.0 ./ r .+ 1.0) .* exp.( -r);
+\end{verbatim}
+
+\begin{verbatim}
+A = gen_A(N,r)
+b = gen_b(N,h,r,V0,VN1,r0,rN1);
+\end{verbatim}
+
+\begin{verbatim}
+Iter = 7
+#V_trial = ones(N)
+#V_trial = 1.0 . - 0.08 .* r
+V_trial = 2.0 ./(r .+ 2.0);
+\end{verbatim}
+
+\begin{verbatim}
+V = gauss_seidel(A,b,Iter,V_trial);
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,[V, V_ref],label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"V(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/439f37019c1c7b8fb82cba13473d0403.png}
+
+Nampak bahwa hingga iterasi ke 7 maka hasil nilai coba untuk
+masih menyimpang jauh dibanding nilai rujukan. Namun ketika iterasi dinaikkan hingga 900 kali maka nilai coba untuk
+sudah mulai sesuai dan konvergen pada nilai rujukan.
+
+\begin{verbatim}
+Iter = 300;
+#V_trial = ones(N);
+#V_trial = 1.0 . - 0.08 .* r;
+V_trial = 2.0 ./(r .+ 2.0);
+\end{verbatim}
+
+\begin{verbatim}
+V = gauss_seidel(A,b,Iter,V_trial);
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,[V, V_ref],label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"V(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/84fa6c1926ae67651200fe76f3265c3f.png}
+
+\subsubsection{Penyelesaian berdasar bentuk eksplisit persamaan simultan untuk penentuan $\phi(r)$}
+
+Ungkapan persamaan diferensial dapat dinyatakan dalam bentuk berikut.
+
+\begin{equation}
+\frac{d^2\phi(r)}{dr^2}=-re^{-r}
+\end{equation}
+
+\begin{verbatim}
+rmax = 10.0
+N = 50
+h = rmax / (N - 1)
+r = reshape(collect(range(h, stop=rmax, length=N)), N, 1)
+Phi0 = 0.0
+PhiN1 = 2.0
+Phi_ref = 2.0 . - (2.0 .+ r) .* exp.( -r);
+\end{verbatim}
+
+\begin{verbatim}
+using Random
+
+Iter = 7
+#Phi_trial = 2.0 .* rand(N,1);
+Phi_trial =  ones(N);
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,Phi_trial,xlabel=L"r", ylabel=L"\phi_{trial}(r)", title="Fungsi Coba")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/40bf08627c0ee1eeba3964500595aaf9.png}
+
+\begin{verbatim}
+A = gen_APhi(N)
+b = gen_bPhi(N,h,r,Phi0,PhiN1);
+\end{verbatim}
+
+\begin{verbatim}
+Phi = gauss_seidel(A,b,Iter,Phi_trial);
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,[Phi, Phi_ref],label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"\phi(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/f76ea5d013a481d79c1db8d56e2556ce.png}
+
+Seperti pada komputasi sebelumnya
+, nampak bahwa hingga iterasi ke 7 maka hasil nilai coba untuk
+masih menyimpang jauh dibanding nilai rujukan. Namun ketika iterasi dinaikkan hingga 900 kali maka nilai coba untuk
+sudah mulai sesuai dan konvergen pada nilai rujukan.
+
+\begin{verbatim}
+Iter = 800
+Phi_trial = 2.0 .* rand(N,1);
+#Phi_trial =  ones(N);
+\end{verbatim}
+
+\begin{verbatim}
+50 \times1 Matrix{Float64}:
+ 1.570291671790907
+ 1.0638433205165263
+ 1.4354324705538528
+ 1.5761123639673826
+ 0.8841796918876843
+ 1.8933700368025626
+ 1.476129422010953
+ 1.7370035353176678
+ 1.6598413866191244
+ 1.128757950710294
+ ⋮
+ 0.09826808980255741
+ 1.437382312536897
+ 0.46519320506126505
+ 0.13281398020644164
+ 1.0456996326082266
+ 1.6981288402762222
+ 0.38107607614714434
+ 0.7086351009577123
+ 1.9176327912787687
+\end{verbatim}
+
+\begin{verbatim}
+A = gen_APhi(N)
+b = gen_bPhi(N,h,r,Phi0,PhiN1);
+\end{verbatim}
+
+\begin{verbatim}
+Phi = gauss_seidel(A,b,Iter,Phi_trial);
+\end{verbatim}
+
+\begin{verbatim}
+plot(r,[Phi, Phi_ref],label=["Numerik" "Analitik"],xlabel=L"r", ylabel=L"\phi(r)", title="Penyelesaian Persamaan Poisson")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/965136e84906ea7013b4cd1027fbbeca.png}
+
+\subsection{Penyelesaian dalam Ruang Dua Dimensi (2-D)}
+
+Sebagai gambaran untuk masalah dalam bidang $x -y$ maka diberikan bentuk rapat muatan dengan bentuk berikut
+
+\begin{equation}
+\rho(x,y)=\epsilon e^{-xy}
+\end{equation}
+
+Tinjau masalah untuk menemukan potensial $V(x,y)$ akibat adanya rapat muatan $\rho(x,y)$  pada bidang bentuk persegi panjang di daerah $0\le x\le L_x$ dan $0\le y\le L_y$ sebagai penyelesaian dari persamaan \textit{Poisson} berikut.
+
+\begin{equation}
+\frac{\partial^2 V(x,y)}{\partial x^2}+\frac{\partial^2 V(x,y)}{\partial y^2}=-e^{-xy}
+\end{equation}
+
+Anggap syarat batas yang harus dipenuhi agar didapatkan penyelesaian yang unik adalah berjenis \textit{Derichlet} yaitu nilai $V(x,y)$ sepanjang tepi persegi panjang diketahui sebesar $V(0,y)=V_0, V(L_x,y)=V_0, V(x,0)=V_0$ dan $V(x,L_y)=V_0$.
+
+Membagi persegi panjang ke dalam $N_x\times N_y$ buah kisi yang masing-masing kisis memiliki luas $h_x\times h_y$ sedemikian hingga
+
+\begin{align}
+ x_i&=ih_x;\quad i=0,1,2,\cdots,N_x \\
+ y_j&=jh_y;\quad j=0,1,2,\cdots,N_y
+\end{align}
+
+maka ungkapan beda hingga dari pers{\textasciitilde}(12) adalah
+
+\begin{equation}
+\frac{V_{i-1,j}-2V_{i,j}+V_{i+1,j}}{h_x^2}+
+\frac{V_{i,j-1}-2V_{i,j}+V_{i,j+1}}{h_y^2}=-e^{-x_iy_j}
+\end{equation}
+
+Dalam ungkapan di atas, notasi $V_{i,j}\equiv V(x_i, y_j)$.
+
+\subsubsection{Implementasi Syarat Batas}
+
+\paragraph{Pada titik-titik bagian dalam bidang}
+
+Pada titik-titik kisi yang tidak bersinggungan dengan bagian batas bidang persegi panjang, persamaan tersebut dapat disederhanakan menjadi
+
+\begin{equation}
+h_y^2 V_{i-1,j}+ h_y^2 V_{i+1,j}-2(h_x^2+h_y^2)V_{i,j}+h_x^2 V_{i,j-1}+h_x^2 V_{i,j+1}=-h_x^2 h_y^2 e^{-x_iy_j}
+\end{equation}
+
+Dalam persamaan di atas, $i=2,3,\cdots,N_x -2$ dan  $j=2,3,\cdots,N_y -2$.
+
+\paragraph{Pada titik-titik bagian tepi bidang}
+
+Untuk memenuhi syarat batas maka di dekat bidang batas persegi panjang akan terbentuk persamaan berikut.
+
+\subparagraph{Titik-titik di tepi kiri bidang}
+
+\begin{equation}
+h_y^2 V_{2,j}-2(h_x^2+h_y^2)V_{1,j}+h_x^2 V_{1,j-1}+h_x^2V_{1,j+1}=-h_x^2h_y^2 e^{-x_1y_j}-h_y^2 V_{0,j}
+\end{equation}
+
+\subparagraph{Titik-titik di tepi kanan bidang}
+
+\begin{align}
+h_y^2 V_{N_x-2,j}-2(h_x^2+h_y^2)V_{N_x-1,j}&+h_x^2V_{N_x-1,j-1}+h_x^2V_{N_x-1,j+1}=\\
+&-h_x^2h_y^2 e^{-x_{N_x-1}y_j}-h_y^2V_{N_x,j}
+\end{align}
+
+dengan $j=2,3,\cdots,N_y -2$.
+
+\subparagraph{Titik-titik di tepi bawah bidang}
+
+\begin{equation}
+h_y^2V_{i-1,1}+h_y^2V_{i+1,1}-2(h_x^2+h_y^2)V_{i,1}+h_x^2V_{i,2}=-h_x^2 h_y^2 e^{-x_i y_1}-h_x^2V_{i,0}
+\end{equation}
+
+\subparagraph{Titik-titik di tepi atas bidang}
+
+\begin{align}
+h_y^2V_{i-1,N_y-1}+h_y^2V_{i+1,N_y-1}-2(h_x^2+h_y^2)V_{i,N_y-1}&+h_x^2V_{i,N_y-12}
+=\\
+&-h_x^2 h_y^2 e^{-x_i y_{N_y-1}}-h_x^2V_{i,N_y}
+\end{align}
+
+dengan $i=2,3,\cdots,N_x -2$.
+
+\paragraph{Pada empat titik di pojok bidang}
+
+Adapun pada keempat pojok persegi panjang akan memenuhi persamaan berikut.
+
+\subparagraph{Titik pojok kiri bawah bidang}
+
+\begin{align}
+h_y^2V_{2,1}-2(h_x^2+h_y^2)V_{1,1}+h_x^2V_{1,2}=&-h_x^2 h_y^2 e^{-x_1 y_1}-h_y^2V_{0,1}\\
+&-h_x^2V_{1,0}
+\end{align}
+
+\subparagraph{Titik pojok kanan atas bidang}
+
+\begin{align}
+h_y^2V_{N_x-2,N_y-1}-2(h_x^2+h_y^2)V_{N_x-1,N_y-1}&+h_x^2V_{N_x-1,N_y-2}=-h_x^2 h_y^2 e^{-x_{N_x-1} y_{N_y-1}}
+\\
+&-h_y^2V_{N_x,N_y-1}-h_x^2V_{N_x-1,N_y}
+\end{align}
+
+\subparagraph{Titik pojok kanan bawah bidang}
+
+\begin{align}
+h_y^2V_{N_x-2,1}-2(h_x^2+h_y^2)V_{N_x-1,1}&+h_x^2V_{N_x-1,2}=-h_x^2 h_y^2 e^{-x_{N_x-1} y_1}\\
+&-h_x^2V_{N_x-1,0}-h_y^2V_{N_x,1}
+\end{align}
+
+\subparagraph{Titik pojok kiri atas bidang}
+
+\begin{align}
+h_y^2V_{2,N_y-1}-2(h_x^2+h_y^2)V_{1,N_y-1}+h_x^2V_{1,N_y-2}=
+&-h_x^2 h_y^2 e^{-x_1 y_{N_y-1}}-h_x^2V_{1,N_y}\\
+&-h_y^2V_{0,N_y-1}
+\end{align}
+
+\subsubsection{Ungkapan Operasi Matrik}
+
+Persamaan-persamaan tersebut dapat disederhanakan ke bentuk operasi matrik apabila diperkenalkan matrik kolom $U$ dengan panjang $N_x -1\times N_y -1$ yang berisi gabungan semua baris dari matrik $V_{i,j}$ oleh kaitan
+
+\begin{equation}
+U_k=V_{i,j};\quad\text{dengan}\; k=(i-1)(N_y-1)+j-1
+\end{equation}
+
+dan sebaliknya
+
+\begin{equation}
+i=\text{int}\left(\frac{k}{N_y-1}\right)+1;\quad
+j=(k)\,\text{mod}\,(N_y-1)+1
+\end{equation}
+
+dengan $\text{int}(\dots)$ berarti bilangan bulat dari operasi pembagian tersebut sedang $\text{mod}(\dots)$ adalah sisa dari operasi pembagian.
+
+Dengan penggunaan indek $k$ tersebut maka terbentuk seperangkat persamaan simultan yaitu
+
+\begin{align}
+-2(h_x^2+h_y^2)U_1+h_x^2U_2+h_y^2U_{N_y}=&-h_x^2 h_y^2 e^{-x_1 y_1}\\
+&-h_y^2V_{0,1}-h_x^2V_{1,0}\\
+h_x^2U_1-2(h_x^2+h_y^2)U_2+h_x^2V_3+h_y^2U_{N_y+1}=&-h_x^2 h_y^2 e^{-x_1 y_2}\\
+&-h_y^2V_{0,2}\\
+\vdots=&\vdots\\
+h_y^2U_{k-(N_y-1)}+h_x^2U_{k-1} -2(h_x^2+h_y^2)U_k+h_x^2U_{k+1}+h_y^2U_{k+(N_y-1)}=&-h_x^2 h_y^2 e^{-x_i y_j}\\
+\vdots=&\vdots
+\end{align}
+
+Bentuk tersebut tidak lain adalah bentuk matrik
+
+\begin{equation}
+AU=b,
+\end{equation}
+
+dengan $A$ merupakan matrik pentadiagonal.
+
+\begin{verbatim}
+xmax = 10.0
+ymax = 10.0
+Nx = 10
+Ny = 10
+N = (Nx - 1) * (Ny - 1)
+hx = xmax / Nx
+hy = ymax / Ny
+x = collect(range(0, stop=xmax, length=Nx + 1))
+y = collect(range(0, stop=ymax, length=Ny + 1))
+V = zeros(Nx + 1, Ny + 1);
+\end{verbatim}
+
+\begin{verbatim}
+function gen_A(Nx, Ny, hx, hy)
+    N = (Nx - 1) * (Ny - 1)
+    A = zeros(N, N)
+
+    for i in 1:Nx -1
+        for j in 1:Ny -1
+            k = (i - 1) * (Ny - 1) + (j - 1)
+
+            if i == 1
+                if j == 1
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+2] = hx^2
+                    A[k+1, k+1 + (Ny - 1)] = hy^2
+                elseif j == Ny - 1
+                    A[k+1, k] = hx^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+1 + (Ny - 1)] = hy^2
+                else
+                    A[k+1, k] = hx^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+2] = hx^2
+                    A[k+1, k+1 + (Ny - 1)] = hy^2
+                end
+            elseif i == Nx - 1
+                if j == 1
+                    A[k+1, k+1 - (Ny - 1)] = hy^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+2] = hx^2
+                elseif j == Ny - 1
+                    A[k+1, k+1 - (Ny - 1)] = hy^2
+                    A[k+1, k] = hx^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                else
+                    A[k+1, k+1 - (Ny - 1)] = hy^2
+                    A[k+1, k] = hx^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+2] = hx^2
+                end
+            else
+                if j == 1
+                    A[k+1, k+1 - (Ny - 1)] = hy^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+2] = hx^2
+                    A[k+1, k+1 + (Ny - 1)] = hy^2
+                elseif j == Ny - 1
+                    A[k+1, k+1 - (Ny - 1)] = hy^2
+                    A[k+1, k] = hx^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+1 + (Ny - 1)] = hy^2
+                else
+                    A[k+1, k+1 - (Ny - 1)] = hy^2
+                    A[k+1, k] = hx^2
+                    A[k+1, k+1] = -2.0 * (hx^2 + hy^2)
+                    A[k+1, k+2] = hx^2
+                    A[k+1, k+1 + (Ny - 1)] = hy^2
+                end
+            end
+        end
+    end
+
+    return A
+end
+\end{verbatim}
+
+\begin{verbatim}
+gen_A (generic function with 2 methods)
+\end{verbatim}
+
+\begin{verbatim}
+A=gen_A(Nx,Ny,hx,hy);
+\end{verbatim}
+
+\begin{verbatim}
+function gen_b(Nx, Ny, hx, hy, x, y, V)
+    N = (Nx - 1) * (Ny - 1)
+    b = zeros(N)
+
+    for i in 1:Nx -1
+        for j in 1:Ny -1
+            k = (i - 1) * (Ny - 1) + (j - 1)
+
+            if i == 1
+                if j == 1
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hy^2 * V[i, j+1] - hx^2 * V[i+1, j]
+                elseif j == Ny - 1
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hy^2 * V[i, j+1] - hx^2 * V[i+1, j+2]
+                else
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hy^2 * V[i, j+1]
+                end
+            elseif i == Nx - 1
+                if j == 1
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hy^2 * V[i+2, j+1] - hx^2 * V[i+1, j]
+                elseif j == Ny - 1
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hy^2 * V[i+2, j+1] - hx^2 * V[i+1, j+2]
+                else
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hy^2 * V[i+2, j+1]
+                end
+            else
+                if j == 1
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hx^2 * V[i+1, j]
+                elseif j == Ny - 1
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1]) - hx^2 * V[i+1, j+2]
+                else
+                    b[k+1] = -hx^2 * hy^2 * exp( -x[i+1] * y[j+1])
+                end
+            end
+        end
+    end
+
+    return b
+end
+\end{verbatim}
+
+\begin{verbatim}
+gen_b (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+b=gen_b(Nx, Ny, hx, hy, x, y, V);
+\end{verbatim}
+
+\begin{verbatim}
+using UnicodePlots
+UnicodePlots.spy(A)
+\end{verbatim}
+
+\begin{verbatim}
+┌──────────────────────────────┐    
+    1 │⠻⣦⡀⠉⠦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│ > 0
+      │⡄⠈⠛⣤⡀⠑⢢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│ < 0
+      │⠈⠣⢄⠈⠻⣦⡀⠉⠦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠈⠒⡄⠈⠱⣦⡀⠘⢢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠈⠣⣀⠈⠻⣦⡀⠉⢆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠈⠒⡄⠈⠻⣦⡀⠘⠢⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠈⠱⣀⠈⠛⣤⡀⠉⢆⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠢⡄⠈⠻⣦⡀⠘⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠱⣀⠈⠻⣦⡀⠉⢆⡀⠀⠀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠣⡄⠈⠻⢆⡀⠘⠤⡀⠀⠀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠱⣀⠈⠻⣦⡀⠉⢢⡀⠀⠀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠣⡄⠈⠛⣤⡀⠘⠤⡀⠀⠀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠲⣀⠈⠻⣦⠀⠑⢢⡀│    
+      │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠣⢄⠀⠻⣦⡀⠀│    
+   81 │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠲⠀⠈⠻⠆│    
+      └──────────────────────────────┘    
+      ⠀1⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀81⠀    
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀369 \neq 0⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+\end{verbatim}
+
+\begin{verbatim}
+k = 12
+i = div(k, Ny - 1) + 1
+j = mod(k, Ny - 1) + 1;
+\end{verbatim}
+
+\begin{verbatim}
+i
+\end{verbatim}
+
+\begin{verbatim}
+1
+\end{verbatim}
+
+\begin{verbatim}
+j
+\end{verbatim}
+
+\begin{verbatim}
+13
+\end{verbatim}
+
+\begin{verbatim}
+U = A \ b;
+\end{verbatim}
+
+\begin{verbatim}
+for k in 0:N -1
+    i = div(k, Ny - 1) + 1
+    j = mod(k, Ny - 1) + 1
+    V[i, j] = U[k + 1]
+end
+\end{verbatim}
+
+\begin{verbatim}
+using Plots
+pyplot()  # or use `pyplot()` if you prefer matplotlib -style
+
+# Assuming x, y, and v are already defined
+X = repeat(x', length(y), 1)
+Y = repeat(y, 1, length(x))
+Z = V  # v should be a matrix of size (length(y), length(x))
+
+# Create the surface plot
+plot(
+    X, Y, Z,
+    st = :surface,
+    xlabel = "x",
+    ylabel = "y",
+    zlabel = "V",
+    c = :cividis,
+    colorbar = true,
+    size = (800, 700)
+)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/36b1872a88adec1e94eef00dbcd93d62.png}

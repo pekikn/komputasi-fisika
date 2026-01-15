@@ -1,0 +1,1261 @@
+\section{Penyelesaian Persamaan Schrodinger}
+
+\subsection{Implementasi Metode Beda Hingga (\textit{Finite Difference})}
+
+Pendekatan beda hingga (\textit{finte difference}) bagi bentuk turunan kedua suatu fungsi pada titik $x_i$ diberikan oleh ungkapan
+
+\begin{equation}
+\left. \frac{d^2f}{dx^2}\right]_{x=x_i}\approx \frac{f_{i-1}-2f_i+f_{i+1}}{(\Delta x)^2}
+\end{equation}
+
+dengan
+
+\begin{equation}
+f_i\equiv f(x_i);\qquad \Delta x=x_{i+1}-x_i=\frac{x_N-x_0}{N};\qquad x_i=x_0+i\Delta x; \qquad i=1,2,3,\cdots,N
+\end{equation}
+
+Bentuk umum persamaan Schrodinger bagi suatu sistem dengan potensial $V(x)$ disajikan dalam bentuk
+
+\begin{equation}
+-\frac{\hbar^2}{2m}\frac{d^2\psi(x)}{dx^2}+V(x)\psi(x)=E\psi(x)
+\end{equation}
+
+Dalam satuan universal, persamaan Schrodinger di atas dapat ditulis dalam bentuk
+
+\begin{equation}
+-\frac{d^2\psi}{dr^2}+\gamma(r)\psi=\epsilon\psi
+\end{equation}
+
+Dengan pendekatan beda hingga tersebut maka persamaan Schrodinger pada posisi $x_i$ akan dapat disajikan sebagai ungkapan persamaan beda hingga dalam bentuk
+
+\begin{equation}
+-\left[\frac{\psi_{i-1}-2\psi_i+\psi_{i+1}}{(\Delta r)^2}\right]+\gamma_i\psi_i=\epsilon\psi_i
+\end{equation}
+
+dengan $\gamma_i\equiv \gamma(r_i)$ dan $\psi_i\equiv \psi(r_i)$.
+
+Dalam ungkapan tersebut, diambil $a$ sebagai faktor skala dalam peubah posisi $x$ sehingga satuan universal dapat dinyatakan dalam bentuk berikut
+
+\begin{equation}
+r=\frac{x}{a};\qquad \gamma(r)=\frac{2ma^2V(x)}{\hbar^2};\qquad \epsilon=\frac{2ma^2E}{\hbar^2}
+\end{equation}
+
+Ungkapan tersebut dapat disajikan dalam bentuk lain yaitu
+
+\begin{equation}
+-\psi_{i-1}+\left[2+(\Delta r)^2\gamma_i-(\Delta r)^2\epsilon\right]\psi_i-\psi_{i+1}=0
+\end{equation}
+
+Bentuk syarat batas diambil bahwa nilai fungsi gelombang di $x_0$ dan $x_N$ adalah $\psi_0=0$ dan $\psi_N=0$. Dengan informasi ini maka persamaan beda hingga yang mewakili persamaan Schrodinger  akan dapat disajikan dalam bentuk matrik yaitu
+
+\begin{equation}
+\begin{pmatrix}
+  2+(\Delta r)^2\gamma_1-(\Delta r)^2\epsilon & -1 & \cdots & 0 \\
+  -1 & 2+(\Delta r)^2\gamma_2-(\Delta r)^2\epsilon & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & 0 & \cdots & 2+(\Delta r)^2\gamma_{N-1}-(\Delta r)^2\epsilon
+ \end{pmatrix}\begin{pmatrix}
+  \psi_1\\
+  \psi_2\\
+  \vdots\\
+  \psi_{N-1}
+ \end{pmatrix}=\begin{pmatrix}
+  0\\
+  0\\
+  \vdots\\
+  0
+ \end{pmatrix}
+\end{equation}
+
+\subsection{Diagonalisasi Matrik: Penyelesaian Masalah Nilai \textit{Eigen}}
+
+Bentuk operasi matrik seperti diberikan oleh ungkapan di atas merupakan bentuk masalah nilai \textit{eigen} dengan nilai \textit{eigen} adalah $\epsilon$ dan fungsi \textit{eigen} diwakili oleh suatu matrik kolom yang memiliki unsur matrik pada baris ke $i$ berupa nilai fungsi gelombang pada posisi $x_i$ yaitu $\psi_i$.
+
+Tinjau suatu fungsi \textit{eigen} ke $j$, yaitu $\psi_j$, yang berkaitan dengan nilai \textit{eigen} $(\Delta r)^2\epsilon_j$ dan memenuhi masalah nilai \textit{eigen} $A\psi_j=(\Delta r)^2\epsilon_j\psi_j$ dalam bentuk berikut:
+
+\begin{equation}
+\underbrace{\begin{pmatrix}
+  2+(\Delta r)^2\gamma_1 & -1 & \cdots & 0 \\
+  -1 & 2+(\Delta r)^2\gamma_2 & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & 0 & \cdots & 2+(\Delta r)^2\gamma_{N-1}
+ \end{pmatrix}}_{A}
+ \underbrace{\begin{pmatrix}
+  \psi_{1,j}\\
+  \psi_{2,j}\\
+  \vdots\\
+  \psi_{N-1,j}
+ \end{pmatrix}}_{\psi_j}=(\Delta r)^2\epsilon_j
+  \underbrace{ \begin{pmatrix}
+  \psi_{1,j}\\
+  \psi_{2,j}\\
+  \vdots\\
+  \psi_{N-1,j}
+ \end{pmatrix}}_{\psi_j}
+\end{equation}
+
+Berdasar ungkapan matrik tersebut maka dapat ditunjukkan bahwa untuk semua pasangan fungsi \textit{eigen} $\psi_j$ dan nilai \textit{eigen} $\epsilon_j$ dengan $j=1,2\cdots,N -1$ akan berlaku ungkapan matrik berikut.
+
+\begin{align}
+&\underbrace{\begin{pmatrix}
+  2+(\Delta r)^2\gamma_1 & -1 & \cdots & 0 \\
+  -1 & 2+(\Delta r)^2\gamma_2 & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & 0 & \cdots & 2+(\Delta r)^2\gamma_{N-1}
+ \end{pmatrix}}_{A}
+ \underbrace{\begin{pmatrix}
+  \psi_{1,1}&\cdots & \psi_{1,N-1}\\
+  \psi_{2,1}&\cdots & \psi_{2,N-1} \\
+  \vdots &\ddots & \vdots\\
+  \psi_{N-1,1}&\cdots & \psi_{N-1,N-1} 
+ \end{pmatrix}}_{P}=\nonumber\\ 
+ &\underbrace{\begin{pmatrix}
+ \psi_{1,1}&\cdots & \psi_{1,N-1}\\
+  \psi_{2,1}&\cdots & \psi_{2,N-1} \\
+  \vdots &\ddots & \vdots\\
+  \psi_{N-1,1}&\cdots & \psi_{N-1,N-1}  
+ \end{pmatrix}}_{P}
+\underbrace{ \begin{pmatrix}
+  (\Delta r)^2\epsilon_1 & 0 & \cdots & 0 \\
+  0 & (\Delta r)^2\epsilon_2 & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & 0 & \cdots & (\Delta r)^2\epsilon_{(N-1)} \end{pmatrix}}_{D}
+\end{align}
+
+Ungkapan matrik $AP=PD$ dalam persamaan tersebut akan dapat ditulis dalam bentuk
+
+\begin{equation}
+P^{-1}AP=D\qquad\text{atau }\qquad A=PD P^{-1}
+\end{equation}
+
+Ungkapan seperti diberikan oleh pers (8) disebut sebagai proses diagonalisasi matrik, yaitu suatu proses untuk mengubah sebarang bentuk matrik $A$ ke wakilan matrik diagonal $D$ dan sebaliknya.
+
+Dapat dipahami oleh ungkapan matrik yang mewakili persamaan Schrodinger di atas bahwa proses diagonalisasi matrik akan dapat diperoleh apabila nilai-nilai \textit{eigen} beserta fungsi \textit{eigen} yang terkait telah tersedia. Nilai-nilai \textit{eigen} akan digunakan untuk mengisi unsur-unsur diagonal pada matrik diagonal $D$, sedangkan fungsi-fungsi \textit{eigen} akan digunakan untuk mengisi tiap kolom pada matrik $P$.
+
+Pemahaman sebaliknya juga berlaku bahwa apabila proses diagonalisasi matrik telah diperoleh maka nilai-nilai \textit{eigen} beserta fungsi \textit{eigen} yang terkait akan dapat diperoleh.
+
+Dengan kata lain, pencarian masalah nilai eigen serta proses digonalisasi matrik dapat dipahami sebagai proses yang setara.
+
+\subsubsection{Pencarian nilai \textit{eigen} untuk matrik tri-diagonal}
+
+Untuk bentuk matrik tri-diagonal seperti diuraikan sebelumnya, proses untuk memperoleh nilai \textit{eigen} dapat dilakukan dengan prosedur pencarian titik nol, yaitu menjamin agar determinan matrik adalah nol dalam bentuk
+
+\begin{equation}
+\begin{vmatrix}
+  2+(\Delta r)^2\gamma_1-(\Delta r)^2\epsilon & -1 & \cdots & 0 \\
+  -1 & 2+(\Delta r)^2\gamma_2-(\Delta r)^2\epsilon & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & 0 & \cdots & 2+(\Delta r)^2\gamma_{N-1}-(\Delta r)^2\epsilon
+ \end{vmatrix}=0
+\end{equation}
+
+Determinan $d_n$ bagi sebarang bentuk matrik tri-diagonal berorde $n$ disajikan dalam bentuk berikut:
+
+\begin{equation}
+d_n=\begin{vmatrix}
+  a_1 & b_1 & \cdots & 0 \\
+  c_1 & a_2 & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & \cdots & c_{n-1} & a_n
+ \end{vmatrix}
+\end{equation}
+
+Dapat ditunjukkan bahwa determinan tersebut memiliki sifat yang memenuhi kaitan rekurensi yang melibatkan unsur-unsur matrik $a_i$, $b_i$ dan $c_i$ dalam bentuk:
+
+\begin{equation}
+d_n=a_n d_{n-1}-c_{n-1}b_{n-1}d_{n-2};\qquad\text{dengan } n\text{ adalah orde matrik}
+\end{equation}
+
+Proses rekurensi dapat dimulai dengan nilai awal $d_1=a_1$ dan $d_2=a_1a_2 -b_1c_1$.
+
+Dengan memanfaatkan sifat rekurensi bagi determinan suatu matrik tri-diagonal tersebut maka nilai-nilai \textit{eigen} akan dapat diperoleh berdasar pencarian titik nol berdasar metode Bisection atau metode Newton-Raphson berdasar ungkapan
+
+\begin{equation}
+f(\epsilon)=d_n(\epsilon)=0
+\end{equation}
+
+Untuk sistem kuantum yang sedang ditinjau di atas maka unsur-unsur matrik akan diberikan oleh ungkapan
+
+\begin{align*}
+a_i&=2+(\Delta r)^2\gamma_i-(\Delta r)^2\epsilon;\quad\text{untuk}\quad i=1,2,\cdots,n\\
+b_i&=-1;\qquad \text{dan} \qquad c_i=-1;\quad{untuk}\quad i=1,2,\cdots,(n-1)
+\end{align*}
+
+\subsubsection{Pencarian fungsi \textit{eigen} untuk matrik tri-diagonal}
+
+Tinjau penyelesaian seperangkat persamaan simultan untuk matrik tri-diagonal dalam bentuk berikut
+
+\begin{equation}
+\begin{pmatrix}
+  a_1 & b_1 & \cdots & 0 \\
+  c_1 & a_2 & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & \cdots & c_{n-1} & a_n
+ \end{pmatrix}\begin{pmatrix}
+  x_1 \\
+  x_2 \\
+  \vdots  \\
+  x_n  
+ \end{pmatrix}=\begin{pmatrix}
+  y_1 \\
+  y_2 \\
+  \vdots  \\
+  y_n  
+ \end{pmatrix}
+\end{equation}
+
+Ungkapan tersebut dapat diubah ke bentuk yang setara, dengan menerapkan langkah eliminasi bagi seluruh unsur $c_i$, sehingga setelah tercapai langkah pengubahan nilai nol bagi unsur $c_i$ maka didapatkan operasi yang melibatkan matrik segitiga atas (\textit{upper triangular matrix}) dalam bentuk
+
+\begin{equation}
+\begin{pmatrix}
+  a^{'}_1 & b_1 & \cdots & 0 \\
+  0 & a^{'}_2 & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & \cdots & 0 & a^{'}_n
+ \end{pmatrix}\begin{pmatrix}
+  x_1 \\
+  x_2 \\
+  \vdots  \\
+  x_n  
+ \end{pmatrix}=\begin{pmatrix}
+  y^{'}_1 \\
+  y^{'}_2 \\
+  \vdots  \\
+  y^{'}_n  
+ \end{pmatrix}
+\end{equation}
+
+Dengan bentuk seperangkat persamaan simultan yang setara tersebut maka penyelesaian bagi $x_i$ dapat diperoleh melalui proses substitusi balik.
+
+Berikut merupakan beberapa langkah untuk implementasi penyelesaian seperangkat persamaan simultan bagi matrik tri-diagonal tersebut.
+
+\paragraph{Untuk $a^{'}_1=a_1; y^{'}_1=y_1$ dan $i=2,3,\cdots,n$ lakukan}
+
+\begin{align*}
+ w &= \frac{c_{i-1}}{a^{'}_{i-1}}\\
+ a^{'}_i&=a_i - wb_{i-1}\\
+ y^{'}_i&=y_i - wy^{'}_{i-1}
+\end{align*}
+
+Dengan ungkapan tersebut maka penyelesaian seperangkat persamaan simultan berdasar proses substitusi balik berbentuk
+
+\begin{align}
+x_n&=\frac{y^{'}_n}{a^{'}_n}\\
+x_i&=\frac{y^{'}_i-b_i x_{i+1}}{a^{'}_i};\qquad i=(n-1),(n-2),\dots,1
+\end{align}
+
+Berdasar langkah di atas maka penyelesaian untuk masalah nilai eigen akan memberikan hasil trivial karena $x_i=0$ untuk $i=1,2,\cdots,n$. Penyelesian tak trivial dapat diatasi dengan tidak mnenyertakan baris atau persamaan ke $n$ sehingga $x_n$ akan bernilai sebarang, dan untuk kemudahan proses komputasi maka sementara dapat dipilih nilai $x_n=1$. Karena nilai $x_i$ untuk $i=(n -1), (n -2), \cdots,1$ merupakan kelipatan dari $x_n$ maka nilai sebarang $x_n$ nantinya dapat ditentukan berdasar syarat normalisir bahwa
+
+\begin{equation}
+\sum_{i=1}^n x_i^2=\left(x_1^2+x_2^2+\cdots+1^2\right)x_n^2=1\quad\Longrightarrow\quad x_n=\frac{1}{\sqrt{x_1^2+x_2^2+\cdots+1^2}}
+\end{equation}
+
+Berdasar langkah yang dijelaskan di atas maka prosedur untuk memperoleh fungsi gelombang yang merupakan fungsi eigen adalah sebagai berikut:
+
+\begin{enumerate}
+\item Berikan nilai eigen yaitu $\epsilon$ yang terkait dengan fungsi eigen yang akan tentukan.
+\item Untuk memulai proses komputasi, ambil $\psi_{N -1}=1$
+\item Dengan tidak menyertakan baris ke $(N -1)$ maka seperangkat $N -2$ persamaan simultan akan berbentuk
+\end{enumerate}
+
+\begin{equation}
+\begin{pmatrix}
+  2+(\Delta r)^2\gamma_1-(\Delta r)^2\epsilon & -1 & \cdots & 0 \\
+  -1 & 2+(\Delta r)^2\gamma_2-(\Delta r)^2\epsilon & \cdots & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 & 0 & \cdots & 2+(\Delta r)^2\gamma_{N-2}-(\Delta r)^2\epsilon
+ \end{pmatrix}\begin{pmatrix}
+  \psi_1\\
+  \psi_2\\
+  \vdots\\
+  \psi_{N-2}
+ \end{pmatrix}=\begin{pmatrix}
+  0\\
+  0\\
+  \vdots\\
+  \psi_{N-1}
+ \end{pmatrix}
+\end{equation}
+
+\begin{enumerate}[resume]
+\item Setelah $\psi_1, \cdots, \psi_{N -2}$ diperoleh berdasar langkah untuk implementasi penyelesaian seperangkat persamaan simultan bagi matrik tri-diagonal di atas maka fungsi gelombang ternormalisir yang berpadanan dengan nilai tenaga $\epsilon$ diperoleh melalui kaitan
+\end{enumerate}
+
+\begin{equation}
+\psi_i=\frac{\psi_i}{\sqrt{\psi_1^2+\psi_2^2+\cdots+1^2}};\qquad i=1,2,\cdots,(N-1)
+\end{equation}
+
+\subsubsection{Sumur Potensial Tak Berhingga}
+
+Untuk sistem sumur potensial tak berhingga maka partikel tidak mampu menerobos dinding sumur sehingga fungsi gelombang hanya berada di dalam sumur. Untuk itu dapat dipilih syarat batas $\psi_0=0$ dan $\psi_N=0$ masing-masing di $r_0= -1$ (atau $x_0= -a$) dan $r_N=1$ (atau $x_N=a$). Karena di dalam sumur berlaku $V(x)=0$ untuk $-a<x<a$ maka diperoleh paramater $\gamma_i=0$ untuk $i=1,2,\cdots,N -1$. Dengan demikian, unsur-unsur matrik tri-diagonal berbentuk
+$a_i=2 -(\Delta r)^2\epsilon$ untuk $i=1,2,\cdots,N -1$ sedangkan $b_i= -1$ dan $c_i= -1$ untuk $i=1,2,\cdots,N -2$.
+
+Tingkat-tingkat tenaga bagi sistem akan dapat diperoleh berdasar kaitan
+
+\begin{equation}
+E = \frac{\hbar^2 \epsilon}{2ma^2}; \qquad \text{untuk potensial}\qquad V(r)=\frac{\hbar^2 \gamma(r)}{2ma^2}
+\end{equation}
+
+Implementasi ungkapan di atas dalam bentuk \textit{source-code} dapat dilihat seperti di bawah.
+
+\begin{verbatim}
+using LinearAlgebra
+using Plots
+using LaTeXStrings
+
+# - - - - Functions - - - -
+function fung(epsilon, N)
+    dx = 2.0 / N
+    d1 = 2.0 - epsilon * dx^2
+    d2 = (2.0 - epsilon * dx^2)^2 - 1.0
+    b = -1.0
+    c = -1.0
+    a = 2.0 - epsilon * dx^2
+    dn = d2
+    for i in 2:(N -1)             
+        dn = a * d2 - b * c * d1
+        d1, d2 = d2, dn
+    end
+    return dn
+end
+
+function eigval_bisec(epsilon1, epsilon2, N)
+    delta = 1e -4
+    ralat = 0.1
+    epsilonm = (epsilon1 + epsilon2) / 2.0
+    while ralat > delta
+        epsilonm = (epsilon1 + epsilon2) / 2.0
+        f1f2 = fung(epsilon1, N) * fung(epsilonm, N)
+        if f1f2 < 0.0
+            epsilon2 = epsilonm
+        else
+            epsilon1 = epsilonm
+        end
+        ralat = abs((epsilon2 - epsilon1) / epsilon2)
+    end
+    return epsilonm
+end
+
+function eigvec_tridiag(epsilon, N)
+    dx = 2.0 / N
+    a = 2.0 - epsilon * dx^2
+    b = -1.0
+    c = -1.0
+
+    d = fill(a, N -2)              # main diagonal
+    e = fill( -1.0, N -3)           # subdiagonal (also superdiagonal)
+    f = zeros(N -2)                # RHS
+    f[end] = 1.0
+
+    # Forward elimination (Thomas algorithm for tridiagonal)
+    for i in 2:(N -2)              # Python: range(2, N -1)
+        m = e[i -1] / d[i -1]
+        d[i] -= m * b
+        f[i] -= m * f[i -1]
+    end
+
+    # Back substitution
+    v = zeros(N -1)
+    v[N -2] = f[N -2] / d[N -2]
+    v[N -1] = 1.0
+    s = v[N -1]^2 + v[N -2]^2
+    for i in (N -3): -1:1           # Python: range(N -4, -1, -1)
+        v[i] = (f[i] - b * v[i+1]) / d[i]
+        s += v[i]^2
+    end
+
+    v ./= sqrt(s)                 # normalize
+    return v
+end
+\end{verbatim}
+
+\begin{verbatim}
+eigvec_tridiag (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+# - - - - Parameters & evaluation - - - -
+N = 500
+m = 100
+epsilon_vals = range(1.0, 10.0, length=m)
+fe = [fung( \epsilon, N) for \epsilon in epsilon_vals];
+\end{verbatim}
+
+\begin{verbatim}
+plot(epsilon_vals, fe;
+     xlabel=L"\epsilon",
+     ylabel=L"f(\epsilon)",
+     title="Fungsi untuk Tenaga",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/06c22cf6799381b529bb32f27b996757.png}
+
+\begin{verbatim}
+# - - - - Root via bisection - - - -
+epsilon_root = eigval_bisec(2.0, 4.0, N)
+println(epsilon_root)
+\end{verbatim}
+
+\begin{verbatim}
+2.457763671875
+\end{verbatim}
+
+\begin{verbatim}
+# - - - - Eigenvector and plot - - - -
+y = range( -1.0, 1.0, length=N -1)
+v = eigvec_tridiag(epsilon_root, N);
+\end{verbatim}
+
+\begin{verbatim}
+plot(y, v;
+     xlabel=L"y",
+     ylabel=L"\psi(y)",
+     title="Fungsi Gelombang",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/7930415e461036b0388d54bc5ca8900c.png}
+
+\subsubsection{Sumur Potensial Berhingga}
+
+Untuk sistem sumur potensial berhingga maka partikel mampu menerobos dinding sumur sehingga fungsi gelombang tidak hanya berada di dalam sumur. Untuk itu perlu dijamin agar syarat batas $\psi_0=0$ dan $\psi_N=0$ dapat terpenuhi pada posisi $r_0$  dan $r_N$. Karena kedua posisi batas tersebut belum diketahui, maka dapat dicoba pada berbagai posisi yang jauh dari dinding sumur. Berdasarkan intuisi maka dapat diperkirakan bahwa terobosan kuantum akan semakin terasa ketika tenaga sistem besar. Sebagai contoh, untuk tenaga dasar (\textit{ground-state}) maka dapat dicoba pada posisi $x_0\approx -1.2$ dan $x_N\approx 1.2$ dan kemudian untuk tenaga eksitasi pertama maka dapat dicoba pada posisi $x_0\approx -1.6$ dan $x_N\approx 1.6$.
+
+Berbeda dengan sistem sumur potensial tak berhingga yang memiliki nilai $\gamma_i=0$ untuk $i=1,2,\cdots,N$, untuk sistem sumur potensial berhingga berlaku
+
+\begin{align}
+\gamma(r)&=\frac{2ma^2V_0}{\hbar^2}=\gamma;&-\infty<r<-1\nonumber\\
+&=0;&-1<r<1\nonumber\\
+&=\frac{2ma^2V_0}{\hbar^2}=\gamma;&1<r<\infty
+\end{align}
+
+Dengan demikian, unsur-unsur matrik tri-diagonal berbentuk
+$a_i=2+(\Delta r)^2\gamma_i -(\Delta r)^2\epsilon$ untuk $i=1,2,\cdots,N -1$ sedangkan $b_i= -1$ dan $c_i= -1$ untuk $i=1,2,\cdots,N -2$.
+
+Tingkat-tingkat tenaga bagi sistem akan dapat diperoleh berdasar kaitan
+
+\begin{equation}
+E = \frac{\hbar^2 \epsilon}{2ma^2}; \qquad \text{untuk potensial}\qquad V(r)=\frac{\hbar^2 \gamma(r)}{2ma^2}
+\end{equation}
+
+Implementasi ungkapan di atas dalam bentuk \textit{source-code} dapat dilihat seperti di bawah.
+
+\begin{verbatim}
+function observ(v0, rmak, rmin, dr, N)
+    r = zeros(N -1)
+    gamma = zeros(N -1)
+    for i in 1:(N -1)
+        r[i] = dr * i + rmin
+        if r[i] <= -1.0 || r[i] >= 1.0
+            gamma[i] = v0
+        else
+            gamma[i] = 0.0
+        end
+    end
+    return r, gamma
+end
+\end{verbatim}
+
+\begin{verbatim}
+observ (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function fung_gamma(epsilon, dr, gamma, N)
+    a = zeros(N -1)
+    b = zeros(N -2)
+    c = zeros(N -2)
+    for i in 1:(N -1)
+        a[i] = 2.0 + gamma[i] * dr^2 - epsilon * dr^2
+    end
+    for i in 1:(N -2)
+        b[i] = -1.0
+        c[i] = -1.0
+    end
+    d1 = a[1]
+    d2 = a[2] * d1 - b[1] * c[1]
+    dn = 0.0
+    for i in 3:(N -1)            
+        dn = a[i] * d2 - b[i -1] * c[i -1] * d1
+        d1, d2 = d2, dn
+    end
+    return dn
+end
+\end{verbatim}
+
+\begin{verbatim}
+fung_gamma (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function eigval_bisec(epsilon1, epsilon2, dr, gamma, N)
+    delta = 1e -4
+    ralat = 0.1
+    epsilonm = (epsilon1 + epsilon2) / 2.0
+    while ralat > delta
+        epsilonm = (epsilon1 + epsilon2) / 2.0
+        f1f2 = fung_gamma(epsilon1, dr, gamma, N) * fung_gamma(epsilonm, dr, gamma, N)
+        if f1f2 < 0.0
+            epsilon2 = epsilonm
+        else
+            epsilon1 = epsilonm
+        end
+        ralat = abs((epsilon2 - epsilon1) / epsilon2)
+    end
+    return epsilonm
+end
+\end{verbatim}
+
+\begin{verbatim}
+eigval_bisec (generic function with 2 methods)
+\end{verbatim}
+
+\begin{verbatim}
+function eigvec_tridiag(epsilon, dr, gamma, N)
+    d = zeros(N -2)
+    e = zeros(N -3)
+    b = zeros(N -3)
+    for i in 1:(N -2)
+        d[i] = 2.0 + gamma[i] * dr^2 - epsilon * dr^2
+    end
+    for i in 1:(N -3)
+        e[i] = -1.0
+        b[i] = -1.0
+    end
+    f = zeros(N -2)            
+    f[end] = 1.0
+
+    # Forward elimination (Thomas algorithm for tridiagonal)
+    for i in 2:(N -2)             
+        m = e[i -1] / d[i -1]
+        d[i] -= m * b[i -1]
+        f[i] -= m * f[i -1]
+    end
+
+    # Back substitution
+    v = zeros(N -1)
+    v[N -2] = f[N -2] / d[N -2]
+    v[N -1] = 1.0
+    s = v[N -1]^2 + v[N -2]^2
+    for i in (N -3): -1:1         
+        v[i] = (f[i] - b[i] * v[i+1]) / d[i]
+        s += v[i]^2
+    end
+
+    v ./= sqrt(s)                 # normalize
+    return v
+end
+\end{verbatim}
+
+\begin{verbatim}
+eigvec_tridiag (generic function with 2 methods)
+\end{verbatim}
+
+\begin{verbatim}
+# - - - - Parameters & evaluation - - - -
+N = 500
+m = 100
+rmak = 1.2
+rmin = -rmak
+dr = (rmak - rmin) / N
+v0 = 50.0
+r = zeros(N -1)
+gamma = zeros(N -1)
+r, gamma = observ(v0, rmak, rmin, dr, N)
+epsilon = range(1.0, 10.0, length=m)
+fe = zeros(m)
+for i in 1:m
+    fe[i] = fung_gamma(epsilon[i], dr, gamma, N)
+end
+\end{verbatim}
+
+\begin{verbatim}
+plot(r, gamma;
+     xlabel=L"r",
+     ylabel=L"\gamma",
+     title="Potensial",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/ede7c90d14266b075810d70077ba7bca.png}
+
+\begin{verbatim}
+plot(epsilon, fe;
+     xlabel=L"\epsilon",
+     ylabel=L"f(\epsilon)",
+     title="Fungsi untuk Tenaga",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/bed48c19b6708a96d5f45df56b654a56.png}
+
+\begin{verbatim}
+# - - - - Root via bisection - - - -
+epsilon = eigval_bisec(7.0, 8.0, dr, gamma, N)
+println(epsilon)
+\end{verbatim}
+
+\begin{verbatim}
+7.76123046875
+\end{verbatim}
+
+\begin{verbatim}
+# - - - - Eigenvector and plot - - - -
+v = eigvec_tridiag(epsilon, dr, gamma, N);
+vabs = v .^ 2;
+\end{verbatim}
+
+\begin{verbatim}
+plot(r, vabs;
+     xlabel=L"y",
+     ylabel=L"\psi(y)",
+     title="Fungsi Gelombang",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/8c8e291dcb5506da954de773262df40f.png}
+
+\subsubsection{Sumur Bertanggul Potensial}
+
+Mirip seperti sistem sumur potensial berhingga di atas maka untuk sistem dengan potensial berbentuk sumur bertanggul maka partikel mampu menerobos dinding sumur sehingga fungsi gelombang tidak hanya berada di dalam sumur. Sebagai tambahan maka partikel di dalam sumur juga berpotensi mengalami terobosan kuantum saat mengenai tanggul potensial.
+
+Dengan melakukan modifikasi pada sistem sumur potensial berhingga, untuk sistem dengan potensial berbentuk sumur bertanggul berlaku
+
+\begin{align}
+\gamma(r)&=\frac{2ma^2V_0}{\hbar^2}=\gamma;&-\infty<r<0\nonumber\\
+&=0;&0<r<\rho\nonumber\\
+&=\frac{2ma^2V_1}{\hbar^2}=\beta;&\rho<r<1\nonumber\\
+&=\frac{2ma^2V_0}{\hbar^2}=\gamma;&1<r<\infty
+\end{align}
+
+Dalam ungkapan digunakan satuan universal seperti berikut
+
+\begin{equation}
+r=\frac{x}{a};\qquad\rho=\frac{b}{a};\qquad\epsilon=\frac{2ma^2E}{\hbar^2};\qquad\gamma=\frac{2ma^2V_0}{\hbar^2};\qquad\beta=\frac{2ma^2V_1}{\hbar^2}
+\end{equation}
+
+Dengan demikian, unsur-unsur matrik tri-diagonal berbentuk
+$a_i=2+(\Delta r)^2\gamma_i -(\Delta r)^2\epsilon$ untuk $i=1,2,\cdots,N -1$ sedangkan $b_i= -1$ dan $c_i= -1$ untuk $i=1,2,\cdots,N -2$.
+
+Tingkat-tingkat tenaga bagi sistem akan dapat diperoleh berdasar kaitan
+
+\begin{equation}
+E = \frac{\hbar^2 \epsilon}{2ma^2}; \qquad \text{untuk potensial}\qquad V(r)=\frac{\hbar^2 \gamma(r)}{2ma^2}
+\end{equation}
+
+Implementasi ungkapan di atas dalam bentuk \textit{source-code} dapat dilihat seperti di bawah.
+
+\begin{verbatim}
+function observ1(v0, v1, rmak, rmin, dr, rho, N)
+    r = zeros(N -1)
+    gamma = zeros(N -1)
+    beta = zeros(N -1)
+    for i in 1:(N -1)
+        r[i] = dr * i + rmin
+        if r[i] <= 0.0 || r[i] >= 1.0
+            gamma[i] = v0
+        elseif r[i] <= rho
+            gamma[i] = 0.0
+        else
+            gamma[i] = v1
+        end
+    end
+    return r, gamma
+end
+\end{verbatim}
+
+\begin{verbatim}
+observ1 (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function fung_gamma1(epsilon, dr, gamma, N)
+    a = zeros(N -1)
+    b = zeros(N -2)
+    c = zeros(N -2)
+    for i in 1:(N -1)
+        a[i] = 2.0 + gamma[i] * dr^2 - epsilon * dr^2
+    end
+    for i in 1:(N -2)
+        b[i] = -1.0
+        c[i] = -1.0
+    end
+    d1 = a[1]
+    d2 = a[2] * d1 - b[1] * c[1]
+    dn = 0.0
+    for i in 3:(N -1)            
+        dn = a[i] * d2 - b[i -1] * c[i -1] * d1
+        d1, d2 = d2, dn
+    end
+    return dn
+end
+\end{verbatim}
+
+\begin{verbatim}
+fung_gamma1 (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function eigval_bisec1(epsilon1, epsilon2, dr, gamma, N)
+    delta = 1e -4
+    ralat = 0.1
+    epsilonm = (epsilon1 + epsilon2) / 2.0
+    while ralat > delta
+        epsilonm = (epsilon1 + epsilon2) / 2.0
+        f1f2 = fung_gamma1(epsilon1, dr, gamma, N) * fung_gamma1(epsilonm, dr, gamma, N)
+        if f1f2 < 0.0
+            epsilon2 = epsilonm
+        else
+            epsilon1 = epsilonm
+        end
+        ralat = abs((epsilon2 - epsilon1) / epsilon2)
+    end
+    return epsilonm
+end
+\end{verbatim}
+
+\begin{verbatim}
+eigval_bisec1 (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function eigvec_tridiag1(epsilon, dr, gamma, N)
+    d = zeros(N -2)
+    e = zeros(N -3)
+    b = zeros(N -3)
+    for i in 1:(N -2)
+        d[i] = 2.0 + gamma[i] * dr^2 - epsilon * dr^2
+    end
+    for i in 1:(N -3)
+        e[i] = -1.0
+        b[i] = -1.0
+    end
+    f = zeros(N -2)            
+    f[end] = 1.0
+
+    # Forward elimination (Thomas algorithm for tridiagonal)
+    for i in 2:(N -2)             
+        m = e[i -1] / d[i -1]
+        d[i] -= m * b[i -1]
+        f[i] -= m * f[i -1]
+    end
+
+    # Back substitution
+    v = zeros(N -1)
+    v[N -2] = f[N -2] / d[N -2]
+    v[N -1] = 1.0
+    s = v[N -1]^2 + v[N -2]^2
+    for i in (N -3): -1:1         
+        v[i] = (f[i] - b[i] * v[i+1]) / d[i]
+        s += v[i]^2
+    end
+
+    v ./= sqrt(s)                 # normalize
+    return v
+end
+\end{verbatim}
+
+\begin{verbatim}
+eigvec_tridiag1 (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+# - - - - Parameters & evaluation - - - -
+N = 500
+m = 100
+rmak = 1.2
+rmin = -0.4
+dr = (rmak - rmin) / N
+v0 = 100.0
+v1 = 25.0
+rho = 0.5
+r = zeros(N -1)
+gamma = zeros(N -1)
+r, gamma = observ1(v0, v1, rmak, rmin, dr, rho, N)
+epsilon = range(12.0, 20.0, length=m)
+fe = zeros(m)
+for i in 1:m
+    fe[i] = fung_gamma1(epsilon[i], dr, gamma, N)
+end
+\end{verbatim}
+
+\begin{verbatim}
+plot(r, gamma;
+     xlabel=L"r",
+     ylabel=L"\gamma",
+     title="Potensial",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/259f29e1d07e227ecfd39e663468ec94.png}
+
+\begin{verbatim}
+plot(epsilon, fe;
+     xlabel=L"\epsilon",
+     ylabel=L"f(\epsilon)",
+     title="Fungsi untuk Tenaga",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/e58b03cf5de5dd3c8381378b70cfb806.png}
+
+\begin{verbatim}
+# - - - - Root via bisection - - - -
+epsilon = eigval_bisec1(14.0, 15.0, dr, gamma, N)
+println(epsilon)
+\end{verbatim}
+
+\begin{verbatim}
+14.5361328125
+\end{verbatim}
+
+\begin{verbatim}
+# - - - - Eigenvector and plot - - - -
+v = eigvec_tridiag1(epsilon, dr, gamma, N);
+vabs = v .^ 2;
+\end{verbatim}
+
+\begin{verbatim}
+plot(r, vabs;
+     xlabel=L"y",
+     ylabel=L"\psi(y)",
+     title="Fungsi Gelombang",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/944803ce8bf4e52adc6d6764dd24ffbf.png}
+
+\subsubsection{Pencarian nilai \textit{eigen} dan fungsi \textit{eigen} untuk sebarang bentuk matrik}
+
+Apabila masalah nilai \textit{eigen} bukan berbentuk matrik tri-diagonal maka cara komputasi yang cukup efektif di atas menjadi tidak dimungkinkan. Untuk keadaan ini maka pencarian nilai \textit{eigen} dan fungsi \textit{eigen} perlu diselesaikan dengan metode lain yang berlaku untuk matrik dengan bentuk sebarang, salah satu diantaranya adalah dengan implementasi metode dekomposisi $LU$. Istilah $LU$ merupakan singkatan dari (\textit{Lower Triangular Matrix}) untuk $L$ dan  (\textit{Upper Triangular Matrix}) untuk $U$. Seperti yang tersirat dari nama tersebut maka prinsip dasar dari metode pemisahan $LU$ adalah mengubah sebarang matrik $A$ menjadi produk perkalian matrik segitiga bawah $L$ dan matrik segitiga atas $U$ yaitu $A=LU$ sehingga dapat memanfaatkan proses substitusi maju bagi matrik $L$ dan substitusi balik bagi matrik $U$ ketika nantinya dimanfaatkan untuk mendapatkan penyelesaian $x$.
+
+\begin{equation}
+A=LU
+\end{equation}
+
+Apabila bentuk matrik $U$ diambil sama dengan matrik segitiga atas $A^{'}$ yang diperoleh dari proses eliminasi Gauss maka berlaku ungkapan berikut.
+
+\begin{equation}
+U=\begin{pmatrix}
+u_{11}&u_{12}&u_{13}&\cdots&u_{1N}\\
+0&u_{22}&u_{22}&\cdots&u_{2N}\\
+0&0&u_{33}&\cdots&u_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&u_{NN}
+\end{pmatrix}=\begin{pmatrix}
+a^{'}_{11}&a^{'}_{12}&a^{'}_{13}&\cdots&a^{'}_{1N}\\
+0&a^{'}_{22}&a^{'}_{23}&\cdots&a^{'}_{2N}\\
+0&0&a^{'}_{33}&\cdots&a^{'}_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&a^{'}_{NN}
+\end{pmatrix}=A^{'}
+\end{equation}
+
+Dengan bentuk matrik segitiga atas $U$ tersebut maka bentuk matrik segitiga bawah dapat ditentukan berdasar operasi berikut.
+
+\begin{align}
+LU&=\begin{pmatrix}
+1&0&0&\cdots&0\\
+l_{21}&1&0&\cdots&0\\
+l_{31}&l_{32}&1&\cdots&0\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+l_{N1}&l_{N2}&l_{N3}&\cdots&1
+\end{pmatrix}
+\begin{pmatrix}
+a^{'}_{11}&a^{'}_{12}&a^{'}_{13}&\cdots&a^{'}_{1N}\\
+0&a^{'}_{22}&a^{'}_{23}&\cdots&a^{'}_{2N}\\
+0&0&a^{'}_{33}&\cdots&a^{'}_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&a^{'}_{NN}
+\end{pmatrix}\nonumber\\
+&=\begin{pmatrix}
+a^{'}_{11}&a^{'}_{12}&a^{'}_{13}&\cdots&a^{'}_{1N}\\
+l_{21}a^{'}_{11}&a^{'}_{22}&a^{'}_{23}&\cdots&a^{'}_{2N}\\
+l_{31}a^{'}_{11}&l_{32}a^{'}_{22}&a^{'}_{33}&\cdots&a^{'}_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+l_{N1}a^{'}_{11}&l_{N2}a^{'}_{22}&l_{N3}a^{'}_{33}&\cdots&a^{'}_{NN}
+\end{pmatrix}
+=\begin{pmatrix}
+a_{11}&a_{12}&a_{13}&\cdots&a_{1N}\\
+a_{21}&a_{22}&a_{23}&\cdots&a_{2N}\\
+a_{31}&a_{32}&a_{33}&\cdots&a_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+a_{N1}&a_{N2}&a_{N3}&\cdots&a_{NN}
+\end{pmatrix}=A
+\end{align}
+
+Berdasar ungkapan tersebut maka bentuk matrik segitiga bawah $L$ adalah seperti berikut.
+
+\begin{equation}
+L=\begin{pmatrix}
+1&0&0&\cdots&0\\
+l_{21}&1&0&\cdots&0\\
+l_{31}&l_{32}&1&\cdots&0\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+l_{N1}&l_{N2}&l_{N3}&\cdots&1
+\end{pmatrix}=\begin{pmatrix}
+1&0&0&\cdots&0\\
+\frac{a_{21}}{a^{'}_{11}}&1&0&\cdots&0\\
+\frac{a_{31}}{a^{'}_{11}}&\frac{a_{32}}{a^{'}_{22}}&1&\cdots&0\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+\frac{a_{N1}}{a^{'}_{11}}&\frac{a_{N2}}{a^{'}_{22}}&\frac{a_{N3}}{a^{'}_{33}}&\cdots&1
+\end{pmatrix}
+\end{equation}
+
+Dari bentuk matrik segitiga bawah $L$ tersebut maka menjadi jelas bahwa unsur matrik bagi $L$ tidak lain merupakan faktor pengali dalam metode eliminasi Gauss dalam proses pengubahan ke nilai nol pada kolom ke $k$ dan baris ke $i$ yaitu $l_{ik}=\frac{a_{ik}}{a^{'}_{kk}}=\frac{U_{ik}}{U_{kk}}$.
+
+Berikut merupakan \textit{source-code} bagi implementasi metode pemisahan $LU$.
+
+\begin{verbatim}
+function lu_decomp(A)
+    N = size(A, 1)
+    L = Matrix{Float64}(I, N, N)
+    U = copy(A)
+    for k in 1:N -1
+        for i in k+1:N
+            pengali = U[i, k]/U[k, k]
+            L[i, k] = pengali
+            U[i, k:N] -= pengali*U[k, k:N];
+        end
+    end
+
+    return L, U 
+end
+\end{verbatim}
+
+\begin{verbatim}
+lu_decomp (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function deter(A)
+    determinan = 0.0
+    N = size(A, 1)
+    L, U = lu_decomp(A)
+    sum = 1.0
+    for i in 1:N
+        sum *= U[i,i]
+    end
+
+    determinan = sum
+    return determinan
+end
+\end{verbatim}
+
+\begin{verbatim}
+deter (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function back_subs(U::Matrix{Float64},w::Vector{Float64})
+    N = size(U,1)
+    x = zeros(Float64,N)
+    x[N] = w[N]/U[N,N]
+    for i in N -1: -1:1
+        sum = 0
+        for j in i+1:N
+            sum += U[i, j]*x[j]
+        end    
+        x[i] = (w[i] -sum)/U[i, i]    
+    end
+    
+    return x
+end
+\end{verbatim}
+
+\begin{verbatim}
+back_subs (generic function with 1 method)
+\end{verbatim}
+
+\paragraph{Pencarian nilai \textit{eigen} untuk sebarang bentuk matrik}
+
+Ditinjau suatu masalah nilai eigen yang dapat dinyatakan dengan bentuk ungkapan  berikut.
+
+\begin{equation}
+Ax=\lambda x
+\end{equation}
+
+Seperti sudah dijelaskan dalam uraian untuk matrik tri-diagonal sebelumnya, dalam persamaan nilai eigen  tersebut maka $A$ merupakan matrik bujursangkar berorde $N\times N$ yang sudah diketahui. Matrik kolom $x$ merupakan matrik yang akan diselesaikan dan biasa disebut sebagai fungsi eigen. Adapun $\lambda$ adalah suatu nilai yang juga akan diselesaikan dan biasa disebut sebagai nilai eigen.
+
+Persamaan nilai eigen  dapat diubah ke ungkapan persamaan simultan berupa persamaan homogen, yaitu ruas kanan persamaan adalah matrik $O$ dalam bentuk berikut.
+
+\begin{equation}
+(A-\lambda I)x=O \implies x=(A-\lambda I)^{-1}0=\frac{1}{\det{(A-\lambda I)}}\text{adj}(A-\lambda I)\,O
+\end{equation}
+
+Dalam ungkapan di atas, matrik $I$ melambangkan matrik identitas yang memiliki norde sama dengan matrik $A$ sedangkan matrik $O$ merupakan matrik kolom dengan semua unsur bernilai 0.
+
+Upaya untuk menyelesaikan bentuk persamaan homogen tersebut dengan beberapa metode penyelesaian persamaan simultan yang dijelaskan dalam uraian sebelumnya nampak akan gagal karena akan memberikan penyelesaian trivial berupa fungsi eigen $x=O$. Untuk mendapatkan penyelesaian tak trivial sedemikian hingga fungsi eigen $x\ne O$, beserta nilai eigen $\lambda$ yang terkait dengan fungsi eigen tersebut, maka dapat digunakan mekanisme yang disebut proses diagonalisasi matrik.
+
+Berdasar pada ungkapan persamaan homogen di atas maka proses diagonalisasi matrik pada dasarnya merupakan suatu upaya agar $x\ne O$ atau $x\propto \frac{O}{0}$, yang dapat terpenuhi apabila dipersyaratkan bentuk berikut.
+
+\begin{equation}
+\det(A-\lambda I)=\begin{vmatrix}
+a_{11}-\lambda&a_{12}&a_{13}&\cdots&a_{1N}\\
+a_{21}&a_{22}-\lambda&a_{23}&\cdots&a_{2N}\\
+a_{31}&a_{32}&a_{33}-\lambda&\cdots&a_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+a_{N1}&a_{N2}&a_{N3}&\cdots&a_{NN}-\lambda
+\end{vmatrix}=0
+\end{equation}
+
+Ungkapan di atas tidak lain merupakan bentuk masalah pencarian akar atau titik nol suatu fungsi $f(\lambda)=\det(A -\lambda I)$, yaitu nilai eigen $\lambda$ merupakan akar atau titik nol fungsi tersebut. Dengan demikian nilai eigen akan dapat diperoleh menggunakan metode pencarian akar sebagai contoh metode Bisection atau metode Newton-Raphson.
+
+Andaikan bentuk matrik di atas berupa matrik diagonal atau matrik segitiga dengan bentuk berikut:
+
+\begin{equation}
+f(\lambda)=\det(A-\lambda I)=\begin{vmatrix}
+a_{11}-\lambda&a_{12}&a_{13}&\cdots&a_{1N}\\
+0&a_{22}-\lambda&a_{23}&\cdots&a_{2N}\\
+0&0&a_{33}-\lambda&\cdots&a_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&a_{NN}-\lambda
+\end{vmatrix}=0
+\end{equation}
+
+Dengan bentuk tersebut maka penyelesaian akan mudah diperoleh yaitu:
+
+\begin{equation}
+f(\lambda)=\det(A-\lambda I)=\left(a_{11}-\lambda\right)\left(a_{22}-\lambda\right)\cdots \left(a_{NN}-\lambda\right)=0
+\end{equation}
+
+Dengan demikian penyelesaian nilai eigen $\lambda$ diperoleh sebagai berikut:
+
+\begin{equation}
+\lambda_1=a_{11};\quad \lambda_2=a_{22};\quad \cdots \quad\lambda_N=a_{NN}
+\end{equation}
+Istilah proses diagonalisasi matrik untuk memperoleh penyelesaian tak trivial sedemikian hingga fungsi eigen $x\ne O$, beserta nilai eigen $\lambda$ yang terkait dengan fungsi eigen tersebut, menjadi mudah dipahami dari ungkapan matrik di atas.
+
+Secara umum untuk matrik tidak diagonal $A$ maka proses untuk memperoleh nilai eigen $\lambda$ dapat dilakukan dengan tahap berikut:
+
+\begin{enumerate}
+\item Berikan nilai coba bagi nilai eigen $\lambda$ sebagai masukan bagi nilai coba akar.
+\item Lakukan proses diagonalisasi matrik dengan metode dekomposisi $LU$, yaitu $(A -\lambda I)=LU$ untuk memperoleh fungsi $f(\lambda)=\det(A -\lambda I)$.
+\item Tentukan nilai eigen melalui proses pencarian akar bagi ungkapan $f(\lambda)=\det(A -\lambda I)=0$ menggunakan metode
+Bisection.
+\end{enumerate}
+
+Berikut merupakan \textit{source-code} bagi implementasi percarian nilai eigen $\lambda$ berdasar tahapan di atas.
+
+\begin{verbatim}
+function matrix_A(dr, gamma, N)
+    a = zeros(N -1)
+    b = zeros(N -2)
+    c = zeros(N -2)
+    A = zeros(N -1, N -1)
+    for i in 1:(N -1)
+        a[i] = 2.0 + gamma[i] * dr^2
+    end
+    for i in 1:(N -2)
+        b[i] = -1.0
+        c[i] = -1.0
+    end
+    A = diagm(0 => a, -1 => b, 1 => c)
+    return A
+end
+\end{verbatim}
+
+\begin{verbatim}
+matrix_A (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function fung_lambda(A, dr, epsilon)
+    N = size(A, 1)
+    A_lambda = A . - epsilon * dr^2 * I(N)
+    hasil = 0.0
+    hasil = deter(A_lambda)
+
+    return hasil
+end
+\end{verbatim}
+
+\begin{verbatim}
+fung_lambda (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function nil_eigen(A, epsilon1, epsilon2)
+    N = size(A, 1)
+    U = zeros(N,N)
+    a = epsilon1
+    b = epsilon2
+    c = 0.0
+    iter = 0
+    while (b - a)/2 > 1.0e -6 && iter < 100
+        iter += 1
+        c = (a + b)/2
+        f1 = fung_lambda(A, dr, a)
+        f2 = fung_lambda(A, dr, c)       
+        if f1 * f2 < 0
+            b = c
+        else
+            a = c
+        end
+    end
+
+    return c
+end
+\end{verbatim}
+
+\begin{verbatim}
+nil_eigen (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+# - - - - Parameters & evaluation - - - -
+N = 500
+m = 25
+rmak = 1.2
+rmin = -0.4
+dr = (rmak - rmin) / N
+v0 = 100.0
+v1 = 25.0
+rho = 0.5
+r = zeros(N -1)
+gamma = zeros(N -1);
+\end{verbatim}
+
+\begin{verbatim}
+r, gamma = observ1(v0, v1, rmak, rmin, dr, rho, N)
+A = matrix_A(dr, gamma, N)
+epsilon = range(12.0, 20.0, length=m)
+fe = zeros(m)
+for i in 1:m
+    fe[i] = fung_lambda(A, dr, epsilon[i])
+end
+\end{verbatim}
+
+\begin{verbatim}
+plot(epsilon, fe;
+     xlabel=L"\epsilon",
+     ylabel=L"f(\epsilon)",
+     title="Fungsi untuk Tenaga",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/ee1633a9444b2f677b4d7360f276132c.png}
+
+\begin{verbatim}
+epsilon1 = 12.0
+epsilon2 = 15.0
+epsilon_new = nil_eigen(A, epsilon1, epsilon2)
+\end{verbatim}
+
+\begin{verbatim}
+14.535302639007568
+\end{verbatim}
+
+\paragraph{Pencarian fungsi \textit{eigen} untuk sebarang bentuk matrik}
+
+Ketika nilai eigen $\lambda$ tertentu telah diperoleh berdasar prosedur pencarian nilai eigen di atas maka fungsi eigen yang berpadanan dengan nilai eigen tertentu tersebut akan dapat diperoleh dengan cara memasukkan kembali nilai eigen $\lambda$ ke persamaan nilai eigen semula. Pada satu nilai eigen $\lambda$ tertentu ini, penggunaan metode dekomposisi $LU$ dalam proses diagonalisasi matrik $\det(A -\lambda I)=0$ menyebabkan berlakunya kaitan berikut.
+
+\begin{equation}
+\det(A-\lambda I)=\begin{vmatrix}
+a_{11}-\lambda&a_{12}&a_{13}&\cdots&a_{1N}\\
+0&a_{22}-\lambda&a_{23}&\cdots&a_{2N}\\
+0&0&a_{33}-\lambda&\cdots&a_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&a_{NN}-\lambda
+\end{vmatrix}=\begin{vmatrix}
+u_{11}&u_{12}&u_{13}&\cdots&u_{1N}\\
+0&u_{22}&u_{23}&\cdots&u_{2N}\\
+0&0&u_{33}&\cdots&u_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&u_{NN}
+\end{vmatrix}=u_{11}u_{22}\dots u_{NN}=0
+\end{equation}
+
+Pada satu nilai eigen $\lambda$ tertentu ini maka persamaan nilai eigen memenuhi ungkapan berikut.
+
+\begin{equation}
+(A-\lambda I)x=LUx=O \implies Ux=O
+\end{equation}
+
+Dalam bentuk eksplisit, ungkapan tersebut dapat disajikan seperti berikut.
+
+\begin{equation}
+\begin{pmatrix}
+u_{11}&u_{12}&u_{13}&\cdots&u_{1N}\\
+0&u_{22}&u_{23}&\cdots&u_{2N}\\
+0&0&u_{33}&\cdots&u_{3N}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+0&0&0&\cdots&u_{NN}
+\end{pmatrix}
+\begin{pmatrix}
+x_1\\ x_2\\ x_3\\
+\vdots\\ x_N
+\end{pmatrix}
+=\begin{pmatrix}
+0\\ 0\\ 0\\
+\vdots\\ 0
+\end{pmatrix}\implies \begin{array}{lr}
+&u_{11}x_1+u_{12}x_2+u_{13}x_3+\cdots+u_{1N}x_N=0\\
+&u_{22}x_2+u_{23}x_3+\cdots+u_{2N}x_N=0\\
+&u_{33}x_3+\cdots+u_{3N}x_N=0\\
+&\vdots=\vdots\\
+&u_{NN}x_N=0
+\end{array}
+\end{equation}
+
+Berdasar ungkapan pada persamaan baris ke $N$ di atas, nampak bahwa nilai $x_N=0$ dan akibatnya ketika dilakukan proses substitusi balik maka diperoleh fungsi eigen adalah nol yaitu $x_i=0$ untuk $i=(N -1),\cdots, 1$. Penyelesaian seperti ini disebut penyelesaian trivial, yang tidak memberikan informasi apapun bagi sistem.
+
+Untuk memperoleh penyelesaian tak trivial, yaitu fungsi eigen yang tidak nol, maka baris ke $N$ dapat dihilangkan sehingga tersisa sejumlah $N -1$ persamaan simultan dalam bentuk berikut
+
+\begin{equation}
+\begin{array}{rl}
+u_{11}x_1+u_{12}x_2+u_{13}x_3+\cdots+u_{1(N-1)}x_{N-1}=&-u_{1N}x_N\\
+u_{22}x_2+u_{23}x_3+\cdots+u_{2(N-1)}x_{N-1}=&-u_{2N}x_N\\
+u_{33}x_3+\cdots+u_{3(N-1)}x_{N-1}=&-u_{3N}x_N\\
+\vdots=&\vdots\\
+u_{(N-1)(N-1)}x_{N-1}=&-u_{(N-1)N}x_N\\
+\end{array}
+\end{equation}
+
+Karena baris ke $N$ tidak diperhitungkan akibatnya nilai $x_N$ menjadi tidak tentu atau bebas. Apabila untuk sementara nilai bebas bagi $x_N$ ditentukan yaitu diambil $x_N=1$ maka seperangkat $(N -1)$ persamaan simultan di atas akan dapat diperoleh berdasar proses substitusi balik sehingga diperoleh nilai untuk $x_i$ dengan $i=(N -1), \cdots, 1$.
+
+Pada akhirnya fungsi eigen dapat diperoleh yaitu dengan mempersyaratkan bahwa fungsi eigen perlu ternormalisir oleh proses normalisasi seperti berikut.
+
+\begin{equation}
+x_{\text{norm}} = Cx;\quad\text{dengan}\quad C=\frac{1}{\sqrt{x_1^2+x_2^2+\cdots+x_N^2}};\quad x_N = 1
+\end{equation}
+
+Berikut merupakan \textit{source-code} bagi implementasi percarian fungsi eigen ternormalisir $x_{norm}$ berdasar uraian di atas.
+
+\begin{verbatim}
+function fung_eigen(A,dr,epsilon)
+    N = size(A, 1)
+    A_lambda = A . - epsilon * dr^2 * I(N)
+    L, U = lu_decomp(A_lambda)
+    x_norm = zeros(Float64,N)
+    U_new = U[1:(N -1),1:(N -1)] #Mengambil submatrik dari U dengan menghilangkan baris dan kolom ke N
+    b_new = -1.0*U[1:(N -1),N]   
+    x_new = back_subs(U_new,b_new)
+    sum = 1.0
+    for i in 1:(N -1)
+        sum += x_new[i]^2
+    end
+    C = 1.0/sqrt(sum)
+    x_norm = C * push!(x_new,1.0) #Menambahkan unsur x[N]=1.0 ke matrik kolom x yang sebelumnya berorde N -1
+
+    return x_norm
+end
+\end{verbatim}
+
+\begin{verbatim}
+fung_eigen (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+feigen = fung_eigen(A, dr, epsilon_new);
+\end{verbatim}
+
+\begin{verbatim}
+plot(r, feigen;
+     xlabel=L"y",
+     ylabel=L"\psi(y)",
+     title="Fungsi Gelombang dari Metode Eigen",
+     grid=true, gridstyle=:solid)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/541ffe457f7145779c4e354824e89bb4.png}

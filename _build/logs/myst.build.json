@@ -1,0 +1,78 @@
+{
+  "input": {
+    "files": [],
+    "opts": {
+      "execute": false,
+      "pdf": true,
+      "tex": false,
+      "typst": false,
+      "docx": false,
+      "md": false,
+      "xml": false,
+      "meca": false,
+      "cff": false,
+      "site": false,
+      "html": false,
+      "all": false,
+      "doiBib": false,
+      "watch": false,
+      "force": false,
+      "checkLinks": false,
+      "strict": false,
+      "ci": false,
+      "maxSizeWebp": 1572864,
+      "keepHost": false
+    }
+  },
+  "exports": [
+    {
+      "format": "pdf",
+      "template": "plain_latex_book",
+      "output": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/exports/komputasi_fisika.pdf",
+      "articles": [
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/1_Pengantar_Julia.ipynb",
+          "level": 1,
+          "slug": "pengantar-julia"
+        },
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/2_Period_of_Pendulum_by_Proper_Integration_Julia.ipynb",
+          "level": 1,
+          "slug": "period-of-pendulum-by-proper-integration-julia"
+        },
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/3_Period_of_pendulum_by_improper_integration_Julia.ipynb",
+          "level": 1,
+          "slug": "period-of-pendulum-by-improper-integration-julia"
+        },
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/4_Masalah_Syarat_Awal_Julia.ipynb",
+          "level": 1,
+          "slug": "masalah-syarat-awal-julia"
+        },
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/5_Masalah_Syarat_Batas_Julia.ipynb",
+          "level": 1,
+          "slug": "masalah-syarat-batas-julia"
+        },
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/6_Pers-Schrodinger_by_Finite_Diff_Julia.ipynb",
+          "level": 1,
+          "slug": "pers-schrodinger-by-finite-diff-julia"
+        },
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/7_Gerak_Bandul_by_Evaluasi_fungsi_Julia.ipynb",
+          "level": 1,
+          "slug": "gerak-bandul-by-evaluasi-fungsi-julia"
+        },
+        {
+          "file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/materi/8_Penyelesaian_Pers_Diffusi_Julia.ipynb",
+          "level": 1,
+          "slug": "penyelesaian-pers-diffusi-julia"
+        }
+      ],
+      "$file": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika/myst.yml",
+      "$project": "/Users/pekiknurwantoro/Documents/Buku_Komputasi_Fisika"
+    }
+  ]
+}

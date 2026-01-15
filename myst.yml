@@ -1,0 +1,37 @@
+version: 1
+project:
+  title: Komputasi Fisika
+  numbering:
+    title: true
+  authors:
+    - name: Pekik Nurwantoro
+      corresponding: true
+      email: pekik@ugm.ac.id
+      affiliations:
+        - id: UGM
+          institution: Fisika, FMIPA, Universitas Gadjah Mada
+          url: https://pekikedukasi.net 
+  license: GPL-3.0-or-later
+  toc:
+    - file: materi/intro.md
+    - file: materi/1_Pengantar_Julia.ipynb
+    - file: materi/2_Period_of_Pendulum_by_Proper_Integration_Julia.ipynb
+    - file: materi/3_Period_of_pendulum_by_improper_integration_Julia.ipynb
+    - file: materi/4_Masalah_Syarat_Awal_Julia.ipynb
+    - file: materi/5_Masalah_Syarat_Batas_Julia.ipynb
+    - file: materi/6_Pers-Schrodinger_by_Finite_Diff_Julia.ipynb
+    - file: materi/7_Gerak_Bandul_by_Evaluasi_fungsi_Julia.ipynb
+    - file: materi/8_Penyelesaian_Pers_Diffusi_Julia.ipynb
+  exports:
+    - format: pdf
+      template: plain_latex_book
+      output: exports/komputasi_fisika.pdf
+  downloads:
+  - file: exports/komputasi_fisika.pdf
+site:
+  options:
+    logo: Logo_UGM.png
+    logo_text: "Komputasi Fisika"
+    folders: true
+    hide_authors: false
+  template: book-theme

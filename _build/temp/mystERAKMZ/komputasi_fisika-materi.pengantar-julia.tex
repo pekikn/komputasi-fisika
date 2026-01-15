@@ -1,0 +1,917 @@
+\section{Tinjauan Ringkas Bahasa Julia}
+
+\subsection{Dasar-dasar Julia}
+
+\textit{Scientific Computing} memerlukan bahasa pemrograman yang memiliki unjuk kerja tinggi, dan sekaligus sederhana, untuk menyelesaikan suatu permasalahan secara komputasi. Dalam praktek, kedua fitur tersebut sayangnya tidak dapat terpenuhi secara bersamaan. Salah satu komponen penunjang unjuk kerja tinggi adalah berupa sistem \textit{compiler}, bukan sistem \textit{interpreter} seperti bahasa Python atau R. Adapun salah satu ciri kemudahan dalam bahasa pemrograman adalah berupa \textit{dynamically-typed language}, bukan \textit{statically-typed language} seperti bahasa C.
+
+Bahasa pemrograman \href{https://julialang.org/}{Julia} dirancang sejak awal untuk memiliki 2 fitur tersebut yaitu memiliki unjuk kerja tinggi dan sederhana dalam penggunaan. Fitur lain dari Julia antara lain:
+
+\begin{itemize}
+\item Dikembangkan oleh MIT dengan lisensi yang bersifat \textit{free} dan \textit{open source}.
+\item Dirancang untuk mendukung komputasi paralel
+\item Didukung dalam penggunaan \href{https://en.wikipedia.org/wiki/Unicode}{\textit{Unicode}}
+\end{itemize}
+
+Uraian berikut akan memaparkan secara ringkas tentang sebagian fasilitas yang dimiliki oleh Julia dalam melakukan berbagai perintah (\textit{tasks}) yang terkait dengan komputasi. Informasi secara lebih lengkap terkait beberapa uraian yang disajikan di bawah maka dapat merujuk pada \href{https://docs.julialang.org/en/v1/}{Dokumentasi Julia}.
+
+\subsection{Sintak untuk Komentar}
+
+Dalam penulisan suatu bahasa pemrograman, kadang diperlukan mekanisme untuk memberikan komentar agar beberapa bagian dalam \textit{source code} menjadi lebih jelas. Untuk itu diperlukan suatu penanda untuk membedakan antara suatu perintah dan suatu komentar. Dalam Julia, sintak yang menjadi penanda bagi suatu komentar adalah \texttt{\#}.
+
+\subsection{\textit{Variable}}
+
+\textit{Variable} merupakan suatu penamaan yang terkait dengan suatu nilai. Penulisan \textit{variable} dalam Julia amat fleksibel dan kaya pilihan, yang mampu membedakan antara huruf besar dan kecil serta dapat menggunakan \textit{unicode}, bahkan mampu menerima kode dalam \textit{LaTeX}. Berikut adalah contoh penggunaan \textit{variable}:
+
+\begin{verbatim}
+# seluruh kata setelah tanda pagar dianggap sebagai komentar, bukan sebagai perintah
+x = 10
+\end{verbatim}
+
+\begin{verbatim}
+10
+\end{verbatim}
+
+\begin{verbatim}
+\delta = 13
+\end{verbatim}
+
+\begin{verbatim}
+13
+\end{verbatim}
+
+\begin{verbatim}
+® = 5
+\end{verbatim}
+
+\begin{verbatim}
+5
+\end{verbatim}
+
+Dalam ungkapan di atas, simbol \textit{LaTeX} $\delta$ dimasukkan dengan mengetik {\textbackslash}delta dan diikuti tekan kunci TAB, sedang simbol \textit{Unicode} \textregistered  dimasukkan dengan mengetik {\textbackslash}circledR dan diikuti tekan kunci TAB.
+
+\subsection{Bilangan Bulat dan Pecahan (\textit{Floating Point})}
+
+\subsubsection{Bilangan Bulat}
+
+Secara otomatis (\textit{default}), jenis bilangan bulat yang digunakan dalam Julia akan tergantung pada tipe bit komputer yang digunakan, yaitu jenis bilangan bulat Int8, Int16, Int32, Int64 atau Int128 untuk komputer bertipe 8, 16, 32, 64 atau 128 bit. Semakin besar tipe bit maka semakin besar pula kemampuan komputer untuk mengakses bilangan bulat maksimum (bilangan bulat positip yang terbesar) dan minimum (bilangan bulat negatip yang terbesar).
+
+\begin{verbatim}
+x = 2894
+\end{verbatim}
+
+\begin{verbatim}
+2894
+\end{verbatim}
+
+\begin{verbatim}
+typeof(x)
+\end{verbatim}
+
+\begin{verbatim}
+Int64
+\end{verbatim}
+
+\begin{verbatim}
+(typemax(Int64), typemin(Int64))
+\end{verbatim}
+
+\begin{verbatim}
+(9223372036854775807, -9223372036854775808)
+\end{verbatim}
+
+\begin{verbatim}
+(typemax(Int32), typemin(Int32))
+\end{verbatim}
+
+\begin{verbatim}
+(2147483647, -2147483648)
+\end{verbatim}
+
+\subsubsection{Pecahan (\textit{Floating Point})}
+
+Seperti halnya bilangan bulat, jenis \textit{floating point} yang digunakan secara \textit{default} saat menjalankan komputasi juga ditentukan oleh tipe bit komputer tersebut antara lain Float16, Float32 atau Float64. Jenis \textit{floating point} juga dapat dipilih dengan menggunakan penulisan angka dengan notasi-e (sebagai contoh 2.3e-3 sebagai wakilan angka 0.0023) untuk Float64 dan notasi-f (sebagai contoh 2.3f-3 sebagai wakilan angka 0.0023) untuk Float32.
+
+Beberapa nilai khusus dalam \textit{floating point}, dan tidak ada dalam bilangan bulat, yang memiliki peran penting dalam komputasi antara lain:
+
+\begin{itemize}
+\item Nilai \texttt{eps} yang mewakili ketelitian bagi mesin (komputer), yaitu nilai yang menjadi pembeda antara satu \textit{floating point} dengan \textit{floating point} terdekatnya.
+\item Nilai \texttt{-Inf} dan \texttt{Inf} yang mewakili nilai tak hingga bagi mesin (komputer), yaitu nilai yang terkait dengan nilai maksimum atau yang lebih besar serta nilai minimum yang lebih kecil bagi \textit{floating point}.
+\item Nilai \texttt{NaN} yang mewakili keadaan suatu \textit{error} dalam proses komputasi, yaitu suatu nilai yang bukan nilai-nilai dalam \textit{floating point}.
+\end{itemize}
+
+\begin{verbatim}
+xf = 2.3e -34
+\end{verbatim}
+
+\begin{verbatim}
+2.3e -34
+\end{verbatim}
+
+\begin{verbatim}
+typeof(xf)
+\end{verbatim}
+
+\begin{verbatim}
+Float64
+\end{verbatim}
+
+\begin{verbatim}
+yf = 23f -34
+\end{verbatim}
+
+\begin{verbatim}
+2.3f -33
+\end{verbatim}
+
+\begin{verbatim}
+typeof(yf)
+\end{verbatim}
+
+\begin{verbatim}
+Float32
+\end{verbatim}
+
+\begin{verbatim}
+eps(1.0)
+\end{verbatim}
+
+\begin{verbatim}
+2.220446049250313e -16
+\end{verbatim}
+
+\begin{verbatim}
+(typemax(Float64), typemin(Float64))
+\end{verbatim}
+
+\begin{verbatim}
+(Inf, -Inf)
+\end{verbatim}
+
+\begin{verbatim}
+3.0 / Inf
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+3.0 / 0
+\end{verbatim}
+
+\begin{verbatim}
+Inf
+\end{verbatim}
+
+\begin{verbatim}
+sin(0) / 0
+\end{verbatim}
+
+\begin{verbatim}
+NaN
+\end{verbatim}
+
+\subsubsection{Bilangan Kompleks dan Bilangan Rasional}
+
+Dalam berbagai permasalahan, proses komputasi sering melibatkan bilangan kompleks dan bilangan rasional. Dalam Julia, tetapan \texttt{im} digunakan untuk mewakili bilangan imajiner $i=\sqrt{ -1}$. Berbeda dengan kebanyakan bahasa pemrograman yang menggunakan tetapan \texttt{i} atau \texttt{j} untuk mewakili bilangan imajiner, dalam Julia digunakan tetapan \texttt{im} karena notasi \texttt{i} atau \texttt{j} sering dimanfaatkan sebagai indeks dalam proses perhitungan perulangan (\textit{looping}). Penulisan bilangan kompleks dalam Julia mengikuti penulisan matematika baku sebagai contoh \texttt{z = 3 + 2im}, yang lebih ringkas dibanding penulisan \texttt{z = 3 + 2*im}.
+
+Julia memiliki cara alamiah untuk mewakili bilangan rasional, yaitu bilangan yang dapat dinyatakan sebagai pembagian dari 2 bilangan bulat, dalam bentuk \texttt{//}.  Penggunaan bilangan rasional dalam proses komputasi sangat berguna dalam berbagai bidang permasalahan.
+
+\subsection{Operasi Matematika dan Fungsi Dasar}
+
+Beberapa perintah untuk melakukan operasi matematika beserta beberapa fungsi dasar dalam Julia memiliki ungkapan yang secara alamiah sama dengan penulisan baku dalam matematika. Tidak seperti perintah dalam bahasa lain, sebagai contoh dalam Julia dibolehkan untuk menulis perintah dalam bentuk \texttt{2x}, alih-alih dalam bentuk \texttt{2 * x}. Beberapa ungkapan operasi matematika beserta fungsi dasar yang lebih lengkap dapat merujuk pada \href{https://docs.julialang.org/en/v1/manual/mathematical-operations/}{Dokumen Julia}.
+
+\begin{verbatim}
+x = 2.6 + 2.1im # sama dengan penulisan 2.6 + 2.1*im
+\end{verbatim}
+
+\begin{verbatim}
+2.6 + 2.1im
+\end{verbatim}
+
+\begin{verbatim}
+y = 3
+\end{verbatim}
+
+\begin{verbatim}
+3
+\end{verbatim}
+
+\begin{verbatim}
+x * y
+\end{verbatim}
+
+\begin{verbatim}
+7.800000000000001 + 6.300000000000001im
+\end{verbatim}
+
+\begin{verbatim}
+x / y
+\end{verbatim}
+
+\begin{verbatim}
+0.8666666666666667 + 0.7000000000000001im
+\end{verbatim}
+
+\begin{verbatim}
+x + y
+\end{verbatim}
+
+\begin{verbatim}
+5.6 + 2.1im
+\end{verbatim}
+
+\begin{verbatim}
+x - y
+\end{verbatim}
+
+\begin{verbatim}
+-0.3999999999999999 + 2.1im
+\end{verbatim}
+
+\begin{verbatim}
+y ^ 3
+\end{verbatim}
+
+\begin{verbatim}
+27
+\end{verbatim}
+
+\begin{verbatim}
+y % 2 # sisa dari pembagian x terhadap y
+\end{verbatim}
+
+\begin{verbatim}
+1
+\end{verbatim}
+
+\begin{verbatim}
+2x # sama seperti menulis y = 2 * x
+\end{verbatim}
+
+\begin{verbatim}
+5.2 + 4.2im
+\end{verbatim}
+
+\begin{verbatim}
+y + 1//2
+\end{verbatim}
+
+\begin{verbatim}
+7//2
+\end{verbatim}
+
+\begin{verbatim}
+nilai = cos(y)
+\end{verbatim}
+
+\begin{verbatim}
+-0.9899924966004454
+\end{verbatim}
+
+\subsubsection{Operasi \textit{Boolean} dan Perbandingan Numerik}
+
+Dalam beberapa proses komputasi kadang diperlukan untuk memilih berdasar beberapa kondisi atau persyaratan melalui operasi \textit{Boolean}, yaitu operasi untuk melihat suatu keadaan adalah benar (\textit{true}) atau salah (\textit{false}) serta perbandingan 2 nilai secara numerik. Beberapa operasi \textit{Boolean} serta perbandingan numerik yang difasilitasi dalam Julia diberikan dalam contoh berikut.
+
+\begin{verbatim}
+kondisi1 = 2.5 == 3.7 # operasi kesamaan
+\end{verbatim}
+
+\begin{verbatim}
+false
+\end{verbatim}
+
+\begin{verbatim}
+kondisi2 = 2.5 != 3.7 # operasi ketidaksamaan
+\end{verbatim}
+
+\begin{verbatim}
+true
+\end{verbatim}
+
+\begin{verbatim}
+2.5 < 3.7 # operasi kurang dari
+\end{verbatim}
+
+\begin{verbatim}
+true
+\end{verbatim}
+
+\begin{verbatim}
+2.5 <= 3.7 # operasi kuranf dari atau sama dengan
+\end{verbatim}
+
+\begin{verbatim}
+true
+\end{verbatim}
+
+\begin{verbatim}
+2.5 >= 3.7 # operasi lebih dari atau sama dengan
+\end{verbatim}
+
+\begin{verbatim}
+false
+\end{verbatim}
+
+\begin{verbatim}
+!kondisi1 # operasi boolean NEGATION yaitu kebalikan dari keadaan sebelumnya
+\end{verbatim}
+
+\begin{verbatim}
+true
+\end{verbatim}
+
+\begin{verbatim}
+kondisi1 && kondisi2 # operasi boolean AND yaitu false jika salah satu false
+\end{verbatim}
+
+\begin{verbatim}
+false
+\end{verbatim}
+
+\begin{verbatim}
+kondisi1 || kondisi2 # operasi boolean OR yaitu true jika salah satu true
+\end{verbatim}
+
+\begin{verbatim}
+true
+\end{verbatim}
+
+\subsubsection{Operasi Pembaruan (\textit{updating})}
+
+Dalam beberapa proses komputasi, kadang diperlukan pembaruan suatu nilai oleh operasi matematika tertentu. Sebagai gambaran, untuk memperbarui nilai suatu \textit{variable} agar nilai tersebut bertambah 3 maka Julia memberikan operasi ringkas dalam bentuk \texttt{x += 3}, yang sama dengan operasi \texttt{x = x + 3}. Operasi tersebut juga berlaku untuk bentuk lain yaitu \texttt{-=}, \texttt{*=}, \texttt{/=}, \texttt{\^=}, \texttt{\%=} dan lainnya.
+
+\begin{verbatim}
+x = 5.6
+\end{verbatim}
+
+\begin{verbatim}
+5.6
+\end{verbatim}
+
+\begin{verbatim}
+x += 3
+\end{verbatim}
+
+\begin{verbatim}
+8.6
+\end{verbatim}
+
+\begin{verbatim}
+y = 2
+\end{verbatim}
+
+\begin{verbatim}
+2
+\end{verbatim}
+
+\begin{verbatim}
+y ^= 3 # sama dengan operasi y = y^3
+\end{verbatim}
+
+\begin{verbatim}
+8
+\end{verbatim}
+
+\subsection{\textit{Array}}
+
+\textit{Array} merupakan jenis \textit{variable} berupa jajaran dari nilai-nilai yang disajikan dalam bentuk 1, 2 hingga multi-dimensi. \textit{Array} dalam 1 dimensi digunakan untuk melambangkan suatu vektor yang memiliki bentuk berupa jajaran nilai pada beberapa baris dalam satu kolom (biasa disebut sebagai matrik kolom). \textit{Array} dalam 2 dimensi digunakan untuk melambangkan suatu matrik yang memiliki bentuk berupa jajaran nilai pada beberapa baris dan kolom. Secara umum \textit{array} dalam 3 dimensi atau multi-dimensi biasa digunakan untuk melambangkan suatu tensor.
+
+\textit{Array} memegang peran penting dalam komputasi karena operasi yang melibatkan banyak nilai, yang berarti banyak \textit{variable}, akan dapat diwakili oleh satu \textit{variable} sehingga menyederhanakan prosedur penyelesaian. Implementasi \textit{array} dalam Julia cukup lengkap yang dapat dirujuk pada \href{https://docs.julialang.org/en/v1/manual/arrays/}{Dokumentasi \textit{Array}}. Berikut disajikan beberapa hal penting dari implementasi \textit{array} tersebut.
+
+\subsubsection{Beberapa Fungsi Dasar}
+
+\textit{Array} diwakili oleh lambang kurung persegi \texttt{[ ]}, ketika berupa vektor maka dapat dibangkitkan dengan sintak \texttt{[x1, x2, ...]}, dengan \texttt{x1, x2, ...} merupakan unsur-unsur vektor.
+
+\textit{Array} berupa matrik dapat dibangkitkan dengan sintak \texttt{[x1 x2 ...; y1 y2 ...; ...]}, yaitu memberikan jarak spasi antar unsur matrix pada suatu baris dan pemberian \textit{semicolon} untuk memisahkan kolom.
+
+Dalam beberapa permasalahan komputasi, kadang diperlukan \textit{array} dengan bentuk khusus sebagai contoh matrik yang memiliki semua unsur bernilai 1. Beberapa fungsi dasar untuk membangkitkan \textit{array} dalam bentuk khusus tersebut diberikan pada contoh berikut.
+
+\begin{verbatim}
+A = [1,2,3]
+\end{verbatim}
+
+\begin{verbatim}
+3 -element Vector{Int64}:
+ 1
+ 2
+ 3
+\end{verbatim}
+
+\begin{verbatim}
+B = [1 2 3;3 4 5; 6 7 8]
+\end{verbatim}
+
+\begin{verbatim}
+3 \times3 Matrix{Int64}:
+ 1  2  3
+ 3  4  5
+ 6  7  8
+\end{verbatim}
+
+\begin{verbatim}
+C = zeros(2,3) # matrik orde 2x3 (2 baris dan 3 kolom) dengan semua unsur bernilai 0
+\end{verbatim}
+
+\begin{verbatim}
+2 \times3 Matrix{Float64}:
+ 0.0  0.0  0.0
+ 0.0  0.0  0.0
+\end{verbatim}
+
+\begin{verbatim}
+D = ones(3,4) # matrik orde 3x4 dengan semua unsur bernilai 1
+\end{verbatim}
+
+\begin{verbatim}
+3 \times4 Matrix{Float64}:
+ 1.0  1.0  1.0  1.0
+ 1.0  1.0  1.0  1.0
+ 1.0  1.0  1.0  1.0
+\end{verbatim}
+
+\begin{verbatim}
+E = rand(3,2) # matrik orde 3x2 dengan semua unsur bernilai bilangan random dalam interval 0 dan 1
+\end{verbatim}
+
+\begin{verbatim}
+3 \times2 Matrix{Float64}:
+ 0.543852  0.713582
+ 0.656821  0.47524
+ 0.996348  0.844814
+\end{verbatim}
+
+\begin{verbatim}
+length(E) # operasi untuk menunjukkan cacah unsur pada matrik E
+\end{verbatim}
+
+\begin{verbatim}
+6
+\end{verbatim}
+
+\begin{verbatim}
+size(E) # operasi untuk menunjukkan daftar urutan (*tuple*) dimensi atau orde bagi matrik E
+\end{verbatim}
+
+\begin{verbatim}
+(3, 2)
+\end{verbatim}
+
+\begin{verbatim}
+ndims(E) # operasi untuk menunjukkan dimensi bagi matrik E
+\end{verbatim}
+
+\begin{verbatim}
+2
+\end{verbatim}
+
+\subsubsection{Indeks dalam \textit{Array}}
+
+Berbeda dengan bahasa pemrogram lain, sebagai contoh Python, aturan penomoran atau indeks dalam suatu \textit{array} dimulai dengan indeks 1 (bukan 0). Kemudian urutan indeks dalam seluruh \textit{array} didasarkan pada urutan kolom (bukan baris). Contoh berikut adalah perintah untuk menampilkan unsur dari suatu \textit{array} (vektor atau matrik) berdasar aturan indeks tersebut.
+
+Penomoran atau pengaturan indeks dari suatu unsur tertentu dalam suatu \textit{array} dalam dilakukan dengan 2 cara:
+
+\begin{enumerate}
+\item \textit{Cartesian Index} yaitu penomoran dengan mengikuti indeks bagi \textit{array} tersebut, sebagai contoh unsur \texttt{A[2.3]} adalah unsur beris ke 2 dan kolom ke 3 dari matrik \texttt{A}.
+\item \textit{Linear Index} yaitu penomoran dengan mengikuti urutan lokasi suatu unsur tertentu bagi \textit{arrtay} tersebut, sesuai urutan kolom.
+\end{enumerate}
+
+Perintah \texttt{CartesianIndices} dan \texttt{LinearIndices} digunakan untuk melakukan konversi dari masing-masing cara penomoran tersebut.
+
+\begin{verbatim}
+A = [1,2,3,4,5]
+\end{verbatim}
+
+\begin{verbatim}
+5 -element Vector{Int64}:
+ 1
+ 2
+ 3
+ 4
+ 5
+\end{verbatim}
+
+\begin{verbatim}
+A[5] # mencuplik nilai dari unsur ke 5 bagi vektor A
+\end{verbatim}
+
+\begin{verbatim}
+5
+\end{verbatim}
+
+\begin{verbatim}
+B = [1 2 3;3 4 5; 6 7 8]
+\end{verbatim}
+
+\begin{verbatim}
+3 \times3 Matrix{Int64}:
+ 1  2  3
+ 3  4  5
+ 6  7  8
+\end{verbatim}
+
+\begin{verbatim}
+B[5] # mencuplik nilai dari unsur ke 5 bagi matrik B, yaitu dimulai dari kolom ke 1 (terdiri atas 3 unsur) dan dilanjutkan ke kolom ke 2
+\end{verbatim}
+
+\begin{verbatim}
+4
+\end{verbatim}
+
+\begin{verbatim}
+B[2,2] # mencuplik nilai dari unsur baris ke 2 dan kolom ke 2, yang sama dengan perintah B[5]
+\end{verbatim}
+
+\begin{verbatim}
+4
+\end{verbatim}
+
+\begin{verbatim}
+CartesianIndices(B)[5] # mengubah dari unsur urutan ke 5 menjadi unsur baris ke 2 dan kolom ke 2
+\end{verbatim}
+
+\begin{verbatim}
+CartesianIndex(2, 2)
+\end{verbatim}
+
+\begin{verbatim}
+LinearIndices(B)[2,2] # mengubah dari unsur baris ke 2 dan kolom ke 2 menjadi unsur urutan ke 5
+\end{verbatim}
+
+\begin{verbatim}
+5
+\end{verbatim}
+
+\subsubsection{Operasi Vektorisasi pada \textit{Array}}
+
+Operasi vektorisasi merupakan operasi matematika yang bekerja pada seluruh unsur pada \textit{array} secara bersamaan, bukan satu persatu pada tiap unsur \textit{array}. Mekanisme operasi matematika pada seluruh unsur yang semacam ini sehingga operasi vektorisasi kadang disebut pemrosesn berbasis unsur (\textit{element-wise processing}). Fitur operasi vektorisasi dalam Julia bukan hanya menyederhanakan proses komputasi namun secara umum dapat mempercepat proses komputasi, khususnya pada komputer yang memfasilitasi pemrosesan paralel.
+
+Julia mengimplementasikan operasi vektorisasi berupa penambahan perintah \textit{dot} (yaitu \texttt{.}) di depan operasi matematika tertentu. Sebagai contoh, untuk mengalikan suatu nilai yang diwakili oleh \textit{variable} \texttt{x1} dengan nilai \texttt{x2} maka digunakan sintak \texttt{x1 * x2}. Adapun untuk mengalikan suatu nilai yang diwakili oleh \textit{variable} \texttt{x1} dengan seluruh nilai pada suatu \textit{array} yang diwakili oleh \textit{variable} \texttt{X2} maka diganakan sintak \texttt{x1 .* X2}.
+
+\begin{verbatim}
+x1 = 2.0
+\end{verbatim}
+
+\begin{verbatim}
+2.0
+\end{verbatim}
+
+\begin{verbatim}
+x2 = 0.4
+\end{verbatim}
+
+\begin{verbatim}
+0.4
+\end{verbatim}
+
+\begin{verbatim}
+X2 = rand(2,2)
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.835739  0.31754
+ 0.988938  0.701721
+\end{verbatim}
+
+\begin{verbatim}
+x1 * x2
+\end{verbatim}
+
+\begin{verbatim}
+0.8
+\end{verbatim}
+
+\begin{verbatim}
+x1 .* X2
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 1.67148  0.63508
+ 1.97788  1.40344
+\end{verbatim}
+
+Implementasi \textit{element-wise} memerlukan kehati-hatian ketika melibatkan matrik agar tidak rancu dengan operasi matrik sejenis yang secara definisi boleh jadi berbeda. Sebagai contoh, operasi perkalian matrik \texttt{A} dengan matrik \texttt{B}, yaitu \texttt{A * B}, secara definisi dilakukan dengan mengalikan baris matrik \texttt{A} dengan kolom matrik \texttt{B}. Oleh karena itu persyaratan agar \texttt{A * B} berlaku adalah jumlah kolom matrik \texttt{A} perlu sama dengan jumlah baris matrik \texttt{B}. Sedangkan operasi perkalian \textit{element-wise}   matrik \texttt{A} dengan matrik \texttt{B}, yaitu \texttt{A .* B}, secara definisi dilakukan dengan mengalikan setiap unsur matrik \texttt{A} dengan setiap unsur matrik \texttt{B}pada indeks matrik yang sama. Dengan demikian tidak ada persyaratan bahwa jumlah kolom matrik \texttt{A} perlu sama dengan jumlah baris matrik \texttt{B}agar \texttt{A .* B} berlaku. Contoh berikut memberikan gambaran jelas terkait uraian tersebut.
+
+\begin{verbatim}
+A = rand(2,2)
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.855451  0.553349
+ 0.978379  0.25829
+\end{verbatim}
+
+\begin{verbatim}
+B = rand(2,2)
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.357629  0.573794
+ 0.414223  0.347491
+\end{verbatim}
+
+\begin{verbatim}
+C = A * B
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.535145  0.683137
+ 0.456887  0.651142
+\end{verbatim}
+
+\begin{verbatim}
+D = A .* B
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.305935  0.317509
+ 0.405267  0.0897537
+\end{verbatim}
+
+\begin{verbatim}
+C == D
+\end{verbatim}
+
+\begin{verbatim}
+false
+\end{verbatim}
+
+\subsubsection{Operasi \textit{Broadcasting}}
+
+Persyaratan agar operasi vektorisasi berbasis \textit{element-wise} berlaku adalah adanya kesamaan orde bagi \textit{array} yang terlibat dalam operasi. Apabila \textit{array} yang terlibat ternyata tidak memiliki orde yang sama maka proses \textit{element-wise} diimplemnetasikan melalui operasi \textit{broadcasting} dengan sintak \texttt{braodcast(+,A,B)} untuk operasi \textit{broadcasting} penjumlahan. Operasi \textit{broadcasting} yang lain maka dilakukan dengan mengganti opearasi \texttt{+} dengan operasi matematika yang berpadanan.
+
+\begin{verbatim}
+A = rand(2,2)
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.996268  0.377983
+ 0.168009  0.813264
+\end{verbatim}
+
+\begin{verbatim}
+B = rand(1,2)
+\end{verbatim}
+
+\begin{verbatim}
+1 \times2 Matrix{Float64}:
+ 0.098382  0.498448
+\end{verbatim}
+
+\begin{verbatim}
+C = broadcast(+,A,B)
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 1.09465   0.876431
+ 0.266391  1.31171
+\end{verbatim}
+
+\subsection{Blok atau Gabungan Perintah}
+
+Suatu blok atau gabungan beberapa perintah kadang perlu diproses agar beberapa hasil yang diperoses tersebut akan dapat digunakan untuk menghasilkan satu hasil akhir. Blok atau gabungan beberapa perintah tersebut dalam Julia dapat dimplementasikan dalam berbagai bentuk, seperti bentuk fungsi, proses \textit{conditional} atau proses \textit{looping},  yang memiliki penanda pada akhir blok berupa perintah \texttt{end}. Gabungan perintah dalam Julia juga dapat diimplementasikan dalam bentuk umum berupa penanda perintah \texttt{begin} dan \texttt{end} seperti contoh berikut.
+
+\begin{verbatim}
+for i = 1:5
+    i = i^3
+    println(i)
+end
+\end{verbatim}
+
+\begin{verbatim}
+1
+8
+27
+64
+125
+\end{verbatim}
+
+\begin{verbatim}
+nilai =
+begin
+    x = 3.2
+    y = 5.6
+    x/y
+end
+\end{verbatim}
+
+\begin{verbatim}
+0.5714285714285715
+\end{verbatim}
+
+\begin{verbatim}
+nilai
+\end{verbatim}
+
+\begin{verbatim}
+0.5714285714285715
+\end{verbatim}
+
+\subsection{Fungsi dalam Julia}
+
+Kebanyakan fungsi dasar yang biasa digunakan di matematika, sebagai contoh fungsi trigonometri, telah terdefinisi dalam Julia sehingga dapat langsung diimplementasikan dalam proses komputasi. Apabila diperlukan bentuk fungsi yang belum termasuk dalam fungsi bawaan Julia, maka fungsi tersebut perlu didefinisikan terlebih dahulu sebelum dapat dimanfaatkan.
+
+Secara umum bentuk fungsi dalam Julia akan berupa suatu obyek yang memetakan seperangkat argumen bagi fungsi, untuk menghasilkan satu atau beberapa nilai bagi fungsi tersebut. Beberapa contoh berikut merupakan metode yang dapat dipilih untuk mendefinisikan suatu fungsi. Uraian lebih lengkap terkait fungsi dapat merujuk pada \href{https://docs.julialang.org/en/v1/manual/functions/\#Argument-Passing-Behavior}{Dokumen Fungsi}.
+
+\begin{verbatim}
+function f(x,y)  # mendefinisikan fungsi untuk perkalian variable x dan y
+    x * y
+end
+\end{verbatim}
+
+\begin{verbatim}
+f (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+f(2,4)
+\end{verbatim}
+
+\begin{verbatim}
+8
+\end{verbatim}
+
+\begin{verbatim}
+f(x,y) = x * y # cara lain mendefinisikan fungsi untuk perkalian variable x dan y
+\end{verbatim}
+
+\begin{verbatim}
+f (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+f(3,4)
+\end{verbatim}
+
+\begin{verbatim}
+12
+\end{verbatim}
+
+\subsection{Proses Bersyarat (\textit{Conditional})}
+
+Dalam proses komputasi, suatu evaluasi tertentu kadang perlu dilakukan ketika satu persyaratan dipenuhi dan sebaliknya, suatu evaluasi tersebut tidak perlu dilakukan ketika persyaratan tersebut tidak terpenuhi. Proses bersyarat seperti hal tersebut dapat diimplementasikan melalui sintak \texttt{if-elseif-else} seperti contoh berikut.
+
+\begin{verbatim}
+function hasil(x,y)
+    if (x < y)
+        x + y
+    elseif (x > y)
+        x - y
+    else
+        x * y
+    end
+end
+\end{verbatim}
+
+\begin{verbatim}
+hasil (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+hasil(3,5)
+\end{verbatim}
+
+\begin{verbatim}
+8
+\end{verbatim}
+
+\begin{verbatim}
+hasil(5,2)
+\end{verbatim}
+
+\begin{verbatim}
+3
+\end{verbatim}
+
+\begin{verbatim}
+hasil(5,5)
+\end{verbatim}
+
+\begin{verbatim}
+25
+\end{verbatim}
+
+\subsection{Proses Berulang (\textit{Looping})}
+
+Ketika suatu proses perlu dilakukan secara berulang maka perintah untuk proses tersebut akan menjadi panjang dan oleh karena itu diperlukan mekanisme untuk meringkas perintah dalam bentuk proses berulang (\textit{looping}). Proses \textit{looping} dapat diwujudkan dalam dua sintak yaitu \texttt{while-end}dan \texttt{for-end} seperti contoh berikut.
+
+\begin{verbatim}
+function total(i)
+    i = 1
+    while (i < 10)
+        i += 2
+        println(i)
+    end
+end
+\end{verbatim}
+
+\begin{verbatim}
+total (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+total(9)
+\end{verbatim}
+
+\begin{verbatim}
+3
+5
+7
+9
+11
+\end{verbatim}
+
+\begin{verbatim}
+function total(n)
+    for i = 1:n
+        j = i + 2
+        println(j)
+    end
+end
+\end{verbatim}
+
+\begin{verbatim}
+total (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+total(9)
+\end{verbatim}
+
+\begin{verbatim}
+3
+4
+5
+6
+7
+8
+9
+10
+11
+\end{verbatim}
+
+Dalam ungkapan di atas, notasi \textit{colon} yaitu \texttt{:} pada sintak \texttt{i = 1:n} mamiliki arti bahwa \textit{variable} \texttt{i} akan bernilai dari \texttt{1} hingga nilai \texttt{n}.
+
+\subsection{Penggunaan Modul Tambahan}
+
+Dalam beberapa keperluan, kadang diperlukan suatu operasi tertentu yang tidak termasuk dalam paket (\textit{library}) bawaan Julia. Sebagai contoh, keperluan penggunaan matrik Identitas \texttt{I} yang sering muncul dalam berbagai perhitungan aljabar linear ternyata tidak termasuk dalam \textit{library} bawaan. Untuk keadaan seperti hal tersebut maka diperlukan pemanggilan \textit{library} tambahan dengan menggunakan sintak \texttt{using}. Di dalam \href{https://docs.julialang.org/en/v1/stdlib/LinearAlgebra/}{Panduan Julia} akan dapat ditemukan bahwa matrik Identitas \texttt{I} termuat dalam \textit{library} yang disebut \texttt{LinearAlgebra}. Contoh berikut menunjukkan cara untuk memuat \textit{library} tambahan menggunakan perintak \texttt{using}.
+
+\begin{verbatim}
+using LinearAlgebra
+\end{verbatim}
+
+\begin{verbatim}
+A = rand(2,2)
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.952013  0.531056
+ 0.165779  0.591548
+\end{verbatim}
+
+\begin{verbatim}
+B = I * A
+\end{verbatim}
+
+\begin{verbatim}
+2 \times2 Matrix{Float64}:
+ 0.952013  0.531056
+ 0.165779  0.591548
+\end{verbatim}
+
+\subsection{Plot: Visualisasi Data}
+
+Hasil dari proses komputasi pada umumnya melibatkan banyak data dan memerlukan penanganan lebih lanjut terhadap data tersebut. Salah satu cara untuk penanganan data adalah dengan melakukan visualisasi berupa plot terhadap data tersebut. Julia memeiliki fasilitas ynag cukup lengkap untuk membangkitkan berbagai jenis plot sesuai karakteristik data. Berbagai implementasi perintah plot di dalam Julia dapat merujuk pada \href{https://docs.juliaplots.org/stable/}{Dokumen Plot}.
+
+Sintak untuk membangkitkan plot adalah dengan memuat \textit{library} yaitu \texttt{using Plots} dan dikuti dengan beberapa perintah tertentu. Berikut merupakan beberapa contoh berdasar dokumen tersebut.
+
+\begin{verbatim}
+using Plots
+\end{verbatim}
+
+\begin{verbatim}
+x = -pi:0.1:pi
+\end{verbatim}
+
+\begin{verbatim}
+-3.141592653589793:0.1:3.058407346410207
+\end{verbatim}
+
+\begin{verbatim}
+y = sin.(x);
+\end{verbatim}
+
+\begin{verbatim}
+plot(x,y)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/93d819a65e89d18b8eecaaa2b2b73cc0.png}

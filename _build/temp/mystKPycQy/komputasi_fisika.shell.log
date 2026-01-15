@@ -1,0 +1,116 @@
+Rc files read:
+  NONE
+Latexmk: This is Latexmk, John Collins, 15 June 2025. Version 4.87.
+No existing .aux file, so I'll make a simple one, and require run of *latex.
+Latexmk: applying rule 'xelatex'...
+Rule 'xelatex':  Reasons for rerun
+Category 'other':
+  Rerun of 'xelatex' forced or previously required:
+    Reason or flag: 'Initial setup'
+
+------------
+Run number 1 of rule 'xelatex'
+------------
+------------
+Running 'xelatex -no-pdf -synctex=1 -interaction=batchmode -file-line-error -shell-escape -recorder  "komputasi_fisika.tex"'
+------------
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex)
+ \write18 enabled.
+entering extended mode
+
+SyncTeX written on komputasi_fisika.synctex.gz.Latexmk: Getting log file 'komputasi_fisika.log'
+Latexmk: Examining 'komputasi_fisika.fls'
+Latexmk: Examining 'komputasi_fisika.log'
+Latexmk: References changed.
+Latexmk: Missing input file 'komputasi_fisika.toc' message in .log file:
+  No file komputasi_fisika.toc.
+Latexmk: References changed.
+Latexmk: Log file says output to 'komputasi_fisika.xdv'
+Latexmk: Using bibtex to make bibliography file(s).
+Latexmk: applying rule 'xelatex'...
+Rule 'xelatex':  Reasons for rerun
+Changed files or newly in use/created:
+  komputasi_fisika-materi.gerak-bandul-by-evaluasi-fungsi-julia.aux
+  komputasi_fisika-materi.masalah-syarat-awal-julia.aux
+  komputasi_fisika-materi.masalah-syarat-batas-julia.aux
+  komputasi_fisika-materi.pengantar-julia.aux
+  komputasi_fisika-materi.penyelesaian-pers-diffusi-julia.aux
+  komputasi_fisika-materi.period-of-pendulum-by-improper-integration-julia.aux
+  komputasi_fisika-materi.period-of-pendulum-by-proper-integration-julia.aux
+  komputasi_fisika-materi.pers-schrodinger-by-finite-diff-julia.aux
+  komputasi_fisika.aux
+  komputasi_fisika.out
+  komputasi_fisika.toc
+
+------------
+Run number 2 of rule 'xelatex'
+------------
+------------
+Running 'xelatex -no-pdf -synctex=1 -interaction=batchmode -file-line-error -shell-escape -recorder  "komputasi_fisika.tex"'
+------------
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex)
+ \write18 enabled.
+entering extended mode
+
+SyncTeX written on komputasi_fisika.synctex.gz.Latexmk: Getting log file 'komputasi_fisika.log'
+Latexmk: Examining 'komputasi_fisika.fls'
+Latexmk: Examining 'komputasi_fisika.log'
+Latexmk: Log file says output to 'komputasi_fisika.xdv'
+Latexmk: Using bibtex to make bibliography file(s).
+Latexmk: applying rule 'xelatex'...
+Rule 'xelatex':  Reasons for rerun
+Changed files or newly in use/created:
+  komputasi_fisika.aux
+
+------------
+Run number 3 of rule 'xelatex'
+------------
+------------
+Running 'xelatex -no-pdf -synctex=1 -interaction=batchmode -file-line-error -shell-escape -recorder  "komputasi_fisika.tex"'
+------------
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex)
+ \write18 enabled.
+entering extended mode
+
+SyncTeX written on komputasi_fisika.synctex.gz.Latexmk: Getting log file 'komputasi_fisika.log'
+Latexmk: Examining 'komputasi_fisika.fls'
+Latexmk: Examining 'komputasi_fisika.log'
+Latexmk: Log file says output to 'komputasi_fisika.xdv'
+Latexmk: Using bibtex to make bibliography file(s).
+Latexmk: applying rule 'xdvipdfmx'...
+Rule 'xdvipdfmx':  Reasons for rerun
+Changed files or newly in use/created:
+  komputasi_fisika.xdv
+Category 'changed_source_rules':
+  xelatex
+Category 'no_dest':
+  xdvipdfmx
+
+------------
+Run number 1 of rule 'xdvipdfmx'
+------------
+------------
+Running 'xdvipdfmx -E -o "komputasi_fisika.pdf"  "komputasi_fisika.xdv"'
+------------
+komputasi_fisika.xdv -> komputasi_fisika.pdf
+[1][2
+xdvipdfmx:warning: Object @page.i already defined.
+][3][4][5][6][7][8][9][10][11][12][13][14][15][16][17][18][19][20][21][22][23][24][25][26][27][28][29][30][31][32][33][34][35][36][37][38][39][40][41][42][43][44][45][46][47][48][49][50][51][52][53][54][55][56][57][58][59][60][61][62][63][64][65][66][67][68][69][70][71][72][73][74][75][76][77][78][79][80][81][82][83][84][85][86][87][88][89][90][91][92][93][94][95][96][97][98][99][100][101][102][103][104][105][106][107]
+1548049 bytes written
+Latexmk: Summary of warnings from last run of *latex:
+  =====Latex reported missing or unavailable character(s).
+=====See log file for details.
+Latexmk: ====Undefined refs and citations with line #s in .tex file:
+  Missing character: There is no … ("2026) in font ec-lmtt10!
+  Missing character: There is no … ("2026) in font ec-lmtt10!
+  Missing character: There is no … ("2026) in font ec-lmtt10!
+  Missing character: There is no … ("2026) in font ec-lmtt10!
+  Missing character: There is no … ("2026) in font ec-lmtt10!
+  Missing character: There is no … ("2026) in font ec-lmtt10!
+  Missing character: There is no … ("2026) in font ec-lmtt10!
+ And 613 more --- see log file 'komputasi_fisika.log'
+Latexmk: Errors, in force_mode: so I tried finishing targets
+Collected error summary (may duplicate other messages):
+  xelatex: Command for 'xelatex' gave return code 1
+      Refer to 'komputasi_fisika.log' and/or above output for details
+

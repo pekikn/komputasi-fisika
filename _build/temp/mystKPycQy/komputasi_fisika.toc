@@ -1,0 +1,106 @@
+\contentsline {section}{\numberline {0.1}Tinjauan Ringkas Bahasa Julia}{1}{section.0.1}%
+\contentsline {subsection}{\numberline {0.1.1}Dasar-dasar Julia}{1}{subsection.0.1.1}%
+\contentsline {subsection}{\numberline {0.1.2}Sintak untuk Komentar}{1}{subsection.0.1.2}%
+\contentsline {subsection}{\numberline {0.1.3}\textit {Variable}}{1}{subsection.0.1.3}%
+\contentsline {subsection}{\numberline {0.1.4}Bilangan Bulat dan Pecahan (\textit {Floating Point})}{2}{subsection.0.1.4}%
+\contentsline {subsubsection}{Bilangan Bulat}{2}{section*.2}%
+\contentsline {subsubsection}{Pecahan (\textit {Floating Point})}{2}{section*.3}%
+\contentsline {subsubsection}{Bilangan Kompleks dan Bilangan Rasional}{3}{section*.4}%
+\contentsline {subsection}{\numberline {0.1.5}Operasi Matematika dan Fungsi Dasar}{3}{subsection.0.1.5}%
+\contentsline {subsubsection}{Operasi \textit {Boolean} dan Perbandingan Numerik}{4}{section*.5}%
+\contentsline {subsubsection}{Operasi Pembaruan (\textit {updating})}{5}{section*.6}%
+\contentsline {subsection}{\numberline {0.1.6}\textit {Array}}{5}{subsection.0.1.6}%
+\contentsline {subsubsection}{Beberapa Fungsi Dasar}{5}{section*.7}%
+\contentsline {subsubsection}{Indeks dalam \textit {Array}}{6}{section*.8}%
+\contentsline {subsubsection}{Operasi Vektorisasi pada \textit {Array}}{7}{section*.9}%
+\contentsline {subsubsection}{Operasi \textit {Broadcasting}}{9}{section*.10}%
+\contentsline {subsection}{\numberline {0.1.7}Blok atau Gabungan Perintah}{9}{subsection.0.1.7}%
+\contentsline {subsection}{\numberline {0.1.8}Fungsi dalam Julia}{10}{subsection.0.1.8}%
+\contentsline {subsection}{\numberline {0.1.9}Proses Bersyarat (\textit {Conditional})}{10}{subsection.0.1.9}%
+\contentsline {subsection}{\numberline {0.1.10}Proses Berulang (\textit {Looping})}{11}{subsection.0.1.10}%
+\contentsline {subsection}{\numberline {0.1.11}Penggunaan Modul Tambahan}{11}{subsection.0.1.11}%
+\contentsline {subsection}{\numberline {0.1.12}Plot: Visualisasi Data}{12}{subsection.0.1.12}%
+\contentsline {section}{\numberline {0.2}Kasus Fisika Non Linear: Osilasi Bandul}{13}{section.0.2}%
+\contentsline {subsection}{\numberline {0.2.1}Implementasi Integrasi Numerik}{13}{subsection.0.2.1}%
+\contentsline {subsection}{\numberline {0.2.2}Periode Bandul pada Sebarang Simpangan ($T$)}{13}{subsection.0.2.2}%
+\contentsline {subsection}{\numberline {0.2.3}Pemanfaatan Besaran Fisis Tak Berdimensi}{14}{subsection.0.2.3}%
+\contentsline {subsection}{\numberline {0.2.4}Integrasi Numerik: Metode Simpson}{15}{subsection.0.2.4}%
+\contentsline {subsection}{\numberline {0.2.5}Algoritma Perhitungan Periode Bandul}{16}{subsection.0.2.5}%
+\contentsline {subsection}{\numberline {0.2.6}Integral Elliptik (\textit {Elliptic Integral})}{18}{subsection.0.2.6}%
+\contentsline {section}{\numberline {0.3}Kasus Fisika Non Linear: Osilasi Bandul}{19}{section.0.3}%
+\contentsline {subsection}{\numberline {0.3.1}Implementasi Kuadrature Numerik}{19}{subsection.0.3.1}%
+\contentsline {subsection}{\numberline {0.3.2}Metode Kuadratur Numerik: \textit {Gauss-Legendre}}{19}{subsection.0.3.2}%
+\contentsline {subsubsection}{Pengaturan Skala untuk Sebarang Batas Integral}{21}{section*.11}%
+\contentsline {subsection}{\numberline {0.3.3}Bentuk Lain Metode Kuadratur Numerik}{24}{subsection.0.3.3}%
+\contentsline {subsection}{\numberline {0.3.4}Implementasi Bentuk Kuadratur Numerik lainnya: \textit {Gauss-Chebyshev}}{25}{subsection.0.3.4}%
+\contentsline {section}{\numberline {0.4}Penyelesaian Persamaan Gerak Bandul}{27}{section.0.4}%
+\contentsline {subsection}{\numberline {0.4.1}Masalah Syarat Awal dengan Metode Runge-Kutta}{27}{subsection.0.4.1}%
+\contentsline {subsection}{\numberline {0.4.2}Metode Euler untuk Masalah Syarat Awal}{27}{subsection.0.4.2}%
+\contentsline {subsubsection}{Skema Eksplisit: Beda Maju (\textit {Forward Difference})}{27}{section*.12}%
+\contentsline {subsubsection}{Algoritma Penyelesaian Gerak Bandul dengan Skema Eksplisit}{28}{section*.13}%
+\contentsline {subsubsection}{Metode untuk Validasi Hasil}{28}{section*.14}%
+\contentsline {subsubsection}{Skema Implisit: Beda Mundur (\textit {Backward Difference})}{30}{section*.15}%
+\contentsline {subsubsection}{Skema Implisit: Beda Terpusat (\textit {Central Difference})}{33}{section*.16}%
+\contentsline {subsection}{\numberline {0.4.3}Metode Runge-Kutta}{34}{subsection.0.4.3}%
+\contentsline {subsubsection}{Runge-Kutta Orde 2}{34}{section*.17}%
+\contentsline {subsubsection}{Runge-Kutta Orde 4}{36}{section*.18}%
+\contentsline {section}{\numberline {0.5}Penyelesaian Persamaan Poisson}{39}{section.0.5}%
+\contentsline {subsection}{\numberline {0.5.1}Masalah Syarat Batas}{39}{subsection.0.5.1}%
+\contentsline {subsection}{\numberline {0.5.2}Penyelesaian dalam Ruang Satu Dimensi (1-D)}{39}{subsection.0.5.2}%
+\contentsline {subsection}{\numberline {0.5.3}Metode Beda Hingga (\textit {Finite Difference})}{40}{subsection.0.5.3}%
+\contentsline {subsection}{\numberline {0.5.4}Dekomposisi LU}{42}{subsection.0.5.4}%
+\contentsline {subsection}{\numberline {0.5.5}Metode Iterasi Gauss-Seidel}{46}{subsection.0.5.5}%
+\contentsline {subsubsection}{Penyelesaian berdasar bentuk eksplisit persamaan simultan untuk penentuan $V(r)$}{46}{section*.19}%
+\contentsline {subsubsection}{Penyelesaian berdasar bentuk eksplisit persamaan simultan untuk penentuan $\phi (r)$}{48}{section*.20}%
+\contentsline {subsection}{\numberline {0.5.6}Penyelesaian dalam Ruang Dua Dimensi (2-D)}{50}{subsection.0.5.6}%
+\contentsline {subsubsection}{Implementasi Syarat Batas}{51}{section*.21}%
+\contentsline {paragraph}{Pada titik-titik bagian dalam bidang}{51}{section*.22}%
+\contentsline {paragraph}{Pada titik-titik bagian tepi bidang}{51}{section*.23}%
+\contentsline {subparagraph}{Titik-titik di tepi kiri bidang}{51}{section*.24}%
+\contentsline {subparagraph}{Titik-titik di tepi kanan bidang}{51}{section*.25}%
+\contentsline {subparagraph}{Titik-titik di tepi bawah bidang}{51}{section*.26}%
+\contentsline {subparagraph}{Titik-titik di tepi atas bidang}{51}{section*.27}%
+\contentsline {paragraph}{Pada empat titik di pojok bidang}{51}{section*.28}%
+\contentsline {subparagraph}{Titik pojok kiri bawah bidang}{52}{section*.29}%
+\contentsline {subparagraph}{Titik pojok kanan atas bidang}{52}{section*.30}%
+\contentsline {subparagraph}{Titik pojok kanan bawah bidang}{52}{section*.31}%
+\contentsline {subparagraph}{Titik pojok kiri atas bidang}{52}{section*.32}%
+\contentsline {subsubsection}{Ungkapan Operasi Matrik}{52}{section*.33}%
+\contentsline {section}{\numberline {0.6}Penyelesaian Persamaan Schrodinger}{57}{section.0.6}%
+\contentsline {subsection}{\numberline {0.6.1}Implementasi Metode Beda Hingga (\textit {Finite Difference})}{57}{subsection.0.6.1}%
+\contentsline {subsection}{\numberline {0.6.2}Diagonalisasi Matrik: Penyelesaian Masalah Nilai \textit {Eigen}}{58}{subsection.0.6.2}%
+\contentsline {subsubsection}{Pencarian nilai \textit {eigen} untuk matrik tri-diagonal}{58}{section*.34}%
+\contentsline {subsubsection}{Pencarian fungsi \textit {eigen} untuk matrik tri-diagonal}{59}{section*.35}%
+\contentsline {paragraph}{Untuk $a^{'}_1=a_1; y^{'}_1=y_1$ dan $i=2,3,\cdots ,n$ lakukan}{59}{section*.36}%
+\contentsline {subsubsection}{Sumur Potensial Tak Berhingga}{60}{section*.37}%
+\contentsline {subsubsection}{Sumur Potensial Berhingga}{63}{section*.38}%
+\contentsline {subsubsection}{Sumur Bertanggul Potensial}{67}{section*.39}%
+\contentsline {subsubsection}{Pencarian nilai \textit {eigen} dan fungsi \textit {eigen} untuk sebarang bentuk matrik}{71}{section*.40}%
+\contentsline {paragraph}{Pencarian nilai \textit {eigen} untuk sebarang bentuk matrik}{73}{section*.41}%
+\contentsline {paragraph}{Pencarian fungsi \textit {eigen} untuk sebarang bentuk matrik}{76}{section*.42}%
+\contentsline {section}{\numberline {0.7}Gerak Bandul dengan Evaluasi Fungsi}{79}{section.0.7}%
+\contentsline {subsection}{\numberline {0.7.1}Latar Belakang}{79}{subsection.0.7.1}%
+\contentsline {subsection}{\numberline {0.7.2}Sistem Bandul}{79}{subsection.0.7.2}%
+\contentsline {subsection}{\numberline {0.7.3}Integral Eliptik}{80}{subsection.0.7.3}%
+\contentsline {subsection}{\numberline {0.7.4}Perhitungan Integral Eliptik}{80}{subsection.0.7.4}%
+\contentsline {subsection}{\numberline {0.7.5}Evaluasi Berdasar Kaitan Rekurensi}{80}{subsection.0.7.5}%
+\contentsline {subsection}{\numberline {0.7.6}Evaluasi Fungsi Integral Eliptik untuk Gerak Bandul}{81}{subsection.0.7.6}%
+\contentsline {subsubsection}{Evaluasi Integral Eliptik Lengkap Jenis Pertama dengan Metode Rekurensi}{82}{section*.43}%
+\contentsline {subsection}{\numberline {0.7.7}Evaluasi Integral Eliptik Tak Lengkap Jenis Pertama}{82}{subsection.0.7.7}%
+\contentsline {section}{\numberline {0.8}Penyelesaian Persamaan Diferensial Parsial Parabolik}{85}{section.0.8}%
+\contentsline {subsection}{\numberline {0.8.1}Implementasi untuk Persmaan Difusi Panas}{85}{subsection.0.8.1}%
+\contentsline {subsection}{\numberline {0.8.2}Penyelesaian Persamaan Difusi dengan Metode Beda Hingga}{86}{subsection.0.8.2}%
+\contentsline {subsubsection}{Ungkapan beda hingga (\textit {finite difference})}{87}{section*.44}%
+\contentsline {subsection}{\numberline {0.8.3}Penyelesaian dengan Metode Beda Hingga (\textit {Finite Difference})}{87}{subsection.0.8.3}%
+\contentsline {subsubsection}{Skema eksplisit}{87}{section*.45}%
+\contentsline {subsubsection}{Skema implisit}{88}{section*.46}%
+\contentsline {subsubsection}{Skema implisit Crank-Nicholson}{88}{section*.47}%
+\contentsline {subsection}{\numberline {0.8.4}Source code Skema Eksplisit}{89}{subsection.0.8.4}%
+\contentsline {subsection}{\numberline {0.8.5}Source code Skema Implisit}{91}{subsection.0.8.5}%
+\contentsline {subsection}{\numberline {0.8.6}Source code Skema Crank Nicholson}{94}{subsection.0.8.6}%
+\contentsline {subsection}{\numberline {0.8.7}Komputasi berdasar Ekponensial Matrik}{96}{subsection.0.8.7}%
+\contentsline {subsection}{\numberline {0.8.8}Komputasi Eksponensial Matrik}{97}{subsection.0.8.8}%
+\contentsline {subsubsection}{Metode dekomposisi matrik \textit {Suzuki-Trotter}}{98}{section*.48}%
+\contentsline {subsubsection}{Implementasi metode dekomposisi eksponensial matrik untuk persamaan difusi panas}{99}{section*.49}%
+\contentsline {subsubsection}{Pendekatan Suzuki-Trotter orde 1}{101}{section*.50}%
+\contentsline {subsubsection}{Pendekatan Suzuki-Trotter orde 2}{102}{section*.51}%

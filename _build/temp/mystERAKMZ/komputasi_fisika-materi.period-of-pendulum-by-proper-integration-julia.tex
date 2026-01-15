@@ -1,0 +1,332 @@
+\section{Kasus Fisika Non Linear: Osilasi Bandul}
+
+\subsection{Implementasi Integrasi Numerik}
+
+Persamaan gerak benda bermassa $m$ yang digantungkan pada seutas tali dengan panjang $l$ dan massa diabaikan, di bawah pengaruh medan gravitasi bumi $g$, adalah
+
+\begin{equation*}
+m\frac{d^2 x(t)}{dt^2}=-mg\sin\theta(t)
+\end{equation*}
+
+Dalam radian, mengingat $x(t)=l\theta(t)$ dengan $\theta(t)$ adalah sudut simpangan benda terhadap titik setimbang, maka persamaan gerak tersebut dapat dinyatakan dalam bentuk persamaan diferensial orde dua berikut
+
+\begin{equation}
+\frac{d^2\theta(t)}{dt^2}=-\frac{g}{l}\sin\theta(t)
+\end{equation}
+
+Penyelesaian persamaan diferensial tersebut secara analitik akan cukup sulit karena berbentuk nonlinear dalam $\theta(t)$. Untuk keadaan khusus, pada simpangan kecil sedemikian hingga $\sin\theta(t)\approx \theta(t)$ maka pers (1) di atas dapat didekati oleh bentuk
+
+\begin{equation}
+\frac{d^2\theta(t)}{dt^2}\approx-\frac{g}{l}\theta(t)=-\omega^2\theta(t)
+\end{equation}
+
+dengan
+
+\begin{equation}
+\omega=\frac{2\pi}{T}=\sqrt{\frac{g}{l}}
+\end{equation}
+
+Dengan demikian ungkapan periode bandul pada simpangan kecil, yang dinotasikan sebagai $T_0$ berbentuk
+
+\begin{equation}
+T_0=2\pi\sqrt{\frac{l}{g}}
+\end{equation}
+
+Pada simpangan kecil ini, umumnya terpenuhi saat simpangan $\theta<10^\circ$, maka penyelesaian pers (2) berbentuk
+
+\begin{equation}
+\theta(t)=\theta_0\cos(\omega t)
+\end{equation}
+
+Ungkapan tersebut diperoleh dengan asumsi syarat awal bahwa pada saat awal $t=0$ maka benda berada pada simpangan maksimum di $\theta=\theta_0$ dan kecepatan awal $\left[\frac{d\theta}{dt}\right]_{t=0}=0$.
+
+Untuk sebarang simpangan, yang tidak dibatasi pada simpangan kecil, penyelesaian pers (1) menjadi sulit untuk diperoleh secara analitik sehingga bentuk kompak penyelesaian simpangan seperti diberikan oleh pers (3) menjadi tidak berlaku. Oleh karena itu periode bandul pada sebarang simpangan ($T$) tidak dapat diperoleh berdasar pers (2c).
+
+\subsection{Periode Bandul pada Sebarang Simpangan ($T$)}
+
+Perhitungan periode bandul pada sebarang simpangan ($T$) dapat diperoleh dengan meninjau persamaan gerak bandul pada bentuk umum seperti disajikan oleh pers (1). Dengan mengalikan kedua ruas pada pers (1) di atas dengan $\frac{d\theta}{dt}$ dan kemudian melakukan intergrasi terhadap $dt$ maka diperoleh ungkapan
+
+\begin{equation*}
+\frac{d\theta}{dt}=\sqrt{\frac{2g}{l}}\sqrt{\cos\theta - \cos\theta_0}
+\end{equation*}
+
+Berdasar syarat awal tersebut, persamaan diferensial di atas dapat dinyatakan dalam ungkapan integral dalam bentuk
+
+\begin{equation}
+t=\sqrt{\frac{l}{2g}}\int_{\theta_0}^\theta\,\frac{d\theta}{\sqrt{\cos\theta-\cos\theta_0}}
+\end{equation}
+
+Periode $T$ dapat dipahami sebagai waktu yang ditempuh bagi benda untuk bergerak dari posisi $\theta_0$ dan berayun kembali ke posisi semula $\theta_0$. Dengan pengertian lain, periode $T$ adalah empat kali waktu yang diperlukan untuk bergerak dari $\theta=\theta_0$ menuju $\theta=0$. Berdasar pers(4) maka ungkapan bagi perhitungan periode T dapat dinyatakan dalam bentuk integral dalam bentuk
+
+\begin{equation}
+T=4\,\sqrt{\frac{l}{2g}}\int_0^{\theta_0}\,\frac{d\theta}{\sqrt{\cos\theta-\cos\theta_0}}
+\end{equation}
+
+Ungkapan integral tersebut berbentuk integral tak layak (\textit{improper integral}) akibat terjadinya singularitas (bernilai tak hingga) pada nilai integral di bagian batas atas integral, yaitu saat $\theta=\theta_0$. Perhitungan bagi nilai periode $T$ akibatnya menjadi sulit.
+
+Untuk mengatasi kesulitan ini maka bentuk integral tak layak (\textit{improper integral}) di atas perlu diubah menjadi integral layak (\textit{proper integral}). Didefinisikan peubah baru $\xi(t)$, yang dikaitkan oleh $\theta(t)$ melalui kaitan
+
+\begin{equation}
+\sin\xi(t)=\frac{\sin\frac{\theta(t)}{2}}{\sin\frac{\theta_0}{2}}
+\end{equation}
+
+Dalam peubah $\xi(t)$ maka ungkapan integral tak layak bagi periode $T$ akan berubah menjadi integral layak dalam bentuk
+
+\begin{equation}
+T=4\,\sqrt{\frac{l}{g}}\int_0^{\pi/2}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}
+\end{equation}
+
+dengan
+
+\begin{equation}
+k=\sin\frac{\theta_0}{2}
+\end{equation}
+
+Dengan demikian, ungkapan bentuk integral layak di atas dapat digunakan sebagai salah satu metode untuk memperoleh nilai periode bandul pada sebarang simpangan $T$.
+
+\subsection{Pemanfaatan Besaran Fisis Tak Berdimensi}
+
+Meskipun ungkapan dalam pers (7) dapat digunakan untuk pencarian periode $T$ berdasarkan perhitungan nilai integral, namun dari pertimbangan komputasi akan lebih menguntungkan apabila dapat diubah ke bentuk yang tidak melibatkan satuan dari besaran fisis yang terlibat. Dengan kata lain, bentuk tersebut perlu diubah ke dalam bentuk yang melibatkan besaran fisis yang tak berdimensi. Ada berbagai cara untuk mendapatkan bentuk tak berdimensi bagi ungkapan pers (7).
+
+Salah satu cara untuk mendapatkan ungkapan periode bandul yang tidak melibatkan besaran fisis adalah dengan membagi ungkapan periode bandul $T$ dalam pers (7) dengan ungkapan periode bandul pada simpangan kecil $T_0$ dalam pers (2c) dan menyebut sebagai periode bandul ternormalisir pada sebarang simpangan ($\tau$) dalam bentuk
+
+\begin{equation}
+\tau=\frac{T}{T_0}=\frac{4\,\sqrt{\frac{l}{g}}\int_0^{\pi/2}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}}{2\pi\sqrt{\frac{l}{g}}}=\frac{2}{\pi}\,\int_0^{\pi/2}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}
+\end{equation}
+
+Melakukan komputasi yang melibatkan besaran fisis tak berdimensi pada umumnya lebih menguntungkan karena nilai dari besaran yang terlibat berada pada rentang nilai yang lebih terukur, umumnya antara nilai 0 dan 1, sehingga kadang disebut sebagai satuan yang ternormalisir.
+
+\subsection{Integrasi Numerik: Metode Simpson}
+
+Berdasarkan pada prosedur yang telah diuraikan di atas, perhitungan nilai integral dapat dilakukan secara numerik dengan beberapa metode pendekatan perhitungan nilai integral, seperti metode Trapesium atau metode Simpson. Untuk pilihan metode Simpson, maka proses integrasi numerik bagi sebarang fungsi $f(x)$ akan memanfaatkan pendekatan deret fungsi di sekitar titik $x=x_1$ hingga orde 2 (kuadratis) dalam bentuk
+
+\begin{equation}
+f(x)\approx  f(x_1)+\frac{(x-x_1)}{1!}\left.\frac{df(x)}{dx}\right]_{x=x_1}+\frac{(x-x_1)^2}{2!}\left.\frac{d^2f(x)}{dx^2}\right]_{x=x_1}
+\end{equation}
+
+Berdasar ungkapan pendekatan deret tersebut maka diperoleh
+
+\begin{equation}
+f(x_1+h)\approx  f(x_1)+\frac{h}{1!}\left.\frac{df(x)}{dx}\right]_{x=x_1}+\frac{h^2}{2!}\left.\frac{d^2f(x)}{dx^2}\right]_{x=x_1}
+\end{equation}
+
+\begin{equation}
+f(x_1-h)\approx  f(x_1)-\frac{h}{1!}\left.\frac{df(x)}{dx}\right]_{x=x_1}+\frac{h^2}{2!}\left.\frac{d^2f(x)}{dx^2}\right]_{x=x_1}
+\end{equation}
+
+Apabila pers (11b) dikurangkan atau ditambahkan terhadap pers (11a) maka mudah ditunjukkan bahwa ungkapan berikut akan berlaku, yaitu
+
+\begin{equation}
+\left.\frac{df(x)}{dx}\right]_{x=x_1}\approx \frac{f(x_1+h)-f(x_1-h)}{2h}
+\end{equation}
+
+\begin{equation}
+\left.\frac{d^2f(x)}{dx^2}\right]_{x=x_1}\approx \frac{f(x_1+h)-2f(x_1)+f(x_1-h)}{h^2}
+\end{equation}
+
+Berdasar pers (12a) dan (12b) di atas maka pers (10) menjadi
+
+\begin{align}
+f(x)\approx  &f(x_1)+\frac{(x-x_1)}{1!}\left[\frac{f(x_1+h)-f(x_1-h)}{2h}\right]+\nonumber\\
+&\frac{(x-x_1)^2}{2!}\left[\frac{f(x_1+h)-2f(x_1)+f(x_1-h)}{h^2}\right]
+\end{align}
+
+Memanfaatkan pers (13) tersebut, tinjau masalah untuk menghitung pendekatan bagi nilai integral $I$ dari sebarang fungsi $f(x)$ dari batas integral $x=x_1 -h$ hingga $x=x_1+h$ seperti berikut
+
+\begin{align}
+I=&\int_{x_1-h}^{x_1+h} f(x) dx\approx\int_{x_1-h}^{x_1+h}\left\{f(x_1)+\frac{(x-x_1)}{1!}\left[\frac{f(x_1+h)-f(x_1-h)}{2h}\right]+\right.\nonumber\\
+&\left.\frac{(x-x_1)^2}{2!}\left[\frac{f(x_1+h)-2f(x_1)+f(x_1-h)}{h^2}\right]\right\}dx
+\end{align}
+
+Untuk penyederhaan bentuk ungkapan dan nantinya berguna pada langkah komputasi maka dapat diperkenalkan beberapa notasi yaitu $x_0=x_1 -h$ atau $x_1=x_0+h$ serta $x_2=x_1+h$. Dengan melakukan proses integrasi pada pers (14) maka diperoleh bentuk
+
+\begin{equation}
+I=\int_{x_0}^{x_2} f(x) dx\approx\frac{h}{3}\left[f(x_0)+4f(x_1)+f(x_2)\right]
+\end{equation}
+
+Secara umum, untuk batas integral dari $x=a$ hingga $x=b$ maka pendekatan bagi nilai integral dapat dilakukan dengan melakukan proses diskretisasi bagi peubah $x$ yaitu membagi rentang $x=a$ hingga $x=b$ menjadi $N$ bagian dengan lebar $h=\tfrac{b -a}{N}$ yang kecil dan $N$ adalah bilangan genap. Oleh karena itu dapat digunakan titik-titik diskret bagi $x$ dalam ungkapan
+
+\begin{equation*}
+x_0=a;\quad x_N=b; \quad x_i=x_0+ih; \quad i=1,2,3,\cdots, N-1;
+\end{equation*}
+
+Dengan titit-titik diskret tersebut maka integrasi numerik $I$ bagi sebarang fungsi $f(x)$, disebut sebagai metode Simpson, dapat ditulis dalam bentuk
+
+\begin{align}
+I&=\int_a^b\,f(x)dx=\int_{x_0}^{x_2}\,f(x)dx+\int_{x_2}^{x_4}\,f(x)dx+\cdots+\int_{x_{N-2}}^{x_N}\,f(x)dx\nonumber\\
+&\approx\frac{h}{3}\left[f(x_0)+4f(x_1)+f(x_2)\right]+\cdots+\frac{h}{3}\left[f(x_{N-2})+4f(x_{N-1})+f(x_N)\right]\nonumber\\
+&\approx\frac{h}{3}\left[f(x_0)+4f(x_1)+2f(x_2)+\cdots+4f(x_{N-1})+f(x_N)\right]\nonumber\\
+&\approx\frac{h}{3}\left[f(x_0)+f(x_N)+4\sum_{i=1,3,\cdots}^{N-1}f(x_i)+2\sum_{i=2,4,\cdots}^{N-2}f(x_i)\right]
+\end{align}
+
+\subsection{Algoritma Perhitungan Periode Bandul}
+
+Berawal dari keadaan diam di posisi simpangan maksimum tertentu $\theta_0$, dan pada nilai $l$ serta $g$ tertentu, maka prosedur untuk memperoleh periode dalam satuan ternormalisir $\tau$ adalah seperti berikut
+
+\begin{enumerate}
+\item Berikan nilai masukan $\theta_0$, dan oleh karenanya hitung nilai $k$ mellaui ungkapan pers (8)
+\item Hitung nilai integral $\int_0^{\pi/2}\,\frac{d\xi}{\sqrt{1 -k^2\sin^2\xi}}$ berdasar ungkapan pers (10)
+\item Nilai periode ternormalisir $\tau$ diperoleh melalui ungkapan pers (9)
+\end{enumerate}
+
+\begin{verbatim}
+using Plots
+using SpecialFunctions
+\end{verbatim}
+
+\begin{verbatim}
+function fung(x)
+    f = sin(x)
+    return f
+end
+\end{verbatim}
+
+\begin{verbatim}
+fung (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+function integsimpson(a, b, n)
+    h = (b - a) / n
+    sumodd = 0.0
+    nhalf = floor(Int, n / 2)
+    for i in 1:nhalf
+        xodd = a + (2 * i - 1) * h
+        sumodd += fung(xodd)
+    end
+    sumeven = 0.0
+    for i in 1:(nhalf - 1)
+        xeven = a + 2 * i * h
+        sumeven += fung(xeven)
+    end
+    integsimp = h * (fung(a) + 4.0 * sumodd + 2.0 * sumeven + fung(b)) / 3.0
+    return integsimp
+end
+\end{verbatim}
+
+\begin{verbatim}
+integsimpson (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+integsimpson(0,pi/3,100)
+\end{verbatim}
+
+\begin{verbatim}
+0.5000000000334054
+\end{verbatim}
+
+\begin{verbatim}
+cos(0) -cos(pi/3)
+\end{verbatim}
+
+\begin{verbatim}
+0.4999999999999999
+\end{verbatim}
+
+\begin{verbatim}
+function functional_bandul(k, a, b, n)
+    h = (b - a) / n
+    integ = 0.0
+    f = 1.0 / sqrt(1.0 - (k * sin(a))^2)
+    integ += h * f / 3.0
+    f = 1.0 / sqrt(1.0 - (k * sin(b))^2)
+    integ += h * f / 3.0
+    sumodd = 0.0
+    nhalf = floor(Int, n / 2)
+    for i in 1:nhalf
+        xodd = a + (2 * i - 1) * h
+        f = 1.0 / sqrt(1.0 - (k * sin(xodd))^2)
+        sumodd += f
+    end
+    sumeven = 0.0
+    for i in 1:(nhalf -1)
+        xeven = a + 2 * i * h
+        f = 1.0 / sqrt(1.0 - (k * sin(xeven))^2)
+        sumeven += f
+    end
+    integ += h * (4.0 * sumodd + 2.0 * sumeven) / 3.0
+    return integ
+end
+\end{verbatim}
+
+\begin{verbatim}
+functional_bandul (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+a = 0.0
+b = pi / 2.0
+theta0_val = pi / 200.0
+k_val = sin(theta0_val / 2.0)
+n_val = 100
+integ = functional_bandul(k_val, a, b, n_val)
+periode = 2.0 * integ / pi
+println("Periode: ", periode)
+\end{verbatim}
+
+\begin{verbatim}
+Periode: 1.0000154214748778
+\end{verbatim}
+
+\begin{verbatim}
+theta0 = range(pi / 200.0, stop=pi / 20.0, length=10)
+tau = zeros(10)
+n = 100
+for i in 1:10
+    k = sin(theta0[i] / 2.0)
+    integ = functional_bandul(k, a, b, n)
+    tau[i] = 2.0 * integ / pi
+end
+\end{verbatim}
+
+\begin{verbatim}
+plot(theta0, tau, xlabel="Simpangan Awal", ylabel="Periode Ternormalisir", title="Simpangan Awal vs Periode Ternormalisir", legend=false)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/7846fe2583732156cfb9719e2c2f3244.png}
+
+\subsection{Integral Elliptik (\textit{Elliptic Integral})}
+
+Ungkapan bentuk integral seperti diberikan oleh pers (7) atau pers (9) biasa disebut sebagai integral Elliptik lengkap jenis pertama (\href{https://en.wikipedia.org/wiki/Elliptic\_integral}{\textit{The complete Elliptic Integral of the first kind}}) yang didefinisikan sebagai:
+
+\begin{equation*}
+K(k)=\int_0^{\tfrac{\pi}{2}} \frac{d\theta}{\sqrt{1-k^2\sin^2\theta}}
+\end{equation*}
+
+Di dalam \texttt{Julia}, ungkapan tersebut difasilitasi \texttt{package SpecialFunctions}oleh  fungsi khas dengan nama panggilan \texttt{ellipk}.
+
+Untuk membandingkan hasil dari penggunaan integrasi numerik menggunakan metode Simpson yang diuraikan di atas dengan modul bawaan \texttt{Julia} yang difasilitasi oleh \texttt{ellipk} dapat ditunjukkan oleh \textit{source-code} berikut:
+
+\begin{verbatim}
+a = 0.0
+b = pi / 2.0
+theta0 = pi / 200.0
+k = sin(theta0 / 2.0)
+n = 100
+\end{verbatim}
+
+\begin{verbatim}
+100
+\end{verbatim}
+
+\begin{verbatim}
+hasil1 = functional_bandul(k, a, b, n)
+tau1 = 2.0 * hasil1 / pi
+println("Tau from Simpson method: ", tau1)
+\end{verbatim}
+
+\begin{verbatim}
+Tau from Simpson method: 1.0000154214748778
+\end{verbatim}
+
+\begin{verbatim}
+m = k * k
+hasil2 = ellipk(m)
+tau2 = 2.0 * hasil2 / pi
+println("Tau from SpecialFunctions.ellipk: ", tau2)
+\end{verbatim}
+
+\begin{verbatim}
+Tau from SpecialFunctions.ellipk: 1.0000154214748778
+\end{verbatim}

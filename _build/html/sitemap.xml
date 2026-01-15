@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:3000/sitemap_style.xsl" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://localhost:3000</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/pengantar-julia</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/period-of-pendulum-by-proper-integration-julia</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/period-of-pendulum-by-improper-integration-julia</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/masalah-syarat-awal-julia</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/masalah-syarat-batas-julia</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/pers-schrodinger-by-finite-diff-julia</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/gerak-bandul-by-evaluasi-fungsi-julia</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/materi/penyelesaian-pers-diffusi-julia</loc>
+  </url>
+</urlset>

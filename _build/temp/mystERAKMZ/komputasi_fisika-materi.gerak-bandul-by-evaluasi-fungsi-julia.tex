@@ -1,0 +1,314 @@
+\section{Gerak Bandul dengan Evaluasi Fungsi}
+
+\subsection{Latar Belakang}
+
+Ketika suatu model yang mewakili suatu sistem fisis dapat diselesaikan, pada umunya penyelesaian suatu sistem fisis tersebut berupa suatu fungsional, yaitu bentuk kompak (\textit{closed form}) yang melibatkan bentuk fungsi tertentu. Beberapa fungsi yang terlibat dalam penyelesaian boleh jadi berbentuk sederhana sehingga dapat langsung dimanfaatkan dalam perhitungan.
+
+Namun, fungsi yang terlibat dalam banyak penyelesaian kajian fisis ternyata tidak memiliki bentuk sederhana. Peran metode evaluasi fungsi  menjadi penting untuk kondisi seperti ini agar perilaku atau sifat penting  bagi fungsi dapat dipahami pada rentang peubah atau \textit{domain} yang ditinjau dan akibatnya pemanfaatan penyelesaian bagi sistem yang melibatkan perhitungan fungsi akan dapat diperoleh.
+
+\subsection{Sistem Bandul}
+
+Sebagai contoh maka dapat ditinjau suatu sistem bandul bermassa $m$ yang digantungkan pada seutas tali dengan panjang $l$ dan dipengaruhi oleh medan gravitasi bumi $g$. Salah satu bentuk penyelesaian gerak ayunan bandul pada simpangan $\theta$ pada waktu tertentu $t$ akan dapat dinyatakan sebagai ungkapan
+
+\begin{equation}
+t=\sqrt{\frac{l}{g}}\int_{\pi/2}^{\xi(\theta)}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}; \qquad k=\sin\frac{\theta_0}{2}
+\end{equation}
+
+Kaitan antara sudut simpangan $\theta$ terhadap peubah baru $\xi$ diberikan oleh kaitan
+
+\begin{equation}
+\sin\frac{\theta}{2}=k\sin{\xi}
+\end{equation}
+
+Berdasar ungkapan pers (1) maka periode bandul $T$ dapat diungkapkan dalam bentuk
+
+\begin{equation}
+T=4\,\sqrt{\frac{l}{g}}\int_0^{\pi/2}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}
+\end{equation}
+
+Dengan ungkapan periode bandul $T$ seperti diberikan pers (3) maka penyelesaian gerak bandul dalam pers (1) dapat diungkapkan dalam bentuk lain
+
+\begin{equation}
+t=\sqrt{\frac{l}{g}}\int_{\pi/2}^{\xi(\theta)}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}=\sqrt{\frac{l}{g}}\int_0^{\pi/2}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}-\sqrt{\frac{l}{g}}\int_0^{\xi(\theta)}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}
+\end{equation}
+
+Dengan ungkapan lain maka penyelesaian gerak bandul akan setara dengan bentuk
+
+\begin{equation}
+t=\frac{T}{4}-\sqrt{\frac{l}{g}}\int_0^{\xi(\theta)}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}
+\end{equation}
+
+Dalam satuan universal atau besaran waktu yang tak bersatuan yaitu $\tau=\tfrac{t}{T}$, ungkapan pers (4a) dapat dinyatakan dalam bentuk
+
+\begin{equation}
+\tau=\frac{1}{4}-\frac{1}{4}\frac{\int_0^{\xi(\theta)}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}}{\int_0^{\pi/2}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}}
+\end{equation}
+
+\subsection{Integral Eliptik}
+
+Istilah integral eliptik dikaitkan dengan fungsi yang didefinisikan dalam bentuk integral layak tertentu, seperti diuraikan secara detail pada tautan \href{https://en.wikipedia.org/wiki/Elliptic\_integral}{Integral Eliptik: Wikipedia} atau \href{https://functions.wolfram.com/EllipticIntegrals/EllipticF/introductions/IncompleteEllipticIntegrals/ShowAll.html}{Integral Eliptik: Wolfram}.
+
+Integral Eliptik tak-lengkap jenis pertama (\textit{Incomplete elliptic integral of the first kind}) $F(\theta_0,k)$ didefinisikan sebagai
+
+\begin{equation}
+F(\theta_0,k)=\int_0^{\theta_0}\,\frac{d\theta}{\sqrt{1-k^2\sin^2\theta}}
+\end{equation}
+
+Adapun integral Eliptik lengkap jenis pertama (\textit{Complete elliptic integral of the first kind}) K(k) didefinisikan sebagai
+
+\begin{equation}
+K(k)=\int_0^{\pi/2}\,\frac{d\theta}{\sqrt{1-k^2\sin^2\theta}}
+\end{equation}
+
+Berdasar definisi integral Eliptik tersebut maka penyelesaian gerak bandul dalam pers (4) dapat dinyatakan sebagai penyelesaian yang melibatkan fungsi dari integral Eliptik yaitu
+
+\begin{equation}
+\tau=\frac{1}{4}\left[1-\frac{F\left(\xi,k\right)}{K(k)}\right]
+\end{equation}
+
+Dengan pers (5) tersebut maka penyelesaian gerak bandul $\theta(t)$ beserta akan dapat ditentukan apabila evaluasi bagi fungsi integral Eliptik $F\left(\xi(\theta),k\right)$ beserta $K(k)$ berhasil dilakukan.
+
+\subsection{Perhitungan Integral Eliptik}
+
+Integral Eliptik merupakan salah satu fungsi khas (\textit{special functions}) yang sering muncul dalam penyelesaian berbagai kajian fisika. Pada umumnya, sifat-sifat dari fungsi khas dinyatakan dalam berbagai ungkapan antara lain dalam bentuk integral, ekspansi deret pangkat, kaitan rekurensi, bentuk asimtotik serta dalam penyajian fungsi khas lainnya.
+
+Ungkapan deret bagi integral Eliptik lengkap jenis pertama berbentuk
+
+\begin{equation}
+K(k)=\frac{\pi}{2}\sum_{n=0}^\infty\left(\frac{(2n)!}{2^{2n}(n!)^2}\right)^2 k^{2n}
+\end{equation}
+
+\begin{equation}
+K(k)=\frac{\pi}{2}\left[1+\left(\frac{1}{2}\right)^2 k^2+\left(\frac{1.3}{2.4}\right)^2 k^4+\cdots+\left(\frac{(2n-1)!!}{(2n)!!}\right)^2 k^{2n}+\cdots\right]
+\end{equation}
+
+Arti dari notasi faktorial ganda atau semifaktorial ($n!!$) pada pers (7b) dapat merujuk pada tautan \href{https://en.wikipedia.org/wiki/Double\_factorial}{Double Factorial}
+
+Ungkapan deret bagi integral Eliptik tak-lengkap jenis pertama memiliki bentuk yang beragam sesuai rentang nilai argumen $\theta_0$ dan $k$ yang diberikan.
+
+Dengan ungkapan pers (7a) maka periode bandul $T$ akan dapat diperoleh apabila evaluasi ungkapan deret bagi ntegral Eliptik lengkap jenis pertama tersebut.
+
+\subsection{Evaluasi Berdasar Kaitan Rekurensi}
+
+Selain ungkapan penyajian deret, beberapa penyelesaian permasalahan fisika sering melibatkan fungsi khas (\textit{special function}) yang disajikan dalam bentuk kaitan rekurensi. Sebagai contoh, bentuk fungsi gelombang yang merupakan penyelesaian bagi persamaan Schrodinger untuk sistem osilator harmonik dalam mekanika kuantum akan melibatkan fungsi khas yang disebut polinomial \textit{Hermite} $H_n(x)$ berorde $n$ dalam bentuk
+
+\begin{equation}
+\psi_n(x)=\frac{1}{\sqrt{2^n\,n!}}\left(\frac{m\omega}{\pi\hbar}\right)^{1/4}e^{-\frac{m\omega}{2\hbar}x^2}H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right); \quad n=0,1,2,\cdots
+\end{equation}
+
+Dalam ungkapan tersebut, $m$ adalah massa benda, $\hbar=h/2$ dengan $h$ adalah tetapan Planck dan $\omega$ adalah frekuensi osilasi (lihat di tautan \href{https://en.wikipedia.org/wiki/Quantum\_harmonic\_oscillator}{Quantum Harmonic Oscillator }).
+
+Polinomial \textit{Hermite} $H_n(x)$ berode $n$ (\href{https://en.wikipedia.org/wiki/Hermite\_polynomials}{Hermite polynomials}) dapat dinyatakan dalam ungkapan deret seperti berikut
+
+\begin{equation}
+H_n(x)=\begin{cases}
+    n!\sum_{j=0}^{\frac{n}{2}}\frac{(-1)^{\frac{n}{2}-j}}{(2j)!\left(\frac{n}{2}-j\right)!}(2x)^{2j}       & \quad \text{jika } n\, \text{genap}\\
+    n!\sum_{j=0}^{\frac{n-1}{2}}\frac{(-1)^{\frac{n-1}{2}-j}}{(2j+1)!\left(\frac{n-1}{2}-j\right)!}(2x)^{2j+1}  & \quad \text{jika } n\, \text{ganjil}
+  \end{cases}
+\end{equation}
+
+atau penyajian kaitan rekurensi seperti berikut
+
+\begin{equation}
+H_{n+1}(x)=2xH_n(x)-2nH_{n-1}(x)
+\end{equation}
+
+Secara umum, ketika dua bentuk polinomial \textit{Hermite} pada orde rendah diketahui yaitu $H_0(x)$ dan $H_1(x)$, maka perhitungan polinimial \textit{Hermite} pada sebarang $x$ dan sebarang orde $n$ akan lebih mudah dilakukan berdasar kaitan rekurensi dibanding dengan penyajian deret. Berdasar
+
+\subsection{Evaluasi Fungsi Integral Eliptik untuk Gerak Bandul}
+
+Ungkapan deret yang mewakili Integral  Eliptik lengkap jenis pertama, seperti diberikan oleh pars (7a) dan (7b), dapat dinyatakan dalam bentuk yang mirip pers (9) yaitu:
+
+\begin{equation}
+K(k)=\frac{\pi}{2}\sum_{n=0}^\infty a_i=\left(a_0+a_1 + a_2 +\cdots+a_n +\cdots\right)
+\end{equation}
+
+dengan koefisien $a_i$ diberikan oleh kaitan rekurensi berikut
+
+\begin{equation}
+a_i=\left[\frac{k(2i-1)}{2i}\right]^2\,a_{i-1}; \qquad a_0=1
+\end{equation}
+
+Dibanding pers (7a) dan (7b), nampak bahwa bentuk pangkat orde tinggi beserta faktorial pada pers (18) menjadi tidak nampak secara eksplisit.
+
+\textit{Source code} berikut adalah perhitungan nilai  $K(k)$  pada sebarang  $k$  berdasar implementasi ungkapan deret pers (18).
+
+\begin{verbatim}
+function my_ellipk(k)
+        ai = 1.0
+        sum = ai
+        for i in 1:19
+            ai *= (k * (2.0*i -1)/(2.0*i))^2
+            sum += ai
+        end
+        myseries = \pi * sum / 2.0
+        return myseries
+    end
+\end{verbatim}
+
+\begin{verbatim}
+my_ellipk (generic function with 1 method)
+\end{verbatim}
+
+Dengan membandingkan implementasi \textit{Source code} tersebut dengan package \texttt{SpecialFunctions} dalam Julia untuk fungsi Integral  Eliptik lengkap jenis pertama yaitu \texttt{ellipk} nampak bahwa hasil keduanya telah sesuai.
+
+\begin{verbatim}
+using SpecialFunctions
+
+k = 0.6
+m = k*k
+ellip = ellipk(m);
+eksak = my_ellipk(k);
+\end{verbatim}
+
+\begin{verbatim}
+ellip, eksak
+\end{verbatim}
+
+\begin{verbatim}
+(1.7507538029157526, 1.7507538028654843)
+\end{verbatim}
+
+\subsubsection{Evaluasi Integral Eliptik Lengkap Jenis  Pertama dengan Metode Rekurensi}
+
+Selain dapat disajikan dengan ungkapan deret, Integral Eliptik lengkap jenis pertama dapat dilakukan lebih efektif dengan memanfaatkan ungkapan rekursif. Bentuk integral eliptik lengkap jenis pertama $K(k)$ dapat dinyatakan dalam fungsi \href{https://en.wikipedia.org/wiki/Arithmetic\%E2\%80\%93geometric\_mean}{Arithmetic--Geometric Mean (AGM)}, yang dinotasikan oleh $M(x,y)$, oleh kaitan
+
+\begin{equation}
+K(k)=\frac{\pi}{2M(1,\sqrt{1-k^2})}
+\end{equation}
+
+Evaluasi fungsi AGM $M(x,y)$ didasarkan pada prosedur berikut:
+
+\begin{enumerate}
+\item Tinjau jajaran nilai-nilai $a_i$ dan $g_i$ untuk $i=0,1,2,\cdots$
+\item Mulai jajaran dengan $x$ dan $y$ yaitu $a_0=x$ dan $g_0=y$
+\item Lanjutkan jajaran berikutnya dengan kaitan rekurensi:
+
+\begin{itemize}
+\item $a_{i+1}=\frac{1}{2}\left(a_i+g_i\right)$
+\item $g_{i+1}=\sqrt{a_i g_i}$
+\end{itemize}
+
+
+\item Dua jajaran  $a_i$ dan $g_i$ akan konvergen pada satu nilai fungsi AGM yaitu  $M(x,y)$
+\end{enumerate}
+
+Dengan prosedur tersebut maka evaluasi fungsi $M(1,\sqrt{1 -k^2})$ untuk memperoleh nilai  Integral Eliptik lengkap jenis pertama seperti diberikan pers (20) adalah seperti berikut:
+
+\begin{verbatim}
+function my_ellipk_rekurensi(k)
+    a0 = 1.0
+    g0 = sqrt(1.0 - k^2)
+    for i in 1:10
+        ai = (a0 + g0) / 2.0
+        gi = sqrt(a0 * g0)
+        a0 = ai
+        g0 = gi
+    end
+    myrekur = \pi / (2.0 * a0)
+    return myrekur
+end
+\end{verbatim}
+
+\begin{verbatim}
+my_ellipk_rekurensi (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+myrekur=my_ellipk_rekurensi(k)
+\end{verbatim}
+
+\begin{verbatim}
+1.7507538029157523
+\end{verbatim}
+
+Nampak dari hasil di atas bahwa nilai $K(k)$ yang diperoleh berdasar metode deret serta metode rekurensi telah sesuai, namun metode rekurensi nampak lebih cepat untuk konvergen.
+
+\subsection{Evaluasi Integral Eliptik Tak Lengkap Jenis Pertama}
+
+Dalam masalah perhitungan periode bandul, evaluasi Integral Eliptik tak-lengkap jenis pertama (\textit{Incomplete elliptic integral of the first kind}) dilakukan dengan integrasi numerik yaitu metode Simpson. Untuk masalah gerak bandul, yaitu menentukan simpangan bandul sebagai fungsi waktu, evaluasi Integral Eliptik tak-lengkap jenis pertama perlu dilakukan beberapa kali sehingga penggunaan kuadratur numerik akan nampak lebih efisien. Ungkapan Integral Eliptik tak-lengkap jenis pertama $F(\xi,k)$ disajikan oleh pers (5a) yaitu:
+
+\begin{equation}
+F(\xi,k)=\int_0^{\xi}\,\frac{d\xi}{\sqrt{1-k^2\sin^2\xi}}
+\end{equation}
+
+Memanfaatkan uraian yang diberikan pada materi kuliah terdahulu terkait implementasi metode kuadratur numerik pada perhitungan periode bandul maka \textit{source-code} untuk perhitungan Integral Eliptik tak-lengkap jenis pertama $F(\xi,k)$ disajikan oleh pers (21) adalah seperti berikut:
+
+\begin{verbatim}
+using FastGaussQuadrature
+
+function fung(x, k)
+  return 1.0 / sqrt(1.0 - (k * sin(x))^2)
+end
+
+function my_ellip_in(xi, k)
+  n = 15
+  # Legendre -Gauss nodes and weights
+  x, c = gausslegendre(n)
+  a = 0.0
+  b = xi
+  sum = 0.0
+  for i in 1:n
+    y = (b - a) * x[i] / 2.0 + (b + a) / 2.0
+    sum += c[i] * fung(y, k)
+  end
+  my_quad = (b - a) * sum / 2.0
+  return my_quad
+end
+\end{verbatim}
+
+\begin{verbatim}
+my_ellip_in (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+using EllipticFunctions
+
+const pi = \pi
+theta0 = pi/4.0
+k = sin(theta0/2.0)
+theta = pi/6.0
+p = sin(theta/2.0)
+xi = asin(p/k)
+m = k*k
+
+inc_ellip = ellipticF(xi, m);
+hasil = my_ellip_in(xi, k);
+\end{verbatim}
+
+\begin{verbatim}
+inc_ellip, hasil
+\end{verbatim}
+
+\begin{verbatim}
+(0.7520103018323488 - 0.0im, 0.7520103018323493)
+\end{verbatim}
+
+Nampak dari hasil di atas bahwa nilai $F(\xi,k)$ yang diperoleh berdasar metode kuadratur numerik dibanding fungsi \texttt{ellipticF} dari package \texttt{EllipticFunctions} dalam Julia telah sesuai.
+
+Dengan evaluasi fungsi-fungsi tersebut maka penyelesaian gerak baandul melalui perhitungaan waktu $\tau$ sebagai fungsi simpangan $theta$, dan inversnya yaitu $\theta$ sebagai fungsi waktu $\tau$, akan dapat diperoleh.
+
+\begin{verbatim}
+n = 30
+theta = range(pi/n, pi/4, length=n)
+tau = zeros(n)
+eksak = zeros(n)
+theta0 = pi/3.0
+k = sin(theta0/2.0)
+for i in 1:n
+    p = sin(theta[i]/2.0)
+    xi = asin(p/k)
+    inc_ellip = my_ellip_in(xi, k)
+    ellip = my_ellipk_rekurensi(k)
+    tau[i] = 0.25 * (1.0 - inc_ellip / ellip)
+    eksak[i] = theta0 * cos(2 * pi * tau[i])
+end
+
+using Plots
+plot(tau, theta, label="theta")
+plot!(tau, eksak, label="eksak")
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/8379bf0dc08fe391bca78c363388777f.png}
+
+Dari plot di atas nampak bahwa hasil penyelesaian gerak berdasar evaluasi fungsi telah sesuai dengan hasil eksak yang diperoleh saat sudut simpangan awal kecil. Dengan demikian hasil penyelesaian gerak berdasar evaluasi fungsi dapat digunakan untuk sebarang simpangan.

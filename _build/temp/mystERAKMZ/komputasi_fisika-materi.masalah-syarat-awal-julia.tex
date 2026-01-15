@@ -1,0 +1,551 @@
+\section{Penyelesaian Persamaan Gerak Bandul}
+
+\subsection{Masalah Syarat Awal dengan Metode Runge-Kutta}
+
+Persamaan gerak benda bermassa $m$ yang digantungkan pada seutas tali dengan panjang $l$ dan massa diabaikan, di bawah pengaruh medan gravitasi bumi $g$, adalah
+
+\begin{equation}
+m\frac{d^2 x(t)}{dt^2}=-mg\sin\theta(t)
+\end{equation}
+
+Dalam radian, mengingat $x(t)=l\theta(t)$ dengan $\theta(t)$ adalah sudut simpangan benda terhadap titik setimbang, maka persamaan gerak tersebut dapat dinyatakan dalam bentuk persamaan diferensial orde dua berikut
+
+\begin{equation}
+\frac{d^2\theta(t)}{dt^2}=-\frac{g}{l}\sin\theta(t)
+\end{equation}
+
+Diambil satuan universal atau besaran tak berdimensi bagi besaran waktu yaitu
+
+\begin{equation}
+\tau=\frac{t}{\omega_0}
+\end{equation}
+
+Dalam satuan universal tersebut maka persamaan gerak bagi bandul akan dapat diungkapkan dalam bentuk berikut.
+
+\begin{equation}
+\frac{d^2\theta(\tau)}{d\tau^2}=-\sin\theta(\tau)
+\end{equation}
+
+Penyelesaian persamaan diferensial tersebut secara analitik akan cukup sulit karena berbentuk nonlinear dalam $\theta(\tau)$. Untuk keadaan khusus, pada simpangan kecil sedemikian hingga $\sin\theta(\tau)\approx \theta(\tau)$ maka pers (4) di atas dapat didekati oleh bentuk
+
+\begin{equation}
+\frac{d^2\theta(\tau)}{d\tau^2}\approx-\theta(\tau)
+\end{equation}
+
+Pada simpangan kecil ini, umumnya terpenuhi saat simpangan $\theta<10^\circ$, maka penyelesaian pers (5) berbentuk
+
+\begin{equation}
+\theta(\tau)=\theta_0\cos(\tau)+v_0\sin(\tau)
+\end{equation}
+
+Ungkapan tersebut diperoleh dengan asumsi syarat awal bahwa pada saat awal $\tau=0$ maka benda berada pada sudut simpangan maksimum di $\theta=\theta_0$ dan kecepatan sudut awal $\left[\frac{d\theta}{d\tau}\right]_{\tau=0}=v_0=0$.
+
+Untuk sebarang simpangan, yang tidak dibatasi pada simpangan kecil, penyelesaian pers (4) menjadi sulit untuk diperoleh secara analitik sehingga bentuk kompak penyelesaian simpangan seperti diberikan oleh pers (6) menjadi tidak berlaku. Salah satu metode untuk penyelesaian persamaan gerak pada sebarang sudut simpangan tersebut adalah dengan menggunakan metode Euler.
+
+\subsection{Metode Euler untuk Masalah Syarat Awal}
+
+\subsubsection{Skema Eksplisit: Beda Maju (\textit{Forward Difference})}
+
+Masalah sayrat awal merupakan suatu bentuk permasalahan ketika informasi terkait sistem fisis pada keadaan tertentu yaitu pada keadaan awal atau saat waktu $\tau=0$ telah diketahui dan kemudian diinginkan informasi terkait sistem fisis tersebut pada sebarang waktu $\tau$.
+
+Untuk sistem bandul yang telah diuraikan di atas maka diasumsikan bahwa nilai sudut simpangan dan kecepatan sudut pada saat waktu $\tau=0$ secara berurutan adalah $\theta_0$ dan $v_0$.  Persamaan gerak bandul seperti diberikan oleh pers (4) dapat ditulis ulang dalam bentuk berikut.
+
+\begin{align}
+\frac{dv(\tau)}{d\tau}&=-\sin\theta(\tau)\\
+\frac{d\theta(\tau)}{d\tau}&=v(\tau)
+\end{align}
+
+Memanfaatkan salah satu bentuk pendekatan beda hingga (\textit{finite difference}) yaitu beda maju (\textit{forward difference}), ungkapan persamaan diferensial orde satu pada pers (7) dan (8) tersebut akan dapat dinyatakan sebagai bentuk persamaan beda hingga seperti berikut.
+
+\begin{align}
+\left[\frac{dv(\tau)}{d\tau}\right]_{\tau=0}&\approx\frac{v_1-v_0}{\Delta \tau}=-\sin\theta_0 &\Longrightarrow v_1&=v_0-\Delta \tau\sin\theta_0\\
+\left[\frac{d\theta(\tau)}{d\tau}\right]_{\tau=0}&\approx\frac{\theta_1-\theta_0}{\Delta \tau}=v_0 &\Longrightarrow \theta_1&=\theta_0+\Delta \tau\,v_0
+\end{align}
+
+Berdasar ungkapan tersebut maka bentuk umum metode Euler skema eksplisit adalah seperti berikut.
+
+\begin{align}
+v_i&=v_{i-1}-\Delta \tau\sin\theta_{i-1}\\
+\theta_i&=\theta_{i-1}+\Delta \tau\,v_{i-1};\qquad i=1,2,3,\cdots,N
+\end{align}
+
+Dalam ungkapan tersebut, $\Delta\tau=\tau_i -\tau_{i -1}$, $v_i\equiv v(\tau_i)$ dan $\theta_i\equiv \theta(\tau_i)$.
+
+Metode tersebut disebut sebagai metode Euler skema eksplisit karena nilai $v_i$ dan $\theta_i$ dapat langsung diperoleh ketika nilai-nilai sebelumnya yaitu $v_{i -1}$ dan $\theta_{i -1}$ telah diketahui.
+
+\subsubsection{Algoritma Penyelesaian Gerak Bandul dengan Skema Eksplisit}
+
+Berawal dari keadaan nilai sudut simpangan $\theta_0$ dan kecepatan sudut $v_0$,  maka prosedur untuk memperoleh sudut  simpangan dan kecepatan sudut pada sebarang nilai $\tau$ adalah seperti berikut
+
+\begin{enumerate}
+\item Berikan nilai masukan $\theta_0$, $v_0$ dan $\Delta \tau$
+\item Hitung nilai sudut simpangan $\theta_1$ dan kecepatan sudut $v_1$ berdasar ungkapan pers (11) dan (12)
+\item Ulangi langkah pada butir 2 untuk memperoleh  sudut simpangan $\theta_i$ dan kecepatan sudut $v_i$ himgga $i=N$
+\end{enumerate}
+
+\subsubsection{Metode untuk Validasi Hasil}
+
+Salah satu cara untuk melekukan pengecekan bahwa hasil komputasi terkait persamaan gerak bandul telah valid atau sahih adalah dengan memantau nilai tenaga total $E$ pada sebarang waktu $\tau$. Sistem bandul merupakan sistem konservatif, yaitu tenaga total sistem akan konstan, tidak bergantung pada waktu $\tau$. Dengan demikian kriteria bahwa hasil komputasi adalah akurat apabila nilai tenaga total $E$ tidak berubah secara signifikan pada sebarang waktu $\tau$. Ungkapan tenaga total $E$ untuk sistem bandul memiliki bentuk berikut.
+
+\begin{equation}
+E=\frac{1}{2}v^2(\tau)+\left[1-\cos\theta(\tau)\right]
+\end{equation}
+
+\begin{verbatim}
+function bandul_eksplisit(tmax, N, theta0, omega0)
+    tau = range(0.0, tmax, length=N)
+    dtau = tau[2] - tau[1]
+    theta = zeros(N)
+    omega = zeros(N)
+    tenaga = zeros(N)
+    theta[1] = theta0
+    omega[1] = omega0
+    tenaga[1] = omega[1]^2/2.0 + (1.0 - cos(theta[1]))
+    for i in 1:N -1
+        theta[i+1] = theta[i] + dtau * omega[i]
+        omega[i+1] = omega[i] - dtau * sin(theta[i])
+        tenaga[i+1] = omega[i+1]^2/2.0 + (1.0 - cos(theta[i+1]))
+    end
+    return tau, theta, omega, tenaga
+end
+\end{verbatim}
+
+\begin{verbatim}
+bandul_eksplisit (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+tmax=10
+N=100
+theta0=pi/10.0
+omega0=0.0
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+tau,theta,omega,tenaga=bandul_eksplisit(tmax,N,theta0,omega0)
+\end{verbatim}
+
+\begin{verbatim}
+(0.0:0.10101010101010101:10.0, [0.3141592653589793, 0.3141592653589793, 0.3110063524483075, 0.3047005266269638, 0.29527239833619856, 0.28278328126894625, 0.2673250746124124, 0.24901991904969323, 0.22801960513309752, 0.20450470874556503  …  -0.44405884262299766, -0.4654630821405065, -0.4824840118825318, -0.49492544293918167, -0.5026328565022818, -0.5054941722991326, -0.5034403322627302, -0.49644577323628464, -0.4845288402578027, -0.46775216450238594], [0.0, -0.031213837815651253, -0.062427675631302505, -0.093338470078576, -0.1236422589657976, -0.15303624589968512, -0.18122104007091971, -0.20790310777429744, -0.23279747423657177, -0.25563068977245124  …  -0.21190197122333776, -0.16850720444605033, -0.12317016746083372, -0.07630339427469207, -0.028327026388823208, 0.020333016360384343, 0.06924613436181111, 0.11797763648697143, 0.16608908997862598, 0.21313873487721163], [0.04894348370484647, 0.04943063554043736, 0.0499225161461032, 0.05041919539439044, 0.05092079432829728, 0.05142750495576389, 0.051939598472644774, 0.05245741888035964, 0.05298136111939615, 0.0535118353157959  …  0.11943582851425907, 0.1205835257895263, 0.12174032259405235, 0.1229069796347991, 0.12408394718016501, 0.12527143243788688, 0.12646952504453202, 0.1276783590095043, 0.12889828338927356, 0.1301300113871556])
+\end{verbatim}
+
+\begin{verbatim}
+using Plots
+
+plot(tau,[theta,omega,tenaga], label=[" \theta (rad)" " \omega (rad/s)" "E (J)"], xlabel="t (s)", ylabel="Nilai", title="Metode Euler: skema Forward Difference", lw=2)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/730da81d44f1e73519941cad253c907d.png}
+
+\begin{verbatim}
+tmax=10
+N=100000
+theta0=pi/10.0
+omega0=0.0
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+tau,theta,omega,tenaga=bandul_eksplisit(tmax,N,theta0,omega0)
+\end{verbatim}
+
+\begin{verbatim}
+(0.0:0.0001000010000100001:10.0, [0.3141592653589793, 0.3141592653589793, 0.3141592622687476, 0.3141592560882841, 0.3141592468175889, 0.314159234456662, 0.31415921900550353, 0.3141592004641136, 0.3141591788324924, 0.31415915411064005  …  -0.27404650781317896, -0.2740312267233172, -0.27401594292710985, -0.274000656424704, -0.2739853672162468, -0.2739700753018854, -0.273954780681767, -0.2739394833560388, -0.273924183324848, -0.273908880588342], [0.0, -3.090200845757932e -5, -6.180401691515864e -5, -9.270602507883651e -5, -0.0001236080326547115, -0.00015451003934888215, -0.00018541204486744703, -0.00021631404891650472, -0.00024721605120215376, -0.00027811805143049273  …  0.152809370508403, 0.15283643369390992, 0.1528634954083134, 0.15289055565134657, 0.15291761442274257, 0.15294467172223458, 0.1529717275495558, 0.15299878190443936, 0.15302583478661846, 0.15305288619582635], [0.04894348370484647, 0.048943484182313535, 0.048943484659780594, 0.04894348513724762, 0.04894348561471477, 0.04894348609218183, 0.048943486569648906, 0.04894348704711591, 0.04894348752458309, 0.048943488002050096  …  0.04899167387896488, 0.048991674357571915, 0.04899167483617959, 0.04899167531478767, 0.04899167579339621, 0.04899167627200536, 0.048991676750614825, 0.04899167722922493, 0.048991677707835427, 0.04899167818644651])
+\end{verbatim}
+
+\begin{verbatim}
+plot(tau,[theta,omega,tenaga], label=[" \theta (rad)" " \omega (rad/s)" "E (J)"], xlabel="t (s)", ylabel="Nilai", title="Metode Euler: skema Forward Difference", lw=2)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/1b17632c776d0f524e34047c97ceafff.png}
+
+Dua hasil pada nilai $\Delta\tau$ yang berbeda di atas menunjukkan bahwa hasil komputasi persamaan gerak bandul dengan metode Euler skema eksplisit akan sahih dan teliti ketika nilai $\Delta\tau$ adalah begitu kecil. Ketika $\Delta\tau$ tidak cukup kecil maka hasil komputasi menjadi kurang sahih karena nilai tenaga total $E$ nampak tidak konstan. Hasil ini merupakan indikator bahwa metode Euler skema eksplisit memiliki kelemahan yaitu berpotensi untuk tidak stabil.
+
+\subsubsection{Skema Implisit: Beda Mundur (\textit{Backward Difference})}
+
+Upaya unuk mencapai hasil komputasi yang stabil akan dapat dilakukan dengan menggunakan metode Euler skema implisit. Berbeda dengan metode Euler skema eksplisit yang memanfaatkan pendekatan beda maju (\textit{forward difference}), maka metode Euler skema impisit akan memanfaatkan pendekatan beda mundur (\textit{backward difference}) bagi operasi diferensial orde satu dalam bentuk berikut.
+
+\begin{align}
+\left[\frac{dv(\tau)}{d\tau}\right]_{\tau=\tau_1}&\approx\frac{v_1-v_0}{\Delta \tau}=-\sin\theta_1 &\Longrightarrow v_1&=v_0-\Delta \tau\sin\theta_1\\
+\left[\frac{d\theta(\tau)}{d\tau}\right]_{\tau=\tau_1}&\approx\frac{\theta_1-\theta_0}{\Delta \tau}=v_1 &\Longrightarrow \theta_1&=\theta_0+\Delta \tau\,v_1
+\end{align}
+
+Berdasar ungkapan tersebut maka bentuk umum metode Euler skema implisit adalah seperti berikut.
+
+\begin{align}
+v_i&=v_{i-1}-\Delta \tau\sin\theta_i\\
+\theta_i&=\theta_{i-1}+\Delta \tau\,v_i;\qquad i=1,2,3,\cdots,N
+\end{align}
+
+Metode tersebut disebut sebagai metode Euler skema implisit karena nilai $v_i$ dan $\theta_i$ tidak otomatis dapat langsung diperoleh ketika nilai-nilai sebelumnya yaitu $v_{i -1}$ dan $\theta_{i -1}$ telah diketahui.
+
+Salah satu cara untuk mendapatkan nilai $v_i$ dan $\theta_i$ berdasar metode Euler skema implisit tersebut adalah dengan memanfaatkan pencarian akar suatu fungsi (\textit{root finding}) atau pencarian titik nol (\textit{zeros}) menggunakan metode Newton-Raphson.
+
+Bentuk fungsi yang akan digunakan dalam proses pencarian akar dapat disusun dengan mensubstitusikan pers (16) ke pers (17) sehingga diperoleh ungkapan seperti berikut.
+
+\begin{equation}
+\theta_i=\theta_{i-1}+\Delta \tau\left(v_{i-1}-\Delta \tau\sin\theta_i\right)
+\end{equation}
+
+Atau dapat ditulis ulang dalam bentuk:
+
+\begin{equation}
+f(\theta_i)=\theta_i+\Delta \tau^2\sin\theta_i-\Delta \tau v_{i-1}-\theta_{i-1}=0
+\end{equation}
+
+Penggunaan metode Newton-Raphson dapat memanfaatkan \textit{source code} yang telah disampaikan pada materi kuliah atau menggunakan modul Scipy yaitu scipy.optimize.newton.
+
+Nilai coba $\theta_i$, yaitu $\theta_i^0$ yang diperlukan untuk menjalankan metode Newton-Raphson dapat dipilih dari penyelesaian saat simpangan kecil seperti diberikan oleh pers (6) yaitu
+
+\begin{equation*}
+\theta_i^0=\theta_0\cos(\tau_i)+v_0\sin(\tau_i)
+\end{equation*}
+
+\begin{verbatim}
+using Roots
+
+function bandul_implisit(tmax, N, theta0, omega0)
+    tau = range(0.0, tmax, length=N)
+    dtau = tau[2] - tau[1]
+    theta = zeros(N)
+    omega = zeros(N)
+    tenaga = zeros(N)
+    theta[1] = theta0
+    omega[1] = omega0
+    tenaga[1] = omega[1]^2/2.0 + (1.0 - cos(theta[1]))
+    for i in 1:N -1
+        x_init = theta0 * cos(tau[i+1]) + omega0 * sin(tau[i+1])
+        x0 = theta[i]
+        v0 = omega[i]
+        f(x) = x + dtau^2 * sin(x) - dtau * v0 - x0
+        df(x) = 1.0 + dtau^2 * cos(x)
+        theta[i+1] = find_zero((f, df), x_init, Roots.Newton())
+        omega[i+1] = omega[i] - dtau * sin(theta[i+1])
+        tenaga[i+1] = omega[i+1]^2/2.0 + (1.0 - cos(theta[i+1]))
+    end
+    return tau, theta, omega, tenaga
+end
+\end{verbatim}
+
+\begin{verbatim}
+bandul_implisit (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+tmax=10
+N=100
+theta0=pi/10.0
+omega0=0.0
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+tau,theta,omega,tenaga=bandul_implisit(tmax,N,theta0,omega0)
+\end{verbatim}
+
+\begin{verbatim}
+(0.0:0.10101010101010101:10.0, [0.3141592653589793, 0.31103666841500766, 0.30485161220506607, 0.2956933574836417, 0.28367937524914233, 0.2689542065467442, 0.2516880807139795, 0.2320752794297214, 0.21033223809381754, 0.1866953826427497  …  -0.183584270046838, -0.189490659850576, -0.19343570236361185, -0.19539973600462565, -0.19538292899322432, -0.19340508129314804, -0.1895052559264344, -0.18374124211598217, -0.17618885253852928, -0.1669410572386985], [0.0, -0.03091370974531898, -0.06123205647842167, -0.09066672174210116, -0.1189384241215436, -0.14577917015374187, -0.17093464574437048, -0.19416673271415544, -0.2152561092254482, -0.2340048689655714  …  -0.07749938999808642, -0.058473259057006316, -0.03905592087905503, -0.019443933046036522, 0.00016638941287319686, 0.019580692230755318, 0.03860827113046483, 0.057063736723476935, 0.07476865681678335, 0.09155317346832458], [0.04894348370484647, 0.04846101516342059, 0.047983180461970025, 0.04750990151816244, 0.047041055176419655, 0.046576467950376975, 0.046115923015143105, 0.04565917845151912, 0.04520599385235641, 0.04475616096776207  …  0.019807393609626165, 0.0196092598608694, 0.019413104844114303, 0.019218897555275272, 0.0190266150432537, 0.018836238241621086, 0.0186477475507732, 0.018461119023112302, 0.018276321860326173, 0.018093317680765313])
+\end{verbatim}
+
+\begin{verbatim}
+plot(tau,[theta,omega,tenaga], label=[" \theta (rad)" " \omega (rad/s)" "E (J)"], xlabel="t (s)", ylabel="Nilai", title="Metode Euler: skema Backward Difference", lw=2)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/82d250dd116f38199e5659497a61a190.png}
+
+\begin{verbatim}
+tmax=10
+N=100000
+theta0=pi/10.0
+omega0=0.0
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+tau,theta,omega,tenaga=bandul_implisit(tmax,N,theta0,omega0)
+\end{verbatim}
+
+\begin{verbatim}
+(0.0:0.0001000010000100001:10.0, [0.3141592653589793, 0.3141592622687476, 0.3141592560882842, 0.3141592468175893, 0.3141592344566629, 0.3141592190055052, 0.31415920046411633, 0.31415917883249656, 0.3141591541106461, 0.31415912629856524  …  -0.2737650195925278, -0.2737497490194999, -0.2737344757431305, -0.2737191997635666, -0.27370392108095537, -0.2736886396954439, -0.2736733556071793, -0.27365806881630883, -0.27364277932297965, -0.2736274871273391], [0.0, -3.090200816367788e -5, -6.180401573955288e -5, -9.270602243372358e -5, -0.00012360802795228855, -0.0001545100320013464, -0.0001854120342869957, -0.0002163140345153351, -0.0002472160323924632, -0.00027811802762447866  …  0.15267716860598687, 0.15270420322153216, 0.15273123636660363, 0.15275826804093467, 0.15278529824425877, 0.15281232697630934, 0.15283935423681988, 0.15286638002552388, 0.15289340434215482, 0.1529204271864462], [0.04894348370484647, 0.04894348322737939, 0.048943482749912254, 0.048943482272445306, 0.04894348179497821, 0.04894348131751115, 0.04894348084004415, 0.0489434803625771, 0.04894347988511005, 0.04894347940764306  …  0.048895340151033896, 0.04889533967334518, 0.04889533919565606, 0.04889533871796639, 0.0488953382402762, 0.04889533776258566, 0.048895337284894494, 0.04889533680720297, 0.04889533632951087, 0.04889533585181831])
+\end{verbatim}
+
+\begin{verbatim}
+plot(tau,[theta,omega,tenaga], label=[" \theta (rad)" " \omega (rad/s)" "E (J)"], xlabel="t (s)", ylabel="Nilai", title="Metode Euler: skema Backward Difference", lw=2)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/533abdf90b6789858c3f08192f69af96.png}
+
+Dua hasil pada nilai $\Delta\tau$ yang berbeda di atas menunjukkan bahwa hasil komputasi persamaan gerak bandul dengan metode Euler skema implisit beda mundur akan sahih dan teliti ketika nilai $\Delta\tau$ adalah begitu kecil. Ketika $\Delta\tau$ tidak cukup kecil maka hasil komputasi menjadi kurang sahih karena nilai tenaga total $E$ nampak tidak konstan. Namun berbeda dengan skema eksplisit, hasil komputasi yang kurang sahih pada skema implist beda mundur ini nampak tidak menunjukkan potensi tidak stabil karena nilai tenaga semakin saat waktu semakin besar. Hasil ini merupakan indikator bahwa metode Euler skema implisit beda mundur  memiliki sedikit kelebihan dibanding metode Euler skema eksplisit karena tidak berpotensi untuk tidak stabil, meskipun masih sama-sama memiliki kelemahan yaitu memerlukan nilai $\Delta\tau$ yang  begitu kecil.
+
+\subsubsection{Skema Implisit: Beda Terpusat (\textit{Central Difference})}
+
+Hasil di atas menunjukkan bahwa masalah ketakstabilan yang terjadi pada metode Euler skema eksplisit akan dapat dihindari ketika digunakan metode Euler skema implisit. Meskipun metode Euler skema implisit membutuhkan waktu komputasi yang lebih besar, kerena ada tambahan proses pencarian akar, namun adanya jaminan kestabilan menyebabkan metode tersebut lebih menjadi pilihan dibanding metode Euler eksplisit.
+
+Untuk mendapatkan hasil yang lebih teliti, selain jaminan kestabilan, maka dapat memanfaatkan pendekatan beda terpusat (\textit{central difference}) bagi operasi diferensial orde satu dalam bentuk berikut.
+
+\begin{align}
+\left[\frac{dv(\tau)}{d\tau}\right]_{\tau=\tau_{1/2}}&\approx\frac{v_1-v_0}{\Delta \tau}=-\sin\theta_{1/2}\approx-\frac{\sin\theta_0+\sin\theta_1}{2} &\Longrightarrow v_1&=v_0-\\
+&&&\frac{\Delta \tau}{2}\left(\sin\theta_1+\sin\theta_0\right)\\
+\left[\frac{d\theta(\tau)}{d\tau}\right]_{\tau=\tau_{1/2}}&\approx\frac{\theta_1-\theta_0}{\Delta \tau}=v_{1/2}\approx\frac{v_0+v_1}{2} &\Longrightarrow \theta_1&=\theta_0+\frac{\Delta \tau}{2}\left(v_1+v_0\right)
+\end{align}
+
+Berdasar ungkapan tersebut maka bentuk umum metode Euler skema implisit adalah seperti berikut.
+
+\begin{align}
+v_i&=v_{i-1}-\frac{\Delta \tau}{2}\left(\sin\theta_i+\sin\theta_{i-1}\right)\\
+\theta_i&=\theta_{i-1}+\frac{\Delta \tau}{2}\left(v_i+v_{i-1}\right);\qquad i=1,2,3,\cdots,N
+\end{align}
+
+Bentuk fungsi yang akan digunakan dalam proses pencarian akar dapat disusun dengan mensubstitusikan pers (12b) ke pers (13b) sehingga diperoleh ungkapan seperti berikut.
+
+\begin{equation}
+\theta_i=\theta_{i-1}+\frac{\Delta \tau}{2}\left[v_{i-1}-\frac{\Delta \tau}{2}\left(\sin\theta_i+\sin\theta_{i-1}\right)+v_{i-1}\right]
+\end{equation}
+
+Atau dapat ditulis ulang dalam bentuk:
+
+\begin{equation}
+f(\theta_i)=\theta_i+\frac{\Delta \tau^2}{4}\left(\sin\theta_i+\sin\theta_{i-1}\right)-\Delta \tau v_{i-1}-\theta_{i-1}=0
+\end{equation}
+
+\begin{verbatim}
+function bandul_implisit_terpusat(tmax, N, theta0, omega0)
+    tau = range(0.0, tmax, length=N)
+    dtau = tau[2] - tau[1]
+    theta = zeros(N)
+    omega = zeros(N)
+    tenaga = zeros(N)
+    theta[1] = theta0
+    omega[1] = omega0
+    tenaga[1] = omega[1]^2/2.0 + (1.0 - cos(theta[1]))
+    for i in 1:N -1
+        x0 = theta[i]
+        v0 = omega[i]
+        # Initial guess using small angle solution
+        x_init = theta0 * cos(tau[i+1]) + omega0 * sin(tau[i+1])
+        f(x) = x + dtau^2 * sin(x)/4.0 + dtau^2 * sin(x0)/4.0 - dtau * v0 - x0
+        df(x) = 1.0 + dtau^2 * cos(x)/4.0
+        theta[i+1] = find_zero((f, df), x_init, Roots.Newton())
+        omega[i+1] = omega[i] - dtau * sin(theta[i+1])/2.0 - dtau * sin(theta[i])/2.0
+        tenaga[i+1] = omega[i+1]^2/2.0 + (1.0 - cos(theta[i+1]))
+    end
+    return tau, theta, omega, tenaga
+end
+\end{verbatim}
+
+\begin{verbatim}
+bandul_implisit_terpusat (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+tmax=10
+N=100
+theta0=pi/10.0
+omega0=0.0
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+tau,theta,omega,tenaga=bandul_implisit_terpusat(tmax,N,theta0,omega0)
+\end{verbatim}
+
+\begin{verbatim}
+(0.0:0.10101010101010101:10.0, [0.3141592653589793, 0.3125866249719053, 0.30788394264310964, 0.3000968322441008, 0.2893009714540944, 0.2756015722504692, 0.25913261827205114, 0.24005585084413306, 0.2185594844462753, 0.1948566341088187  …  -0.289753878289862, -0.30043986698757424, -0.3081137677797803, -0.3127010097438818, -0.3141571011258324, -0.3124679326997603, -0.30764987276391914, -0.2997496568804393, -0.28884406875876933, -0.27503940239344166], [0.0, -0.031138279664065613, -0.06197483044608823, -0.09220995545428694, -0.12154808818783888, -0.14970001604393895, -0.17638527272873894, -0.20133472234403962, -0.22429333233354407, -0.24502310434809627  …  -0.12047959040197907, -0.09110298581272365, -0.060840249872956054, -0.02998714101625488, 0.001156531653633443, 0.03228900318259369, 0.06310858354706189, 0.09331569094583918, 0.12261495386322577, 0.1507174401702617], [0.04894348370484647, 0.048943483604930046, 0.048943480959126255, 0.04894346918042656, 0.04894343872509682, 0.0489433790112838, 0.04894328067016141, 0.04894313776593329, 0.0489429496113613, 0.04894272185285934  …  0.048943440312307726, 0.04894346988593791, 0.04894348116864298, 0.04894348362566326, 0.04894348370498454, 0.048943483581194214, 0.04894348073739935, 0.04894346844935763, 0.04894343709751409, 0.048943376103851216])
+\end{verbatim}
+
+\begin{verbatim}
+plot(tau,[theta,omega,tenaga], label=[" \theta (rad)" " \omega (rad/s)" "E (J)"], xlabel="t (s)", ylabel="Nilai", title="Metode Euler: skema Central Difference", lw=2)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/83f1e9a2d5cdb253d721da655936bbbb.png}
+
+Nampak bahwa dengan pengambilan $\Delta\tau$ yang tidak terlalu kecil maka metode Euler skema impisit dengan pendekatan beda terpusat dapat memberikan hasil yang teliti dan stabil.
+
+\subsection{Metode Runge-Kutta}
+
+\subsubsection{Runge-Kutta Orde 2}
+
+Berdasar uraian dan contoh di atas maka dapat dipahami bahwa metode Euler memiliki kelemahan untuk menyelesaikan masalah syarat awal. Metode Euler skema eksplisit memiliki kelemahan pada ketakstabilan serta ketelitian hasil sehingga membutuhkan interval waktu $\Delta \tau$ yang amat kecil. Metode Euler skema implisit beda mundur (\textit{backward difference}) mampu mengatasi ketakstabilan namun masih membutuhkan interval waktu $\Delta \tau$ yang amat kecil. Metode Euler skema implisit beda terpusat (\textit{central difference}) mampu mengatasi ketakstabilan dan ketelitian yang tidak membutuhkan interval waktu $\Delta \tau$ yang amat kecil. Meskipun demikian, metode Euler skema implisit beda terpusat (\textit{central difference}) masih memiliki kekurangan yaitu memerlukan langkah komputasi yang relatif mahal karena melibatkan pencarian akar untuk tiap nilai. Metode Runge-Kutta mengatasi kekurangan yang ada pada metode Euler, terutama dalam hal yang terkait dengan ketelitian hasil serta tidak memerlukan langkah komputasi yang relatif mahal karena berbentuk eksplisit.
+
+Tinjau  metode Euler skema implisit beda terpusat (\textit{central difference}) dalam bentuk ungkapan pers (12a) berikut.
+
+\begin{equation}
+\left[\frac{dv(\tau)}{d\tau}\right]_{\tau=\tau_{1/2}}\approx\frac{v_1-v_0}{\Delta \tau}=-\sin\theta_{1/2}
+\end{equation}
+
+Jika dianggap bahwa $\sin\theta_{1/2}\equiv\sin\left[\theta\left(\tau_0+\tfrac{\Delta\tau}{2}\right)\right]$ dapat diperoleh berdasar pendekatan deret hingga orde 1 yaitu
+
+\begin{equation}
+\sin\theta_{1/2}\equiv\sin\left[\theta\left(\tau_0+\tfrac{\Delta\tau}{2}\right)\right]\approx\sin\left(\theta_0+\frac{\Delta\tau}{2}\left[\frac{d\theta}{d\tau}\right]_{\tau=\tau_0}\right)\approx\sin\left(\theta_0+\frac{\Delta\tau}{2}v_0\right)
+\end{equation}
+
+Dengan cara yang sama maka bentuk ungkapan pers (13a) juga dapat disajikan seperti ungkapan pers (15) dan (16) tersebut. Maka  metode Euler skema implisit beda terpusat (\textit{central difference})  dapat diselesaikan dengan langkah eksplisit berikut.
+
+\begin{align}
+k_1^{(1)}&=-\sin\theta_0\\
+k_1^{(2)}&=v_0\\
+k_2^{(1)}&=-\sin\left(\theta_0+\frac{\Delta\tau}{2}k_1^{(2)}\right)\\
+k_2^{(2)}&=v_0+\frac{\Delta\tau}{2}k_1^{(1)}\\
+v_1&=v_0+\Delta\tau k_2^{(1)}\\
+\theta_1&=\theta_0+\Delta\tau k_2^{(2)}
+\end{align}
+
+Ungkapan pada pers (17) tersebut dapat dilakukan secara berulang pada setiap putaran ke $i$ dengan $i=1,2,3\cdots,N$. Langkah seperti diberikan oleh pers (17) disebut sebagai metode Runge-Kutta orde 2 dengan bentuk umum seperti berikut.
+
+\begin{align}
+k_1^{(1)}&=-\sin\theta_{i-1}\\
+k_1^{(2)}&=v_{i-1}\\
+k_2^{(1)}&=-\sin\left(\theta_{i-1}+\frac{\Delta\tau}{2}k_1^{(2)}\right)\\
+k_2^{(2)}&=v_{i-1}+\frac{\Delta\tau}{2}k_1^{(1)}\\
+v_i&=v_{i-1}+\Delta\tau k_2^{(1)}\\
+\theta_i&=\theta_{i-1}+\Delta\tau k_2^{(2)};\qquad i=1,2,3,\cdots,N
+\end{align}
+
+\textit{Source code} berikut merupakan implementasi metode Runge-Kutta orde 2.
+
+\begin{verbatim}
+function bandul_RK2(tmax, N, theta0, omega0)
+    tau = range(0.0, tmax, length=N)
+    dtau = tau[2] - tau[1]
+    theta = zeros(N)
+    omega = zeros(N)
+    tenaga = zeros(N)
+    theta[1] = theta0
+    omega[1] = omega0
+    tenaga[1] = omega[1]^2/2.0 + (1.0 - cos(theta[1]))
+    for i in 1:N -1
+        k1_1 = -sin(theta[i])
+        k1_2 = omega[i]
+        k2_1 = -sin(theta[i] + dtau * k1_2 / 2.0)
+        k2_2 = omega[i] + dtau * k1_1 / 2.0
+        omega[i+1] = omega[i] + dtau * k2_1
+        theta[i+1] = theta[i] + dtau * k2_2
+        tenaga[i+1] = omega[i+1]^2/2.0 + (1.0 - cos(theta[i+1]))
+    end
+    return tau, theta, omega, tenaga
+end
+\end{verbatim}
+
+\begin{verbatim}
+bandul_RK2 (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+tmax=10
+N=100
+theta0=pi/10.0
+omega0=0.0
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+tau,theta,omega,tenaga=bandul_RK2(tmax,N,theta0,omega0)
+\end{verbatim}
+
+\begin{verbatim}
+(0.0:0.10101010101010101:10.0, [0.3141592653589793, 0.31258280890364337, 0.30786109019853874, 0.30004000712852474, 0.28919578224212805, 0.2754344356607958, 0.258891024221477, 0.2397286273128412, 0.2181370586583349, 0.1943312849561382  …  -0.2927456929064658, -0.3027990244360954, -0.3098026631531203, -0.31368827638442937, -0.31441799044271984, -0.3119846440004115, -0.3064118353675897, -0.2977537654351496, -0.28609487086134033, -0.27154923551852644], [0.0, -0.031213837815651253, -0.06212463226292474, -0.0924306331079267, -0.1218342252978799, -0.15004416601973392, -0.1767779975292747, -0.20176465982701564, -0.22474730077596286, -0.2454862521060401  …  -0.11410284008973709, -0.08439627863774492, -0.05386508109102213, -0.02280846326714872, 0.008470784010851357, 0.039668377307133934, 0.07048057160687554, 0.10060621016508695, 0.1297488611995153, 0.15761909940497998], [0.04894348370484647, 0.048944665696320055, 0.048945851102523655, 0.04894704552218808, 0.04894825576158639, 0.048949488740666, 0.04895075027029264, 0.048952043892026356, 0.04895336997095233, 0.048954725202035726  …  0.049054601571478215, 0.04905578630554085, 0.049056972828525766, 0.04905815859795628, 0.04905934307380908, 0.04906052811926045, 0.04906171794529068, 0.04906291859910269, 0.04906413706665905, 0.04906538012087577])
+\end{verbatim}
+
+\begin{verbatim}
+plot(tau,[theta,omega,tenaga], label=[" \theta (rad)" " \omega (rad/s)" "E (J)"], xlabel="t (s)", ylabel="Nilai", title="Metode Runge -Kutta: Orde 2 ", lw=2)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/10b2429b87d8ec0d27f8f96695addad7.png}
+
+Nampak dari hasil di atas bahwa metode Runget-Kutta orde 2 dapat memberikan hasil yang teliti seperti metode Euler skema implisit beda terpusat (\textit{central difference}), dengan tambahan fitur yaitu berdasar skema eksplisit.
+
+\subsubsection{Runge-Kutta Orde 4}
+
+Metode Runge-Kutta orde 2 yang diuraikan di atas memiliki ketelitian sebanding dengan orde $\Delta\tau^3$. APabila diinginkan ketelitian yang lebih tinggi hingga sebanding dengan orde $\Delta\tau^5$, maka dapat digunakan metode Runge-Kutta orde 4 dengan langkah seperti diberikan berikut.
+
+\begin{align}
+k_1^{(1)}&=-\sin\theta_{i-1}\\
+k_1^{(2)}&=v_{i-1}\\
+k_2^{(1)}&=-\sin\left(\theta_{i-1}+\frac{\Delta\tau}{2}k_1^{(2)}\right)\\
+k_2^{(2)}&=v_{i-1}+\frac{\Delta\tau}{2}k_1^{(1)}\\
+k_3^{(1)}&=-\sin\left(\theta_{i-1}+\frac{\Delta\tau}{2}k_2^{(2)}\right)\\
+k_3^{(2)}&=v_{i-1}+\frac{\Delta\tau}{2}k_2^{(1)}\\
+k_4^{(1)}&=-\sin\left(\theta_{i-1}+k_3^{(2)}\right)\\
+k_4^{(2)}&=v_{i-1}+k_3^{(1)}\\
+v_i&=v_{i-1}+\frac{\Delta\tau}{6}\left(k_1^{(1)}+2.0*k_2^{(1)}+2.0*k_3^{(1)}+k_4^{(1)}\right)\\
+\theta_i&=\theta_{i-1}+\frac{\Delta\tau}{6}\left(k_1^{(2)}+2.0*k_2^{(2)}+2.0*k_3^{(2)}+k_4^{(2)}\right);\qquad i=1,2,3,\cdots,N
+\end{align}
+
+\textit{Source code} berikut merupakan implementasi metode Runge-Kutta orde 4.
+
+\begin{verbatim}
+function bandul_RK4(tmax, N, theta0, omega0)
+    tau = range(0.0, tmax, length=N)
+    dtau = tau[2] - tau[1]
+    theta = zeros(N)
+    omega = zeros(N)
+    tenaga = zeros(N)
+    theta[1] = theta0
+    omega[1] = omega0
+    tenaga[1] = omega[1]^2/2.0 + (1.0 - cos(theta[1]))
+    for i in 1:N -1
+        k1_1 = -sin(theta[i])
+        k1_2 = omega[i]
+        k2_1 = -sin(theta[i] + dtau * k1_2 / 2.0)
+        k2_2 = omega[i] + dtau * k1_1 / 2.0
+        k3_1 = -sin(theta[i] + dtau * k2_2 / 2.0)
+        k3_2 = omega[i] + dtau * k2_1 / 2.0
+        k4_1 = -sin(theta[i] + dtau * k3_2)
+        k4_2 = omega[i] + dtau * k3_1
+        omega[i+1] = omega[i] + dtau * (k1_1 + 2.0*k2_1 + 2.0*k3_1 + k4_1) / 6.0
+        theta[i+1] = theta[i] + dtau * (k1_2 + 2.0*k2_2 + 2.0*k3_2 + k4_2) / 6.0
+        tenaga[i+1] = omega[i+1]^2/2.0 + (1.0 - cos(theta[i+1]))
+    end
+    return tau, theta, omega, tenaga
+end
+\end{verbatim}
+
+\begin{verbatim}
+bandul_RK4 (generic function with 1 method)
+\end{verbatim}
+
+\begin{verbatim}
+tmax=30
+N=100
+theta0=pi/10.0
+omega0=0.0
+\end{verbatim}
+
+\begin{verbatim}
+0.0
+\end{verbatim}
+
+\begin{verbatim}
+tau,theta,omega,tenaga=bandul_RK4(tmax,N,theta0,omega0)
+\end{verbatim}
+
+\begin{verbatim}
+(0.0:0.30303030303030304:30.0, [0.3141592653589793, 0.3000745329181524, 0.2590497949653009, 0.1946849504041766, 0.11269951435780967, 0.020474264943755205, -0.07361399333009934, -0.16100460758637525, -0.23379435724544684, -0.2854774752486498  …  -0.12230805682200331, -0.20265425160148018, -0.26466611887558966, -0.3028417850726443, -0.3138355947271597, -0.2966909144187245, -0.25290160235259407, -0.18631495567142758, -0.10285693854144258, -0.010050403806647373], [0.0, -0.09227618651564055, -0.1765008399061332, -0.24515555661052546, -0.2918823121478725, -0.3121905049670935, -0.3040795949197894, -0.26835278669355356, -0.2084882844651988, -0.13012431656559376  …  -0.287847620312954, -0.23846867118937956, -0.1677929908352835, -0.08233784555417671, 0.010294227661489519, 0.10203091756053252, 0.18485636741996478, 0.251350327084268, 0.29532836170203564, 0.3125493669305646], [0.04894348370484647, 0.04894298681020527, 0.04894245218300179, 0.048941956538971806, 0.048941513519635736, 0.04894104613652996, 0.04894048667721159, 0.0489398761123757, 0.04893932246747003, 0.04893887133537991  …  0.048898437144763225, 0.048897845806198076, 0.04889735023869329, 0.04889693258435911, 0.04889649935996709, 0.04889599555849384, 0.04889546225757787, 0.04889497410179848, 0.04889453354043165, 0.048894058267557154])
+\end{verbatim}
+
+\begin{verbatim}
+plot(tau,[theta,omega,tenaga], label=[" \theta (rad)" " \omega (rad/s)" "E (J)"], xlabel="t (s)", ylabel="Nilai", title="Metode Runge -Kutta: Orde 4", lw=2)
+\end{verbatim}
+
+\includegraphics[width=0.7\linewidth]{files/29ea44532eec409741504b6798e4c247.png}
+
+Nampak dari hasil di atas bahwa metode Runget-Kutta orde 4 dapat memberikan hasil yang teliti bahkan ketika diambil nilai $\Delta\tau=0.3$.

@@ -1,0 +1,448 @@
+\section{Kasus Fisika Non Linear: Osilasi Bandul}
+
+\subsection{Implementasi Kuadrature Numerik}
+
+Persamaan gerak benda bermassa $m$ yang digantungkan pada seutas tali dengan panjang $l$ dan massa diabaikan, di bawah pengaruh medan gravitasi bumi $g$, adalah
+
+\begin{equation}
+m\frac{d^2 x(t)}{dt^2}=-mg\sin\theta(t)
+\end{equation}
+
+Dalam radian, mengingat $x(t)=l\theta(t)$ dengan $\theta(t)$ adalah sudut simpangan benda terhadap titik setimbang, maka persamaan gerak tersebut dapat dinyatakan dalam bentuk persamaan diferensial orde dua berikut
+
+\begin{equation}
+\frac{d^2\theta(t)}{dt^2}=-\frac{g}{l}\sin\theta(t)
+\end{equation}
+
+Perhitungan periode bandul pada sebarang simpangan ($T$) dapat diperoleh dengan meninjau persamaan gerak bandul pada bentuk umum seperti disajikan oleh pers (1). Dengan mengalikan kedua ruas pada pers (1) di atas dengan $\frac{d\theta}{dt}$ dan kemudian melakukan intergrasi terhadap $dt$ maka diperoleh ungkapan
+
+\begin{equation}
+\frac{d\theta}{dt}=\sqrt{\frac{2g}{l}}\sqrt{\cos\theta - \cos\theta_0}
+\end{equation}
+
+Berdasar syarat awal tersebut, persamaan diferensial di atas dapat dinyatakan dalam ungkapan integral dalam bentuk
+
+\begin{equation}
+t=\sqrt{\frac{l}{2g}}\int_{\theta_0}^\theta\,\frac{d\theta}{\sqrt{\cos\theta-\cos\theta_0}}
+\end{equation}
+
+Periode $T$ dapat dipahami sebagai waktu yang ditempuh bagi benda bergerak dari posisi $\theta_0$ dan berayun kembali ke posisi semula $\theta_0)$. Dengan pengertian lain, periode $T$ adalah empat kali waktu yang diperlukan untuk bergerak dari $\theta=\theta_0$ menuju $\theta=0$. Berdasar pers(4) maka ungkapan bagi perhitungan periode T dapat dinyatakan dalam bentuk integral dalam bentuk
+
+\begin{equation}
+T=4\,\sqrt{\frac{l}{2g}}\int_0^{\theta_0}\,\frac{d\theta}{\sqrt{\cos\theta-\cos\theta_0}}
+\end{equation}
+
+Dalam bentuk satuan universal, periode ($\tau$) berbentuk
+
+\begin{equation}
+\tau=\frac{T}{T_0}=\frac{\sqrt{2}}{\pi}\int_0^{\theta_0}\,\frac{d\theta}{\sqrt{\cos\theta-\cos\theta_0}}
+\end{equation}
+
+Ungkapan integral tersebut berbentuk integral tak layak (\textit{improper integral}), yang salah satunya dicirikan oleh adanya singularitas (bernilai tak hingga) pada nilai integral di bagian batas atas integral, yaitu saat $\theta=\theta_0$. Perhitungan bagi nilai periode $T$ akibatnya menjadi sulit apabila digunakan integrasi numerik dengan cara diskretisasi pada peubah bebas seperti yang dilakukan pada metode trapesium atau metode Simpson.
+
+\subsection{Metode Kuadratur Numerik: \textit{Gauss-Legendre}}
+
+Perhitungan numerik bagi nilai integral yang selama ini telah dikaji, sebagai contoh metode Trapesium dan metode Simpson, adalah melalui proses diskretisasi peubah bebas pada titik-titik yang telah ditentukan $x_0, x_1, \cdots, x_N$. Secara umum nilai integral dari batas $a$ hingga $b$ dapat didekati oleh bentuk umum
+
+\begin{equation}
+\int_{x_0}^{x_N}f(x)dx\approx h\sum_{i=0}^N c_i f(x_i)
+\end{equation}
+
+dengan $h=x_i -x_{i -1}$ adalah ukuran langkah (\textit{step size}) atau tingkat kehalusan diskretisasi, $c_i$ adalah nilai koefisien atau bobot fungsi  yang seperangkat nilainya dapat ditentukan oleh metode diskretisasi yang dipilih dan $x_0=a, x_N=b$.
+
+Sebagai contoh untuk metode Trapesium maka $c_0=\frac{1}{2}, c_N=\frac{1}{2}$, $c_i=1$ untuk $i=1,2,\cdots,N -1$ sedangkan untuk metode Simpson maka $c_0=\frac{1}{3}, c_N=\frac{1}{3},$ $c_{2i -1}=\frac{4}{3}$ untuk $i=1,2,\cdots,\frac{N}{2}$ dan $c_{2i}=\frac{2}{3}$ untuk $i=1,2,\cdots,\frac{N}{2} -1$.
+
+Nampak dari metode perhitungan numerik pers (6) bahwa pendekatan perhitungan nilai integral akan tidak berhasil apabila terjadi singularitas pada nilai fungsi di titik tertentu, sebagai contoh pada titik $\theta_0$ di bentuk integral tak layak pers (5) di atas.
+
+Dengan prosedur yang agak berbeda, metode kuadratur numerik adalah metode untuk mendekati nilai integral berdasarkan seperangkat nilai bobot $c_i$ dan titik $x_i$ yang ditentukan berdasarkan tingkat (\textit{orde}) ketelitian yang akan dicapai, bukan berdasarkan proses diskretisasi. Dengan tambahan derajat kebebasan untuk memilih seperangkat titik $x_i$ maka 2 fitur yang dimiliki metode kuadratur, dibanding metode integrasi berdasar diskretisasi,  adalah
+
+\begin{enumerate}
+\item Singularitas dapat dihindari karena seperangkat titik $x_i$ tidak berada pada suatu titik yang menyebabkan nilai fungsi bernilai tak hingga.
+\item Orde ketelitian lebih tinggi karena jumlah peubah bebas menjadi lebih banyak.
+\end{enumerate}
+
+Sebagai gambaran terkait 2 fitur tersebut, tinjau ungkapan kuadratur numerik untuk kasus sedehana, yaitu berdasar evaluasi pada 2 titik $x_1$ dan $x_2$ yang berada pada interval -1 dan 1, berikut
+
+\begin{equation}
+\int_{-1}^1 f(x)dx\approx c_1 f(x_1) + c_2 f(x_2)
+\end{equation}
+
+Dalam ungkapan tersebut, sejumlah 4 nilai $c_1, c_2, x_1$ dan $x_2$ menjadi bebas untuk ditentukan. Salah satu cara untuk menentukan 4 nilai tersebut adalah dengan menyusun 4 persamaan yang menjamin bahwa pers (7) akan memberikan nilai eksak apabila $f(x)$ berbentuk polinomial hingga orde 3.
+
+\begin{itemize}
+\item Untuk $f(x)=x^0=1$ maka pers (7) menjadi
+\end{itemize}
+\begin{equation}
+\int_{-1}^1 1dx=2= c_1 x_1^0 + c_2 x_2^0=w_1+w_2
+\end{equation}
+
+\begin{itemize}
+\item Untuk $f(x)=x^1$ maka pers (7) menjadi
+\end{itemize}
+\begin{equation}
+\int_{-1}^1 xdx=0= c_1 x_1 + c_2 x_2
+\end{equation}
+
+\begin{itemize}
+\item Untuk $f(x)=x^2$ maka pers (7) menjadi
+\end{itemize}
+\begin{equation}
+\int_{-1}^1 x^2dx=\frac{2}{3}= c_1 x_1^2 + c_2 x_2^2
+\end{equation}
+
+\begin{itemize}
+\item Untuk $f(x)=x^3$ maka pers (7) menjadi
+\end{itemize}
+\begin{equation}
+\int_{-1}^1 x^3dx=0= c_1 x_1^3 + c_2 x_2^3
+\end{equation}
+
+Mudah ditunjukkan bahwa penyelsaian dari 4 persamaan serentak tersebut adalah
+
+$c_1=1, c_2=1, x_1= -\frac{1}{\sqrt{3}}\approx= -0.577350269$ dan $x_2=\frac{1}{\sqrt{3}}\approx 0.577350269$.
+
+Dengan pers (7) dan 4 nilai yang diperoleh tersebut maka metode kuadratur numerik pada 2 titik  berbentuk
+
+\begin{equation}
+\int_{-1}^1 f(x)dx\approx 1 f(-0.577350269) + 1 f(0.577350269)
+\end{equation}
+
+
+\bigskip
+\centerline{\rule{13cm}{0.4pt}}
+\bigskip
+
+Berikut adalah contoh penggunaan kuadratur numerik 2 titik untuk menentukan nilai integral dari $f(x)=2+x^2$
+
+\begin{verbatim}
+c1 = 1.0
+c2 = 1.0
+x1 = -0.577350269
+x2 = 0.577350269
+f1 = 2.0 + x1^2
+f2 = 2.0 + x2^2
+nilai_kuad = c1*f1 + c2*f2
+nilai_eksak = 2.0*(1.0 - ( -1.0)) + (1.0^3 - ( -1.0)^3)/3.0;
+\end{verbatim}
+
+\begin{verbatim}
+nilai_kuad
+\end{verbatim}
+
+\begin{verbatim}
+4.666666666228744
+\end{verbatim}
+
+\begin{verbatim}
+nilai_eksak
+\end{verbatim}
+
+\begin{verbatim}
+4.666666666666667
+\end{verbatim}
+
+Bandingkan hasil kuadratur numerik 2 titik tersebut dengan intergrasi numerik 2 titik berdasar metode Trapesium untuk bentuk fungsi yang sama yaitu
+
+\begin{verbatim}
+h = 1.0 - ( -1.0)
+c1 = 0.5
+c2 = 0.5
+x1 = -1.0
+x2 = 1.0
+f1 = 2.0 + x1^2
+f2 = 2.0 + x2^2
+nilai_trap = (c1*f1 + c2*f2)*h;
+\end{verbatim}
+
+\begin{verbatim}
+nilai_trap
+\end{verbatim}
+
+\begin{verbatim}
+6.0
+\end{verbatim}
+
+Nampak bahwa perhitungan nilai integral berdasar metode kuadratur numerik nampak lebih teliti dibanding metode Trapesium untuk cacah titik yang sama. Ini merupakan salah satu fitur dari metode kuadratur numerik yang disinggung di atas.
+
+\subsubsection{Pengaturan Skala untuk Sebarang Batas Integral}
+
+Apabila batas integral adalah dari $y=a$ hingga $y=b$ maka bentuk kuadratur numerik dalam pers (7) dari $x= -1$ hingga $x=1$ dapat dilakukan pengaturan skala secara linear dalam bentuk
+
+\begin{equation}
+y=\frac{b-a}{2}x+\frac{b+a}{2}
+\end{equation}
+
+Dengan pengaturan skala tersebut maka bentuk kuadratur numerik dalam pers (7) dapat digunakan dalam bentuk menjadi
+
+\begin{equation}
+\int_a^b f(y)dy\approx\frac{b-a}{2}\left[c_1 f\left(\frac{b-a}{2}x_1+\frac{b+a}{2}\right) + c_2 f\left(\frac{b-a}{2}x_2+\frac{b+a}{2}\right)\right]
+\end{equation}
+
+Dengan bentuk kuadratur numerik seperti disajikan oleh pers (13) maka ungkapan integral tak layak bagi periode bandul ($\tau$) dalam pers (5a) akan dimungkinkan untuk dihitung karena nilai fungsi pada $\theta_0$ tidak perlu untuk dihitung. Akibatnya proses perhitungan nilai integral pada titik singular dapat dihindari, yang merupakan salah satu fitur dari metode kuadratur numerik.
+
+\begin{verbatim}
+using LinearAlgebra
+using SpecialFunctions
+
+function fung(y, y0)
+    return 1.0 / sqrt(cos(y) - cos(y0))
+end
+
+function kuad_GL(a, b)
+    n = 2
+    c = zeros(n)
+    x = zeros(n)
+    c[1] = 1.0
+    c[2] = 1.0
+    x[1] = -1.0/sqrt(3.0)
+    x[2] = 1.0/sqrt(3.0)
+    sum = 0.0
+    for i in 1:n
+        y = (b -a)*x[i]/2.0 + (b+a)/2.0
+        sum += c[i] * fung(y, b)
+    end
+    kuad = (b -a) * sum/2.0
+    return kuad
+end
+
+theta0 = pi/200.0
+a = 0.0
+b = theta0
+kuad = kuad_GL(a, b)
+tau = sqrt(2.0) * kuad / pi;
+\end{verbatim}
+
+\begin{verbatim}
+tau
+\end{verbatim}
+
+\begin{verbatim}
+0.843413737027873
+\end{verbatim}
+
+Nampak bahwa dengan menggunakan metode kuadratur numerik maka nilai periode bandul yang ternormalisir ($\tau$) dapat diperoleh berdasar bentuk intergral tak layak, meskipun dengan nilai yang masih belum teliti. Hasil yang lebih teliti pada metode kuadratur numerik dapat diperoleh dengan mengambil cacah titik yang lebih banyak.
+
+Salah satu kendala bagi metode kuadratur numerik adalah perlunya pencarian seperangkat nilai $c_i$ dan $x_i$, saat $i=1,2,\cdots, N$, untuk cacah titik $N$ yang dipilih. Pada umumnya, pencarian nilai-nilai $c_i$ dan $x_i$ tersebut dapat dilakukan dengan melibatkan operasi pada fungsi khas (\textit{special function}) berupa polinomial orthonormal  tertentu.
+
+Sebagai contoh, metode kuadratur numerik dengan ungkapan seperti diberikan oleh pers (7) merupakan bentuk khusus, yaitu saat cacah titik $N=2$, dari apa yang disebut sebagai metode kuadratur \textit{Gauss-Legendre} dengan bentuk umum
+
+\begin{equation}
+\int_{-1}^1 f(x)dx\approx \sum_{i=1}^n c_i f(x_i)
+\end{equation}
+
+Nilai-nilai $x_i$ dapat diperoleh melalui akar-akar atau titik nol (\textit{zeros}) dari polinomial \textit{Legendre} orde ke $n$, dengan lambang $P_n(x)$, sedangkan nilai-nilai $c_i$ diperoleh dengan melibatkan turunan ke 1 dari polinomial tersebut, yaitu melalui ungkapan
+
+\begin{equation}
+P_n(x_i)=0;\qquad c_i=\frac{2}{(1-x_i^2)\left[P_n^{'}(x_i)\right]^2}
+\end{equation}
+
+Untuk beberapa titik yang tidak terlalu banyak, nilai-nilai $c_i$ dan $x_i$ bagi kuadratur \textit{Gauss-Legendre}, seperti diberikan oleh pers (16), diberikan dalam bentuk Tabel seperti berikut (\href{https://en.wikipedia.org/wiki/Gaussian\_quadrature}{Gaussian Kuadrature})
+
+\bigskip\noindent
+\begin{tabular}{p{\dimexpr 0.333\linewidth-2\tabcolsep}p{\dimexpr 0.333\linewidth-2\tabcolsep}p{\dimexpr 0.333\linewidth-2\tabcolsep}}
+\toprule
+Cacah titik $n$ & Bobot $c_i$ & Titik $x_i$ \\
+\hline
+1 & 2 & 0 \\
+2 & 1 & -0.577350... \\
+1 & 0.577350... &  \\
+3 & 0.555556... & -0.774597... \\
+0.888889... & 0 &  \\
+0.555556... & 0.774597... &  \\
+4 & 0.347855... & -0.861136... \\
+0.652145... & -0.339981... &  \\
+0.652145... & 0.339981... &  \\
+0.347855... & 0.861136... &  \\
+5 & 0.236927... & -0.90618... \\
+0.478629... & -0.53846... &  \\
+0.568889... & 0 &  \\
+0.478629... & 0.53846... &  \\
+0.236927... & 0.90618... &  \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+Untuk memberikan gambaran bahwa pengambilan cacah titik yang semakin banyak maka akan dapat meningkatkan ketelitian metode kuadrature \textit{Gauss-Legendre}, berikut akan diambil untuk $n=5$.
+
+\begin{verbatim}
+function fung(y, y0)
+    return 1.0 / sqrt(cos(y) - cos(y0))
+end
+
+function kuad_GL1(a, b)
+  n = 5
+  c = zeros(n)
+  x = zeros(n)
+  c[1] = 0.236927
+  c[2] = 0.478629
+  c[3] = 0.568889
+  c[4] = 0.478629
+  c[5] = 0.236927
+  x[1] = -0.90618
+  x[2] = -0.53846
+  x[3] = 0.0
+  x[4] = 0.53846
+  x[5] = 0.90618
+  sum = 0.0
+  for i in 1:n
+    y = (b -a)*x[i]/2.0 + (b+a)/2.0
+    sum += c[i] * fung(y, b)
+  end
+  kuad = (b -a) * sum / 2.0
+  return kuad
+end
+
+theta0 = pi/200.0
+a = 0.0
+b = theta0
+kuad = kuad_GL1(a,b)
+tau = sqrt(2.0) * kuad/pi;
+\end{verbatim}
+
+\begin{verbatim}
+tau
+\end{verbatim}
+
+\begin{verbatim}
+0.9287777927160661
+\end{verbatim}
+
+Selain disajikan dalam bentuk ungkapan seperti pers (16) atau bentuk Tabel, beberapa bahasa pemrograman atau paket matematika biasanya juga menyediakan \textit{Library}, \textit{Toolbox} atau \textit{Package} untuk membangkitkan nilai-nilai titik evaluasi fungsi ($x_i$) beserta nilai bobot terkait ($c_i$). Sebagai contoh, di dalam Julia hal tersebut difasilitasi oleh \textit{Package} \texttt{FastGaussQuadrature} seperti berikut.
+
+\begin{verbatim}
+using FastGaussQuadrature
+
+function fung(y, y0)
+    return 1.0 / sqrt(cos(y) - cos(y0))
+end
+
+function kuad_GL(a, b, n)
+    x, c = gausslegendre(n)
+    sum = 0.0
+    for i in 1:n
+        y = (b -a)*x[i]/2.0 + (b+a)/2.0
+        sum += c[i] * fung(y, b)
+    end
+    kuad = (b -a) * sum/2.0
+    return kuad
+end
+
+theta0 = pi/200.0
+a = 0.0
+b = theta0
+kuad = kuad_GL(a, b, 50)
+tau = sqrt(2.0) * kuad / pi;
+\end{verbatim}
+
+\begin{verbatim}
+tau
+\end{verbatim}
+
+\begin{verbatim}
+0.9922539469065875
+\end{verbatim}
+
+\subsection{Bentuk Lain Metode Kuadratur Numerik}
+
+Metode kuadratur \textit{Gauss-Legendre} merupakan salah satu bentuk dari bentuk umum metode kuadratur yaitu
+
+\begin{equation}
+\int_{a}^b w(x)f(x)dx\approx \sum_{i=1}^n c_i f(x_i)
+\end{equation}
+
+Ungkapan tersebut berlaku pada interval $[a,b]$ dan bentuk bobot $w(x)$ tertentu. Keadaan khusus saat $a= -1, b=1$ dan $w(x)=1$ maka pers (17) di atas merupakan bentuk dari metode kuadratur \textit{Gauss-Legnedre}.
+
+Interval $[a,b]$ dan bentuk fungsi bobot $w(x)$ akan terkait dengan fungsi khas dari polinomial orthonormal tertentu sehingga digunakan sebagai penamaan bagi metode kuadratur tersebut. Pemahaman terkait polinomial orthonormal tertentu tersebut akan berguna untuk mendapatkan nilai-nilai $x_i$ dan $c_i$ pada orde pendekatan tertentu.
+
+Tabel berikut memberikan daftar dari beberapa bentuk metode kuadratur numerik yang banyak digunakan pada beberapa permasalahan perhitungan yang melibatkan integral tak layak.
+
+\bigskip\noindent
+\begin{tabular}{p{\dimexpr 0.250\linewidth-2\tabcolsep}p{\dimexpr 0.250\linewidth-2\tabcolsep}p{\dimexpr 0.250\linewidth-2\tabcolsep}p{\dimexpr 0.250\linewidth-2\tabcolsep}}
+\toprule
+Interval pada $[a,b]$ & Bentuk fungsi bobot $w(x)$ & Polinomial Orthonormal & Nama Metode Kuadratur \\
+\hline
+$[ -1,1]$ & 1 & Polinomial \textit{Legendre} & \textit{Gauss-Legendre} \\
+$[ -1,1]$ & $(1 -x)^\alpha(1+x)^\beta$ & Polinomial \textit{Jacobi} & \textit{Gauss-Jacobi} \\
+$[ -1,1]$ & $\frac{1}{\sqrt{(1 -x^2)}}$ & Polinomial \textit{Chebyshev} jenis 1 & \textit{Gauss-Chebyshev} \\
+$[ -1,1]$ & $\sqrt{(1 -x^2)}$ & Polinomial \textit{Chebyshev} jenis 2 & \textit{Gauss-Chebyshev} \\
+$[0,\infty]$ & $e^{ -x}$ & Polinomial \textit{Laguerre} jenis 2 & \textit{Gauss-Laguerre} \\
+$[ -\infty,\infty]$ & $e^{ -x^2}$ & Polinomial \textit{Hermite} jenis 2 & \textit{Gauss-Hermite} \\
+\bottomrule
+\end{tabular}
+
+\bigskip
+
+\subsection{Implementasi Bentuk Kuadratur Numerik lainnya: \textit{Gauss-Chebyshev}}
+
+Perhitungan periode bandul pada sebarang simpangan $T$ atau $\tau$ dengan bentuk seperti pers (5) atau (5a) akan lebih sesuai diselesaikan berdasar kuadratur numerik \textit{Gauss-Chebyshev}, dibanding dengan kuadratur numerik \textit{Gauss-Legendre} seperti uraian berikut.
+
+Tinjau substitusi variabel dalam bentuk ungkapan
+
+\begin{equation}
+k=\sin\frac{\theta_0}{2};\quad \text{dan}\quad y=\frac{\sin\frac{\theta}{2}}{\sin\frac{\theta_0}{2}}=\frac{\sin\frac{\theta}{2}}{k}
+\end{equation}
+
+Maka diperoleh bahwa:
+\begin{equation}
+y=0\quad \text{saat}\quad \theta=0;\quad \text{dan}\quad y=1\quad\text{saat}\quad \theta=\theta_0
+\end{equation}
+
+Dengan ungkapan tersebut maka diperoleh
+
+\begin{equation}
+\sqrt{\cos\theta-\cos\theta_0}=\sqrt{2\left(\sin\frac{\theta_0}{2}-\sin\frac{\theta}{2}\right)}=\sqrt{2}\sin\frac{\theta_0}{2}\sqrt{1-\frac{\sin\frac{\theta}{2}}{\sin\frac{\theta_0}{2}}}=\sqrt{2}k\sqrt{1-y^2}
+\end{equation}
+
+\begin{equation}
+dy=\frac{1}{2k}\sqrt{1-\sin^2\frac{\theta}{2}}d\theta=\frac{1}{2k}\sqrt{1-k^2y^2}d\theta;\quad\Longrightarrow\quad d\theta=\frac{2k}{\sqrt{1-k^2y^2}}dy
+\end{equation}
+
+Ungkapan periode bandul pada sebarang simpangan $T$ atau $\tau$ dengan bentuk seperti pers (5) atau (5a) maka dapat dinyatakan dalam bentuk lain yaitu
+
+\begin{equation}
+T=4\,\sqrt{\frac{l}{2g}}\int_0^{\theta_0}\,\frac{d\theta}{\sqrt{\cos\theta-\cos\theta_0}}=4\,\sqrt{\frac{l}{g}}\int_0^1\,\frac{dy}{\sqrt{1-y^2}\sqrt{1-k^2y^2}}
+\end{equation}
+
+Dalam bentuk satuan universal, periode ($\tau$) berbentuk
+
+\begin{align}
+\tau&=\frac{T}{T_0}=\frac{\sqrt{2}}{\pi}\int_0^{\theta_0}\,\frac{d\theta}{\sqrt{\cos\theta-\cos\theta_0}}=\frac{2}{\pi}\int_0^1\,\frac{dy}{\sqrt{1-y^2}\sqrt{1-k^2y^2}}
+\nonumber\\
+&=\frac{1}{\pi}\int_{-1}^1\,\frac{dy}{\sqrt{1-y^2}\sqrt{1-k^2y^2}}
+\end{align}
+
+Membandingkan pers (18) dan (18a) maka ungkapan tersebut akan sesuai dengan bentuk quadratur numerik  \textit{Gauss-Chebyshev} yaitu
+
+\begin{equation}
+w(y)=\frac{1}{\sqrt{1-y^2}};\quad\text{dan}\quad f(y)=\frac{1}{\sqrt{1-k^2y^2}}
+\end{equation}
+
+\begin{verbatim}
+function fung(y, k)
+    return 1.0 / sqrt(1.0 - (k*y)^2)
+end
+
+function kuad_GC(k, n)
+    x, c = gausschebyshev(n)
+    sum = 0.0
+    for i in 1:n
+        sum += c[i] * fung(x[i], k)
+    end
+    kuad = sum
+    return kuad
+end
+
+theta0 = pi/200.0
+k = sin(theta0/2.0)
+kuad = kuad_GC(k, 20)
+tau = kuad / pi;
+\end{verbatim}
+
+\begin{verbatim}
+tau
+\end{verbatim}
+
+\begin{verbatim}
+1.0000154214748775
+\end{verbatim}
